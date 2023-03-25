@@ -6,6 +6,8 @@
     4:
     5:
 */
+/* ===== IMPORTS ===== */
+@import url('buttons.css');
 
 /* ===== RESETS ===== */
 *, *::before, *::after{
@@ -31,14 +33,39 @@ img{width: 100%;}
 /* ===== ROOT ===== */
 :root{
     /* === COLORS === */
+    /* = GRAYSCALE = */
+    --white: #fff;
+    --almost-white: #f8f8f8;
+    --eaeaea: #eaeaea;
+    --gray-50: #e4e4e4;
+    --gray-100: #d6d6d6;
+    --gray-200: #c2c2c2;
+    --gray-300: #a7a7a7;
+    --gray-400: #999999;
+    --gray-500: #7c7c7c;
+    --gray-600: #686868;
+    --gray-700: #707070;
+    --gray-800: #5e5e5e;
+    --gray-900: #4d4d4d;
+    --almost-black: #141414;
+    --black: #000;
+    /* = REST = */
     --primary-50: #FCEDB8;
     --primary-500: #FFCD1A;
+    --primary-600: #ffee00;
     --secondary-50: #D0EBFF;
     --secondary-500: #1DD6FF;
     --background-50: #FFFFFF;
     --background-700: #292C35;
     --background-800: #17181D;
     --background-900: #000D16;
+    /* = DEFAULT COLORS = */
+    --header-bg: var(--background-900);
+    --footer-bg: var(--background-900);
+    --header-text: var(--white);
+    --body-text: var(--black);
+    --footer-text: var(--white);
+    
 
     /* === SPACES (MARGINS, PADDINGS, GAPS) === */
     --space-xs: .25rem;
@@ -62,44 +89,46 @@ img{width: 100%;}
     --width-xl: 140rem;
     --width-xxl: 150rem;
 }
-
-/* ===== HEADER ===== */
-.header{
-    padding: var(--space-l);
-    background-color: rgb(121, 121, 252);
-}
-.header__content{
-    width: 100%;
-}
-
-/* ===== BODY ===== */
+/* ===== GLOBAL CONTAINER ===== */
 .global-container{
     min-height: 100vh;
     min-height: 100dvh;
     display: grid;
     grid-template-rows: 
-        auto
-        1fr
-        auto;
-    
-    border: 5px solid red;
+        10rem  /*header*/
+        1fr    /*body*/
+        10rem; /*footer*/
 }
+
+/* ===== HEADER ===== */
+.header{
+    padding: var(--space-l);
+    color: var(--header-text);
+    background-color: var(--header-bg);
+}
+.header__content{
+    width: 100%;
+}
+
+/* ===== BODY (CENTRAL CONTAINER) ===== */
 .container{
     padding: var(--space-l);
     margin: 0 auto;
+    color: var(--body-text);
     border: 1px solid;
 }
 
 /* ===== FOOTER ===== */
 .footer{
     padding: var(--space-l);
-    background-color: rgb(121, 121, 252);
+    color: var(--footer-text);
+    background-color: var(--footer-bg);
 }
 .footer__content{
     margin: 0 auto;
 }
 
-/* ===== UTILIDADES ===== */
+/* ===== UTILITIES ===== */
 .limit-width{max-width: var(--width-default);}
 .img-fit{
     width: 100%;
