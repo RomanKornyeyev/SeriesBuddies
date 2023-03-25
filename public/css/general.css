@@ -31,7 +31,14 @@ img{width: 100%;}
 /* ===== ROOT ===== */
 :root{
     /* === COLORS === */
-    --a: #fff;
+    --primary-50: #FCEDB8;
+    --primary-500: #FFCD1A;
+    --secondary-50: #D0EBFF;
+    --secondary-500: #1DD6FF;
+    --background-50: #FFFFFF;
+    --background-700: #292C35;
+    --background-800: #17181D;
+    --background-900: #000D16;
 
     /* === SPACES (MARGINS, PADDINGS, GAPS) === */
     --space-xs: .25rem;
