@@ -27,32 +27,22 @@
 }
 /* SECONDARY */
 .btn--secondary{
-    border-color: var(--pink);
-    background-color: var(--pink);
+    border-color: var(--secondary-500);
+    background-color: var(--secondary-500);
 }
 .btn--secondary:hover, .btn--secondary:focus{
-    background-color: var(--dark-pink);
-    border-color: var(--dark-pink);
+    background-color: var(--secondary-600);
+    border-color: var(--secondary-600);
 }
 /* OUTLINE */
 .btn--outline{
     background-color: transparent;
-    border-color: var(--light-purple);
-    color: var(--light-purple);
+    border-color: var(--primary-500);
+    color: var(--primary-500);
 }
 .btn--outline:hover, .btn--outline:focus{
-    background-color: var(--light-purple);
-    color: var(--primary-color);
-}
-/* OUTLINE-BLACK*/
-.btn--outline-black{
-    background-color: transparent;
-    border-color: var(--secondary-color);
-    color: var(--secondary-color);
-}
-.btn--outline-black:hover, .btn--outline-black:focus{
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
+    background-color: var(--primary-500);
+    color: var(--black);
 }
 /* = TAMAÑOS = */
 .btn--sm{

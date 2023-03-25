@@ -51,10 +51,11 @@ img{width: 100%;}
     --black: #000;
     /* = REST = */
     --primary-50: #FCEDB8;
-    --primary-500: #FFCD1A;
-    --primary-600: #ffee00;
+    --primary-500: #FFCD19;
+    --primary-600: #f1bd00;
     --secondary-50: #D0EBFF;
     --secondary-500: #1DD6FF;
+    --secondary-600: #00c8f5;
     --background-50: #FFFFFF;
     --background-700: #292C35;
     --background-800: #17181D;
