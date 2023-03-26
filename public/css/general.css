@@ -103,6 +103,10 @@ img{width: 100%;}
 
 /* ===== HEADER ===== */
 .header{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
     min-height: 10rem;
     padding: var(--space-l);
     color: var(--header-text);
@@ -110,11 +114,13 @@ img{width: 100%;}
 }
 .header__content{
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     height: 100%;
+    transition: height 400ms ease-out;
+    background-color: var(--header-bg);
 }
 .nav{
     display: flex;
@@ -145,18 +151,17 @@ img{width: 100%;}
     justify-content: flex-end;
 }
 
+/* HEADER RESPONSIVE STUFF */
 /* trigger para menú desplegable */
 .nav-toggle{
-    display: none;
     position: relative;
     width: 4.5rem;
     height: 4.5rem;
-    display: flex;
-    flex-flow: column;
     gap: .5rem;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    display: none;
 }
 .bar{
     position: absolute;
@@ -168,6 +173,8 @@ img{width: 100%;}
 }
 .bar--top{top: 1rem;}
 .bar--bottom{bottom: 1rem;}
+.logo--pc{display: block;}
+.logo--mbl{display: none;}
 
 /* ===== BODY (CENTRAL CONTAINER) ===== */
 .container{
@@ -194,6 +201,44 @@ img{width: 100%;}
 /* ===== TABLET (810px) ===== */
 @media screen and (max-width: 810px) {
     /* ===== HEADER ===== */
+    /* HEADER RESPONSIVE STUFF */
+    .header{position: sticky; top:0;}
+    .nav-toggle{display: flex; flex-flow: column; justify-content: center;}
+    .logo--pc{display: none;}
+    .logo--mbl{display: block;}
+    .header__content{
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: var(--space-ultra-l);
+        height: 0;
+        top: 10rem;
+        left:0;
+        position: fixed;
+        overflow: hidden;
+        border-top: 1px solid var(--gray-900);
+        box-shadow: inset 0px 6px 10px 0px #000;
+    }
+    .nav--login, .nav--header{width: auto;}
+    .nav--login{
+        order: 1;
+        justify-content: center;
+        margin-top: var(--space-ultra-l);
+    }
+    .nav--header{
+        order: 2;
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+    }
+    .nav__link--header{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: var(--space-l) 0;
+        border-top: 1px solid var(--gray-900);
+    }
+    .nav__link--header:last-child{border-bottom: 1px solid var(--gray-900);}
 }
 
 /* ===== PHONE (480px) ===== */
@@ -208,4 +253,8 @@ img{width: 100%;}
     height: 100%;
     object-fit: cover;
     object-position: center;
+}
+.height-calc-100-header{
+    height: calc(100vh - 10rem);
+    height: calc(100dvh - 10rem);
 }
