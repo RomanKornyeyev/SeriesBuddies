@@ -186,17 +186,16 @@ img{width: 100%;}
     padding: var(--space-l);
     margin: 0 auto;
     color: var(--body-text);
-    border: 1px solid;
+    border: 1px solid red;
 }
-
 .title{
     color: var(--primary-500);
 }
 .title--form{
+    font-size: 5rem;
     writing-mode: vertical-rl;
     transform: rotate(-180deg);
 }
-
 .bg-fixed{
     position: fixed;
     top: 0;
@@ -207,6 +206,8 @@ img{width: 100%;}
     background: linear-gradient(360deg, var(--almost-black) 20%, var(--gray-900) 80%);
     z-index: -1;
 }
+.link-enphasis{font-weight: bold;}
+.link-enphasis:hover{text-decoration: underline;}
 /* ===== FOOTER ===== */
 .footer{
     min-height: 10rem;

@@ -7,14 +7,13 @@
 }
 .main{
     display: flex;
-    flex-flow: row;
+    flex-flow: row wrap;
     justify-content: center;
     align-items: center;
     width: 50rem;
     min-height: 50rem;
     border: 1px solid white;
 }
-
 
 
 /* ===== TABLET (810px) ===== */
