@@ -168,7 +168,7 @@ img{width: 100%;}
     width: 80%;
     height: .5rem;
     border-radius: .5rem;
-    transition: all 250ms ease-out;
+    transition: all 400ms ease-out;
     background-color: var(--header-text);
 }
 .bar--top{top: 1rem;}
@@ -254,7 +254,18 @@ img{width: 100%;}
     object-fit: cover;
     object-position: center;
 }
+
+/* ===== EXTRA/EFFECTS ===== */
 .height-calc-100-header{
     height: calc(100vh - 10rem);
     height: calc(100dvh - 10rem);
+}
+.bar--top-efect{
+    transform: rotate(50deg);
+    margin-top: .95rem;
+}
+.bar--middle-efect{opacity: 0;}
+.bar--bottom-efect{
+    transform: rotate(-50deg);
+    margin-bottom: .95rem;
 }
