@@ -86,6 +86,7 @@ img{width: 100%;}
     --space-ultra-xl: 7.5rem;
     --space-ultra-xxl: 10rem;
     /* === BORDER RADIUS === */
+    --br-small: var(--space-xs);
     --br-default: var(--space-s);
 
     /* === WIDTHS === */
