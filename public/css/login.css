@@ -6,13 +6,19 @@
     align-items: center;
 }
 .main{
+    position: relative;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column;
     justify-content: center;
     align-items: center;
-    width: 50rem;
-    min-height: 50rem;
-    /* border: 1px solid white; */
+    gap: var(--space-l);
+    padding: var(--space-ultra-l) var(--space-xxl);
+    width: 100%;
+    max-width: 40rem;
+    min-height: 40rem;
+    border-radius: var(--br-default);
+    background-color: var(--primary-50);
+    /* border: 5px solid white; */
 }
 
 
