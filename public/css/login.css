@@ -1,0 +1,28 @@
+/* ===== BODY (CENTRAL CONTAINER) ===== */
+.container{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+.main{
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+    width: 50rem;
+    min-height: 50rem;
+    border: 1px solid white;
+}
+
+
+
+/* ===== TABLET (810px) ===== */
+@media screen and (max-width: 810px) {
+    
+}
+
+/* ===== PHONE (480px) ===== */
+@media screen and (max-width: 480px) {
+    
+}

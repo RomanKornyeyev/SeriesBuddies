@@ -11,10 +11,11 @@
     <meta name="copyright" content="Anabel, Román">
 
     <!-- TITLE -->
-    <title>Plantilla</title>
+    <title>Login</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="./css/general.css">
+    <link rel="stylesheet" href="./css/login.css">
 
     <!-- JS -->
     <script src="./js/header.js" defer></script>
@@ -49,22 +50,27 @@
         <div class="container limit-width">
             <!-- main -->
             <main class="main">
-                <div class="main__content">
-                    <h2>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Id, vitae?</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio ea facilis enim assumenda,
-                        necessitatibus quisquam ratione ipsum quo quis obcaecati sunt excepturi. Reiciendis, deserunt nostrum?
-                    </p>
+                <h1 class="title title--form">LOGIN</h1>
+                <form action="" method="post" class="form form--login">
+                    <div class="input-wrapper">
+                        <!-- necesario poner placerholder con un espacio vacío para un trick css -->
+                        <input type="text" name="correo" id="correo" class="input" placeholder=" ">
+                        <label for="correo" class="label">email</label>
+                    </div>
                     
-                    <button class="btn btn--primary">hola</button>
-                    <button class="btn btn--secondary">hola</button>
-                    <button class="btn btn--outline">hola</button>
-                </div>
+                    
+                    <div class="input-wrapper">
+                        <input type="submit" value="LOGIN" class="btn btn--primary">
+                    </div>
+                </form>
             </main>
 
             <!-- posible aside / divs con info extra -->
+
+             <!-- bg fixed -->
+            <div class="bg-fixed"></div>
         </div>
-        
+       
 
         <!-- footer -->
         <footer class="footer">

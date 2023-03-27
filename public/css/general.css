@@ -1,13 +1,16 @@
 /*
     ===== Z-INDEX: =====
+    -1: bg-fixed
+    0:
     1:
     2: 
     3:
     4:
-    5:
+    5: header
 */
 /* ===== IMPORTS ===== */
 @import url('buttons.css');
+@import url('form.css');
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 /* ===== RESETS ===== */
@@ -38,17 +41,17 @@ img{width: 100%;}
     --white: #fff;
     --almost-white: #f8f8f8;
     --eaeaea: #eaeaea;
-    --gray-50: #e4e4e4;
-    --gray-100: #d6d6d6;
-    --gray-200: #c2c2c2;
-    --gray-300: #a7a7a7;
-    --gray-400: #999999;
-    --gray-500: #7c7c7c;
+    --gray-50: #e0e0e0;
+    --gray-100: #d3d3d3;
+    --gray-200: #b9b9b9;
+    --gray-300: #a0a0a0;
+    --gray-400: #929292;
+    --gray-500: #727272;
     --gray-600: #686868;
-    --gray-700: #707070;
-    --gray-800: #5e5e5e;
-    --gray-900: #4d4d4d;
-    --almost-black: #141414;
+    --gray-700: #5f5f5f;
+    --gray-800: #494949;
+    --gray-900: #292929;
+    --almost-black: #111111;
     --black: #000;
     /* = REST = */
     --primary-50: #FCEDB8;
@@ -82,6 +85,8 @@ img{width: 100%;}
     --space-ultra-l: 5rem;
     --space-ultra-xl: 7.5rem;
     --space-ultra-xxl: 10rem;
+    /* === BORDER RADIUS === */
+    --br-default: var(--space-s);
 
     /* === WIDTHS === */
     --width-xs: 100rem;
@@ -112,6 +117,7 @@ img{width: 100%;}
     padding: var(--space-l);
     color: var(--header-text);
     background-color: var(--header-bg);
+    z-index: 5;
 }
 .header__content{
     display: flex;
@@ -128,7 +134,6 @@ img{width: 100%;}
     flex-flow: row wrap;
     gap: .5rem;
     width: 20rem;
-    /* border: 1px solid white; */
 }
 .nav__link{
     position: relative;
@@ -149,7 +154,7 @@ img{width: 100%;}
     width: 100%;
 }
 .nav--login{
-    width: 25rem;
+    width: 20rem;
     justify-content: flex-end;
 }
 
@@ -177,12 +182,31 @@ img{width: 100%;}
 
 /* ===== BODY (CENTRAL CONTAINER) ===== */
 .container{
+    width: 100%;
     padding: var(--space-l);
     margin: 0 auto;
     color: var(--body-text);
     border: 1px solid;
 }
 
+.title{
+    color: var(--primary-500);
+}
+.title--form{
+    writing-mode: vertical-rl;
+    transform: rotate(-180deg);
+}
+
+.bg-fixed{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    height: 100dvh;
+    width: 100vw;
+    background: linear-gradient(360deg, var(--almost-black) 20%, var(--gray-900) 80%);
+    z-index: -1;
+}
 /* ===== FOOTER ===== */
 .footer{
     min-height: 10rem;
