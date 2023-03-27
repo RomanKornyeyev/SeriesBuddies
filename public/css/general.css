@@ -8,6 +8,7 @@
 */
 /* ===== IMPORTS ===== */
 @import url('buttons.css');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 /* ===== RESETS ===== */
 *, *::before, *::after{
@@ -16,7 +17,7 @@
     box-sizing: border-box;
     scroll-behavior: smooth;
 }
-html{font-size: 62.5%;}
+html{font-size: 62.5%;font-family: 'Nunito', sans-serif;}
 body{font-size: 1.6rem}
 a{text-decoration: none; color: var(--white);}
 ul,ol{list-style: none;}
@@ -148,6 +149,7 @@ img{width: 100%;}
     width: 100%;
 }
 .nav--login{
+    width: 25rem;
     justify-content: flex-end;
 }
 
@@ -183,17 +185,25 @@ img{width: 100%;}
 
 /* ===== FOOTER ===== */
 .footer{
-    padding: var(--space-l);
+    min-height: 10rem;
     color: var(--footer-text);
     background-color: var(--footer-bg);
 }
 .footer__content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-flow: row wrap;
     margin: 0 auto;
+    padding: var(--space-l);
+    height: 100%;
+    width: 100%;
 }
-.login{
-    width: 25rem;
-    border: 1px solid white;
+.nav--footer{
+    width: auto;
+    justify-content: flex-end;
 }
+.nav__link--footer:hover{text-decoration: underline;}
 
 /* ===== TABLET (810px) ===== */
 @media screen and (max-width: 810px) {
