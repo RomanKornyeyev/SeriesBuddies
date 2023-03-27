@@ -17,7 +17,6 @@
     /* border: 1px solid white; */
 }
 .input-wrapper--checkbox{
-    border: 1px solid white;
     padding: 0;
     text-align: left;
 }
@@ -44,10 +43,6 @@
     top: -1rem;
     left: var(--space-ml);
 }
-.checkbox{
-    position: absolute;
-    opacity: 0;
-}
 .label{
     padding: 0 .25rem;
     background-color: var(--primary-50);
@@ -61,8 +56,48 @@
     pointer-events: none;
     color: var(--gray-700);
 }
-
-
+.label--checkbox{
+    padding:0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .5rem;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+}
+.label--checkbox>.checkbox{
+    position: absolute;
+    opacity: 0;
+}
+.visual-check{
+    position: relative;
+    display: inline-block;
+    width: 1.8rem;
+    height: 1.8rem;
+    border: .2rem solid var(--primary-500);
+    border-radius: var(--br-small);
+    transition: all 150ms ease-out;
+}
+.visual-check::before{
+    content: '';
+    position: absolute;
+    top: .4rem;
+    left: .15rem;
+    width: 1.2rem;
+    height: .45rem;
+    border-bottom: .25rem solid #fff;
+    border-left: .25rem solid #fff;
+    transform: scale(0) rotate(-45deg);
+    transition: all 100ms ease-out;
+}
+.checkbox:checked~.visual-check::before{
+    transform: scale(1) rotate(-45deg);
+}
+.checkbox:checked~.visual-check{
+    background-color: var(--primary-500);
+}
 
 /* ===== TABLET (810px) ===== */
 @media screen and (max-width: 810px) {

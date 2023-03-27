@@ -187,7 +187,7 @@ img{width: 100%;}
     padding: var(--space-l);
     margin: 0 auto;
     color: var(--body-text);
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 .title{
     color: var(--primary-500);
