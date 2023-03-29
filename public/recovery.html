@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+    <!-- META -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Intercambia ideas sobre tus series favoritas">
+    <meta name="keywords" content="series, opiniones, ideas">
+    <meta name="author" content="Anabel, Román">
+    <meta name="copyright" content="Anabel, Román">
+
+    <!-- TITLE -->
+    <title>Recovery</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/general.css">
+    <link rel="stylesheet" href="./css/login.css">
+
+    <!-- JS -->
+    <script src="./js/header.js" defer></script>
+</head>
+<body>
+    <!-- global container -->
+    <div class="global-container">
+        <!-- header -->
+        <header class="header">
+            <!-- trigger menu mobile -->
+            <a href="index.html"><h1 class="logo logo--mbl">SeriesBuddies</h1></a>
+            <div id="nav-toggle" class="nav-toggle">
+                <span class="bar bar--top"></span>
+                <span class="bar bar--middle"></span>
+                <span class="bar bar--bottom"></span>
+            </div>
+            <!-- header content (nav, etc.) -->
+            <div id="header-content" class="header__content">
+                <nav class="nav nav--header">
+                    <a href="#" class="nav__link nav__link--header">opc1</a>
+                    <a href="#" class="nav__link nav__link--header">opc2</a>
+                    <a href="#" class="nav__link nav__link--header">opc3</a>
+                </nav>
+                <a href="index.html"><h1 class="logo logo--pc">SeriesBuddies</h1></a>
+                <div class="nav nav--login">
+                    <a href="" class="nav__link nav__link--login">login</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- body (central container) -->
+        <div class="container limit-width">
+            <!-- main -->
+            <main class="main">
+                <h1 class="title title--form">Recovery</h1>
+                <p class="extra-form-info">
+                    <b>¿Contraseña olvidada?</b> No pasa nada
+                    <br>
+                    Déjanos tu email y te enviaremos un enlace para recuperar tu contraseña =)
+                </p>
+                <form action="login.html" method="post" class="form">
+                    <div class="input-wrapper">
+                        <!-- necesario poner placerholder con un espacio vacío para un trick css -->
+                        <input type="text" name="correo" id="correo" class="input shadow-lightgray" placeholder=" ">
+                        <label for="correo" class="label label--text">Email</label>
+                        <!-- <div class="error">Error del campo</div> -->
+                    </div>
+                    
+                    
+                    <div class="input-wrapper input-wrapper--submit">
+                        <input type="submit" value="RECUPERAR" class="btn btn--primary shadow-lightgray">
+                    </div>
+                </form>
+                <div class="extra-form-info">
+                    ¿La has recordado? <a href="login.html" class="link-enphasis link-body">Inicia sesión</a>
+                </div>
+            </main>
+
+            <!-- posible aside / divs con info extra -->
+
+             <!-- bg fixed -->
+            <div class="bg-fixed"></div>
+        </div>
+       
+
+        <!-- footer -->
+        <footer class="footer">
+            <div class="footer__content limit-width">
+                <a href="index.html"><h1 class="logo">SeriesBuddies</h1></a>
+                <nav class="nav nav--footer">
+                    <a href="#" class="nav__link--footer">opc1</a>
+                    <a href="#" class="nav__link--footer">opc2</a>
+                    <a href="#" class="nav__link--footer">opc3</a>
+                </nav>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
