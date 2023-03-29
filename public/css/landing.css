@@ -21,12 +21,66 @@
 }
 .row{
     position: absolute;
-    top:0;
-    width: 25rem;
-    height: 5rem;
-    background-color: black;;
-    border: 5px solid black;
+    display: flex;
+    width: 35rem;
+    height: 7.5rem;
+    background-color: white;
+    border-radius: var(--space-m);
+    overflow: hidden;
 }
+.row--top{
+    right: -1rem;
+    top: 15%;
+    box-shadow: 0 3px 2px var(--primary-500);
+}
+.row--bottom{
+    left: -1rem;
+    bottom: 15%;
+    box-shadow: 0 3px 2px var(--secondary-500);
+}
+.row--top{box-shadow: 0 3px 2px var(--primary-500);}
+.row__post, .row__user{z-index: 1;}
+.row__user{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-ultra-s);
+    width: 20%;
+    height: 100%;
+}
+.user__img{
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--primary-500);
+}
+.user__medals{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-xs);
+    height: 2rem;
+    width: 100%;
+}
+.medal{
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+}
+.medal--primary{ background-color: var(--primary-500);}
+.row__post{
+    display: flex;
+    flex-flow: column;
+    gap: var(--space-s);
+    width: 80%;
+    height: 100%;
+    padding: var(--space-m);
+    background-color: var(--primary-50);
+}
+.post__date{font-weight: bold;}
+.post__content{text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
 .landing-info{
     display: flex;
     flex-flow: column;
