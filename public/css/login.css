@@ -39,3 +39,12 @@
 @media screen and (max-width: 480px) {
     
 }
+
+
+/* ===== EXTRA (420px) ===== */
+@media screen and (max-width: 420px) {
+    /* ===== BODY (CENTRAL CONTAINER) ===== */
+    .main{
+        padding: var(--space-xxxl) var(--space-l);
+    }
+}
