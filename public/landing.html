@@ -11,10 +11,11 @@
     <meta name="copyright" content="Anabel, Román">
 
     <!-- TITLE -->
-    <title>Plantilla</title>
+    <title>SeriesBuddies - Comenta tus series favoritas</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="./css/general.css">
+    <link rel="stylesheet" href="./css/landing.css">
 
     <!-- JS -->
     <script src="./js/header.js" defer></script>
@@ -46,28 +47,43 @@
         </header>
 
         <!-- body (central container) -->
-        <div class="container limit-width">
+        <div class="container">
             <!-- main -->
             <main class="main">
-                <div class="main__content">
-                    <h2>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Id, vitae?</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio ea facilis enim assumenda,
-                        necessitatibus quisquam ratione ipsum quo quis obcaecati sunt excepturi. Reiciendis, deserunt nostrum?
-                    </p>
-                    
-                    <button class="btn btn--primary">hola</button>
-                    <button class="btn btn--secondary">hola</button>
-                    <button class="btn btn--outline">hola</button>
+                <!-- img hero -->
+                <div class="hero">
+                    <img class="img-fit" src="./img/hero-1.jpg" alt="seriesbuddies">
+                    <div class="row row--top"></div>
+                    <div class="row row--bottom"></div>
+                </div>
+
+                <!-- texto -->
+                <div class="landing-info">
+                    <div class="landing-info__content">
+                        <h1 class="title title--landing">
+                            INTERCAMBIA IDEAS SOBRE
+                            <br>
+                            <span class="font-size-ultra-big">
+                                TUS SERIES FAVORITAS
+                            </span>
+                        </h1>
+                        <div class="landing-buttons">
+                            <a href="login.html" class="btn btn--outline">Inicia sesión</a>
+                            <a href="register.html" class="btn btn--primary">Hazte buddy</a>
+                        </div>
+                    </div>
                 </div>
             </main>
 
             <!-- posible aside / divs con info extra -->
+
+             <!-- bg fixed -->
+            <div class="bg-fixed"></div>
         </div>
-        
+       
 
         <!-- footer -->
-        <footer class="footer">
+        <!-- <footer class="footer">
             <div class="footer__content limit-width">
                 <a href="index.html"><h1 class="logo">SeriesBuddies</h1></a>
                 <nav class="nav nav--footer">
@@ -76,7 +92,7 @@
                     <a href="#" class="nav__link--footer">opc3</a>
                 </nav>
             </div>
-        </footer>
+        </footer> -->
     </div>
 </body>
 </html>
