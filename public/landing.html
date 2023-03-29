@@ -19,6 +19,7 @@
 
     <!-- JS -->
     <script src="./js/header.js" defer></script>
+    <script src="./js/landing.js" defer></script>
 </head>
 <body>
     <!-- global container -->
@@ -51,30 +52,43 @@
             <!-- main -->
             <main class="main">
                 <!-- img hero -->
-                <div class="hero">
+                <div class="hero" id="hero">
                     <img class="img-fit" src="./img/hero-1.jpg" alt="seriesbuddies">
 
                     <!-- comment top -->
-                    <div class="row row--top">
+                    <div class="row row--top" id="row-top">
                         <div class="row__user">
-                            <div class="user__img">
+                            <div class="user__img user__img--top">
                                 <img class="img-fit img-user-landing" src="./img/default.png" alt="user">
                             </div>
                             <div class="user__medals">
-                                <div class="medal medal--primary"></div>
-                                <div class="medal medal--primary"></div>
-                                <div class="medal medal--primary"></div>
+                                <div class="medal medal--top"></div>
+                                <div class="medal medal--top"></div>
+                                <div class="medal medal--top"></div>
                             </div>
                         </div>
-                        <div class="row__post">
+                        <div class="row__post row__post--top">
                             <p class="post__date">15/03/2023</p>
                             <p class="post__content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, doloremque!</p>
                         </div>
                     </div>
 
                     <!-- comment bottom -->
-                    <div class="row row--bottom">
-
+                    <div class="row row--bottom" id="row-bottom">
+                        <div class="row__user">
+                            <div class="user__img user__img--bottom">
+                                <img class="img-fit img-user-landing" src="./img/default.png" alt="user">
+                            </div>
+                            <div class="user__medals">
+                                <div class="medal medal--bottom"></div>
+                                <div class="medal medal--bottom"></div>
+                                <div class="medal medal--bottom"></div>
+                            </div>
+                        </div>
+                        <div class="row__post row__post--bottom">
+                            <p class="post__date">15/03/2023</p>
+                            <p class="post__content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, doloremque!</p>
+                        </div>
                     </div>
                 </div>
 
