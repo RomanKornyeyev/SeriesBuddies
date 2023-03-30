@@ -194,6 +194,9 @@ img{width: 100%;}
 .title{
     color: var(--primary-500);
 }
+.title--l{
+    font-size: 4.5rem;
+}
 .title--form{
     position: absolute;
     left:-8.5rem;
@@ -254,6 +257,8 @@ img{width: 100%;}
     box-shadow: 1px 1px 4px 0px rgba(156,156,156,1);
 }
 .font-size-ultra-big{font-size: 5.5rem;}
+.text-align-center{text-align: center;}
+.text-white{color: #fff}
 
 /* ========== BREAK POINTS ========== */
 /* ===== EXTRA (1600px) ===== */
