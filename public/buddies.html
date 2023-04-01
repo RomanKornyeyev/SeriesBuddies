@@ -15,7 +15,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="./css/general.css">
-    <link rel="stylesheet" href="./css/genders.css">
+    <link rel="stylesheet" href="./css/buddies.css">
 
     <!-- JS -->
     <script src="./js/header.js" defer></script>
@@ -50,26 +50,33 @@
         <div class="container limit-width">
             <!-- main -->
             <main class="main">
-                <h1 class="title title--l text-align-center">GÉNEROS</h1>
+                <h1 class="title title--l text-align-center">BUDDIES</h1>
                 <div class="main__content">
-                    <!-- x9 entradas -->
-                    <script>
-                        const mainContent = document.querySelector(".main__content");
-                        for (let i = 0; i < 9; i++) {
-                            mainContent.innerHTML += `
-                                <a href="#" class="box-wrapper">
-                                    <div class="box box--gender">
-                                        <img class="img-fit img-gender" src="./img/stranger_things.png" alt="género">
-                                        <div class="box__info">
-                                            <h2 class="title title-gender">Sci-fi</h2>
-                                            <p class="text-white"> 1578 resultados &gt;</p>
-                                        </div>
+                    <div class="card card--buddy">
+                        <div class="buddy__body">
+                            <div class="profile-img">
+                                <img class="img-fit" src="./img/default.png" alt="profile-img">
+                            </div>
+                            <div class="profile-info">
+                                <h2 class="profile-name">Román</h2>
+                                <p class="profile-hashtag">@romanXD</p>
+                                <div class="profile-achievements">
+                                    <div class="achievements">
+                                        <p>50 Buddies</p>
+                                        <p>1579 Posts</p>
                                     </div>
-                                </a>
-                            `; 
+                                    <div class="barrita"></div>
+                                    <div class="achievements">
+                                        <p>52 Series</p>
+                                        <p>12 Chips</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buddy__footer">
                             
-                        }
-                    </script>
+                        </div>
+                    </div>
                 </div>
                 <div class="pagination">
                     <a href="#" class="btn btn--primary btn--sm">&lt;</a>

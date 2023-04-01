@@ -48,22 +48,6 @@
     text-align: center;
 }
 
-
-/* ===== EXTRA (1400px) ===== */
-@media screen and (max-width: 1400px) {
-    
-}
-
-/* ===== EXTRA (1200px) ===== */
-@media screen and (max-width: 1200px) {
-    
-}
-
-/* ===== EXTRA (1100px) ===== */
-@media screen and (max-width: 1100px) {
-    
-}
-
 /* ===== EXTRA (1000px) ===== */
 @media screen and (max-width: 1000px) {
     .main__content{

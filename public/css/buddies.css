@@ -1,0 +1,91 @@
+.main{
+    display: flex;
+    flex-flow: column;
+    gap: var(--space-l);
+}
+.main__content{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xxl);
+}
+.card{
+    position: relative;
+    min-height: 17.5rem;
+}
+.card--buddy{
+    display: flex;
+    flex-flow: column;
+    min-height: 20rem;
+    border-radius: var(--br-default);
+    overflow: hidden;
+    /* border: 1px solid white; */
+}
+/* .buddy__body{
+    display: grid;
+    align-items: center;
+    grid-template-columns: 3.5fr 6.5fr;
+    gap: var(--space-l);
+    padding: var(--space-l);
+    height: 80%;
+    background-color: var(--primary-50);
+} */
+.buddy__body{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: var(--space-l);
+    padding: var(--space-l);
+    height: 80%;
+    background-color: var(--primary-50);
+}
+.profile-img{
+    width: 35%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--primary-500);
+}
+/* profile info */
+.profile-info{
+    height: 100%;
+}
+.profile-name{
+    font-size: 2.75rem;
+}
+.profile-hashtag{
+    font-weight: bold;
+    margin-bottom: var(--space-l);
+}
+.profile-achievements{
+    display: flex;
+    gap: var(--space-l);
+}
+.barrita{border: 1px solid var(--primary-500);}
+.buddy__footer{
+    height: 20%;
+    background-color: var(--primary-500);
+}
+.pagination{
+    width: 100%;
+    text-align: center;
+}
+
+/* ===== EXTRA (1000px) ===== */
+@media screen and (max-width: 1000px) {
+    .main__content{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ===== TABLET (810px) ===== */
+@media screen and (max-width: 810px) {
+    
+}
+
+/* ===== PHONE (480px) ===== */
+@media screen and (max-width: 480px) {
+    .main__content{
+        grid-template-columns: 1fr;
+        gap: var(--space-l);
+    }
+}
