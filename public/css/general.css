@@ -57,10 +57,17 @@ img{width: 100%;}
     --primary-50: #FCEDB8;
     --primary-500: #FFCD19;
     --primary-600: #ebb800;
+    --primary-700: #b99100;
+    --primary-800: #8f7000;
+    --primary-900: #665000;
     --secondary-50: #D0EBFF;
     --secondary-500: #1DD6FF;
     --secondary-600: #00c1ec;
     --error-500: #ff4949;
+    --error-600: #e62d2d;
+    --error-700: #ca1818;
+    --error-800: #a30a0a;
+    --error-900: #790000;
     --background-50: #FFFFFF;
     --background-700: #292C35;
     --background-800: #17181D;
@@ -259,6 +266,7 @@ img{width: 100%;}
 .font-size-ultra-big{font-size: 5.5rem;}
 .text-align-center{text-align: center;}
 .text-white{color: #fff}
+
 
 /* ========== BREAK POINTS ========== */
 /* ===== EXTRA (1600px) ===== */

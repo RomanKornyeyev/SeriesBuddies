@@ -62,6 +62,8 @@
 }
 .barrita{border: 1px solid var(--primary-500);}
 .buddy__footer{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
     height: 20%;
     background-color: var(--primary-500);
 }
@@ -69,6 +71,9 @@
     width: 100%;
     text-align: center;
 }
+
+/* ===== UTILITIES ===== */
+.grid-col-3{grid-template-columns: repeat(3, 1fr);}
 
 /* ===== EXTRA (1000px) ===== */
 @media screen and (max-width: 1000px) {
