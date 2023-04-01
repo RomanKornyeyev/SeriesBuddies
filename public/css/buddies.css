@@ -69,6 +69,7 @@
 }
 .pagination{
     width: 100%;
+    padding: var(--space-l) 0;
     text-align: center;
 }
 
