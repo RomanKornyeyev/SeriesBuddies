@@ -17,15 +17,11 @@
     background-color: var(--primary-50);
     display: flex;
     align-items: center;
-/*     display: grid;
-    grid-template-columns: 0.5fr 2fr; */
-}
-.card__serie-img {
-    width: 50%;
+    height: 24rem;
     overflow: hidden;
 }
-.img-fit {
-    scale: 110%;
+.card__serie-img {
+    width: 25%;
 }
 .header__serie {
     display: flex;
@@ -42,6 +38,7 @@
     font-size: 3rem;
 }
 .card__serie-info {
+    width: 75%;
     padding: var(--space-xxl);
 }
 .btn--outline_filter {
