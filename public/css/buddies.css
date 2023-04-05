@@ -67,11 +67,6 @@
     height: 20%;
     background-color: var(--primary-500);
 }
-.pagination{
-    width: 100%;
-    padding: var(--space-l) 0;
-    text-align: center;
-}
 
 /* ===== UTILITIES ===== */
 .grid-col-3{grid-template-columns: repeat(3, 1fr);}

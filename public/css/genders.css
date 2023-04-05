@@ -43,11 +43,6 @@
 .title-gender{
     transition: all 250ms ease-out;
 }
-.pagination{
-    width: 100%;
-    padding: var(--space-l) 0;
-    text-align: center;
-}
 
 /* ===== EXTRA (1000px) ===== */
 @media screen and (max-width: 1000px) {

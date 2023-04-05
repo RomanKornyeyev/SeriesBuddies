@@ -230,6 +230,11 @@ img{width: 100%;}
 .link-enphasis{font-weight: bold;}
 .link-enphasis:hover{text-decoration: underline;}
 .link-body{color: var(--black);}
+.pagination{
+    width: 100%;
+    padding: var(--space-l) 0;
+    text-align: center;
+}
 /* ===== FOOTER ===== */
 .footer{
     min-height: 10rem;
