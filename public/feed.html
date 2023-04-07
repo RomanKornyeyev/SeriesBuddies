@@ -16,7 +16,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="./css/general.css">
     <link rel="stylesheet" href="./css/buttons.css">
-    <link rel="stylesheet" href="./css/series.css">
+    <link rel="stylesheet" href="./css/feed.css">
 
     <!-- JS -->
     <script src="./js/header.js" defer></script>
@@ -51,30 +51,63 @@
         <div class="container limit-width">
             <!-- main -->
             <main class="main">
-                <h1 class="title title--l text-align-center">Series de ficción</h1>
                 <div class="card">
                     <div class="card__serie-img">
-                        <img class="img-fit" src="./img/stranger_things-cover.jpg" alt="serie-img">
+                        <img class="img-fit" src="./img/mc2.jpg" alt="serie-img">
+                        <h2 class="title title--serie">Kingdom</h2>
                     </div>
                     <div class="card__serie-info">
-                        <div class="header__serie">
-                            <h2 class="title title--serie">Stranger Things</h2>
-                            <a href="#" class="btn btn--outline_filter">#ficcion</a>
-                            <a href="#" class="btn btn--outline_filter">#aventura</a>
-                        </div>
-                        <div class="body__serie">
+                        <div class="info info--serie">
                             <p class="text text--serie">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac augue lacus. Ut aliquet orci lectus. Pellentesque consequat sapien massa, in finibus odio rutrum ut. Donec a diam vulputate eros tincidunt cursus nec a massa. Vivamus sed rutrum justo. Donec sapien justo, mollis a libero ac, dictum viverra tortor. Nulla at fringilla dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <a href="#" class="btn btn--outline_filter">#ficcion</a>
+                            <a href="#" class="btn btn--outline_filter">#terror</a>
                         </div>
-                        <div class="footer__serie">
-                            <a href="#">
+                        <a href="#" class="links__buddy">
+                            <div class="icon">
                                 <div class="icon__buddy"></div>
                                 <div class="icon__buddy"></div>
                                 <div class="icon__buddy"></div>
-                                <p class="info info--serie">Super buddies</p>
-                            </a>
-                            <a href="#"><p class="info info--serie">1579 comentarios &gt;</p></a>
-                        </div>  
+                                <div class="icon__buddy"></div>
+                            </div>
+                            <p class="info info--buddy">Ver todos los buddies &gt;</p>
+                        </a> 
                     </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__post">
+                        <div class="card__post-img">
+                            <img class="img-fit" src="./img/default.png" alt="serie-img">
+                            <h2 class="title title--user">Román</h2>
+                            <div class="icon">
+                                <div class="icon__chip"></div>
+                                <div class="icon__chip"></div>
+                                <div class="icon__chip"></div>
+                            </div>
+                            <div class="user--responsive">
+                                <h2 class="title title--user">Román</h2>
+                                <div class="icon">
+                                    <div class="icon__chip"></div>
+                                    <div class="icon__chip"></div>
+                                    <div class="icon__chip"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card__post-comment">
+                            <p class="info info--comment">Se unió el 2/02/2023</p>
+                            <p class="text text--comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac augue lacus. Ut aliquet orci lectus. Pellentesque consequat sapien massa, in finibus odio rutrum ut. Donec a diam vulputate eros tincidunt cursus nec a massa. Vivamus sed rutrum justo. Donec sapien justo, mollis a libero ac, dictum viverra tortor. Nulla at fringilla dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pagination">
+                    <a href="#" class="btn btn--primary btn--sm">&lt;</a>
+                    <a href="#" class="btn btn--outline btn--sm">1</a>
+                    <a href="#" class="btn btn--primary btn--sm">2</a>
+                    <a href="#" class="btn btn--outline btn--sm">3</a>
+                    <a href="#" class="btn btn--outline btn--sm">4</a>
+                    <a href="#" class="btn btn--outline btn--sm">5</a>
+                    <a href="#" class="btn btn--primary btn--sm">&gt;</a>
                 </div>
             </main>
 
@@ -97,47 +130,5 @@
             </div>
         </footer>
     </div>
-
-    <script>
-        let main = document.querySelector('.main');
-        for (let i = 0; i < 4; i++) {
-            main.innerHTML+=`
-            <div class="card">
-                <div class="card__serie-img">
-                    <img class="img-fit" src="./img/stranger_things-cover.jpg" alt="serie-img">
-                    </div>
-                    <div class="card__serie-info">
-                        <div class="header__serie">
-                            <h2 class="title title--serie">Stranger Things</h2>
-                            <a href="#" class="btn btn--outline_filter">#ficcion</a>
-                            <a href="#" class="btn btn--outline_filter">#aventura</a>
-                            </div>
-                        <div class="body__serie">
-                            <p class="text text--serie">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac augue lacus. Ut aliquet orci lectus. Pellentesque consequat sapien massa, in finibus odio rutrum ut. Donec a diam vulputate eros tincidunt cursus nec a massa. Vivamus sed rutrum justo. Donec sapien justo, mollis a libero ac, dictum viverra tortor. Nulla at fringilla dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </div>
-                            <div class="footer__serie">
-                                <a href="#">
-                                    <div class="icon__buddy"></div>
-                                    <div class="icon__buddy"></div>
-                                    <div class="icon__buddy"></div>
-                                    <p class="info info--serie">Super buddies</p>
-                                    </a>
-                                    <a href="#"><p class="info info--serie">1579 comentarios &gt;</p></a>
-                                    </div>  
-                                    </div>
-                                    </div>
-                                    `;
-        }
-        main.innerHTML+=`
-        <div class="pagination">
-            <a href="#" class="btn btn--primary btn--sm">&lt;</a>
-            <a href="#" class="btn btn--outline btn--sm">1</a>
-            <a href="#" class="btn btn--primary btn--sm">2</a>
-            <a href="#" class="btn btn--outline btn--sm">3</a>
-            <a href="#" class="btn btn--outline btn--sm">4</a>
-            <a href="#" class="btn btn--outline btn--sm">5</a>
-            <a href="#" class="btn btn--primary btn--sm">&gt;</a>
-        </div>`;
-    </script>
 </body>
 </html>
