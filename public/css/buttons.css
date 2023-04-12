@@ -22,8 +22,8 @@
     border-color: var(--primary-500);
 }
 .btn--primary:hover, .btn--primary:focus{
-    background-color: var(--primary-600);
-    border-color:var(--primary-600);
+    background-color: var(--primary-700);
+    border-color:var(--primary-700);
 }
 /* SECONDARY */
 .btn--secondary{
@@ -58,6 +58,7 @@
     font-weight: 700;
     background-color: transparent;
     border-color: transparent;
+    background-color: var(--primary-500);
     color: var(--primary-900);
 }
 .btn--card:hover, .btn--card:focus{

@@ -10,7 +10,7 @@ window.addEventListener('mousemove', function(event) {
   const mouseY = event.clientY;  
 
   // actualiza la posición del contenido en relación a la posición del ratón
-  elemento1.style.transform = `translate(${mouseX * 0.05}px, ${mouseY * 0.05}px)`;
+  elemento1.style.transform = `translate(-${mouseX * 0.05}px, -${mouseY * 0.05}px)`;
   elemento2.style.transform = `translate(${mouseX * 0.05}px, ${mouseY * 0.05}px)`;
   contenedor.style.transform = `translate(-${mouseX * 0.025}px, -${mouseY * 0.025}px)`;
 });

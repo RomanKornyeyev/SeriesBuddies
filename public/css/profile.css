@@ -12,17 +12,20 @@
     gap: var(--space-l);
 }
 .card {
+    display: flex;
     width:50%;
     border-radius: var(--br-default);
     background-color: var(--primary-50);
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    overflow: hidden;
 }
 .card__user-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: var(--space-ultra-l) var(--space-xxl);
     border-radius: var(--br-default);
     background-color: #FFF4CD;
-    display: flex;
+    width: 40%;
 }
 .profile-img{
     width: 80%;
@@ -33,6 +36,7 @@
     border: 10px solid var(--primary-500);
 }
 .card__user-bio {
+    width:60%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -46,10 +50,8 @@
 .card__user-info {
     padding: var(--space-xxl);
 }
-.btn-primary {
-    border-radius: 0%;
-    border-bottom-right-radius: var(--space-s);
-    width: 100%;
+.button-card{
+    height: 4rem;
 }
 .carousel {
     display: flex;
@@ -95,13 +97,30 @@
 .btn--carousel:hover, .btn--carousel:focus{
     font-size: 6rem;
 }
+
+/* ===== EXTRA (910px) ===== */
+@media screen and (max-width: 910px) {
+    .card__user-img{
+        width: 35%;
+    }
+    .profile-img {
+        width: 100%;
+    }
+    .card__user-bio{
+        width: 65%;
+    }
+}
+
 /* ===== TABLET (810px) ===== */
 @media screen and (max-width: 810px) {
     .card {
-        width: 70%;
+        width: 75%;
     }
-    .profile-img {
-        width: 90%;
+    .card__user-img{
+        width: 30%;
+    }
+    .card__user-bio{
+        width: 70%;
     }
     .carousel__container {
         flex-direction: column;
@@ -118,11 +137,11 @@
 @media screen and (max-width: 480px) {
     .card {
         width: 90%;
-        display: flex;
         flex-direction: column;
     }
     .card__user-img {
         padding: 0;
+        width: 100%;
     }
     .profile-img {
         border:none;
@@ -130,6 +149,9 @@
         width: 100%;
         height: 12vh;
         display: block;
+    }
+    .card__user-bio{
+        width: 100%;
     }
     .title--carousel, .title--carousel::first-line {
         text-align: center;
