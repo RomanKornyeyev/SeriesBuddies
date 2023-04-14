@@ -10,6 +10,7 @@
     align-items: center;
     flex-flow: column;
     gap: var(--space-l);
+    padding: var(--space-l) 0;
 }
 .card {
     display: flex;
@@ -56,7 +57,7 @@
 .carousel {
     display: flex;
     flex-direction: column;
-    margin-top: 2%;
+    margin-top: var(--space-l);
 }
 .carousel__container {
     display: flex;
@@ -135,6 +136,9 @@
 
 /* ===== PHONE (480px) ===== */
 @media screen and (max-width: 480px) {
+    .main{
+        padding: 0;
+    }
     .card {
         width: 90%;
         flex-direction: column;
@@ -152,6 +156,9 @@
     }
     .card__user-bio{
         width: 100%;
+    }
+    .carousel{
+        margin-top: 0;
     }
     .title--carousel, .title--carousel::first-line {
         text-align: center;
