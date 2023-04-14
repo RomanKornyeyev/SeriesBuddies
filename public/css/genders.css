@@ -8,17 +8,22 @@
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-xxl);
 }
-.box-wrapper:hover .img-fit{
+.box{
+    display: flex;
+    flex-flow: column;
+    gap: var(--space-s);
+}
+.box-body-wrapper:hover .img-fit{
     transform: scale(1.15);
 }
-.box-wrapper:hover .box__info{
+.box-body-wrapper:hover .box-body__info{
     height: 5rem;
 }
-.box{
+.box__body{
     position: relative;
     min-height: 17.5rem;
 }
-.box--gender{
+.box__body--gender{
     height: 17.5rem;
     position: relative;
     border: 2px solid var(--primary-500);
@@ -27,7 +32,7 @@
 .img-gender{
     transition: all 250ms ease-out;
 }
-.box__info{
+.box-body__info{
     position: absolute;
     width: 100%;
     bottom: 0;
@@ -39,6 +44,9 @@
     background: linear-gradient(360deg, #111111f6 20%, #111111a8 80%);
     box-shadow: 0 0 8px 8px #111111a8;
     transition: all 250ms ease-out;
+}
+.box__admin{
+    height: 4rem;
 }
 .title-gender{
     transition: all 250ms ease-out;

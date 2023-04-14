@@ -52,22 +52,44 @@
             <main class="main">
                 <h1 class="title title--l text-align-center">GÉNEROS</h1>
                 <div class="main__content">
-                    <!-- x9 entradas -->
+                    <!-- entries -->
                     <script>
+                        // x3 entries (admin view)
                         const mainContent = document.querySelector(".main__content");
-                        for (let i = 0; i < 9; i++) {
+                        for (let i = 0; i < 3; i++) {
                             mainContent.innerHTML += `
-                                <a href="#" class="box-wrapper">
-                                    <div class="box box--gender">
-                                        <img class="img-fit img-gender" src="./img/stranger_things.png" alt="género">
-                                        <div class="box__info">
-                                            <h2 class="title title-gender">Sci-fi</h2>
-                                            <p class="text-white"> 1578 resultados &gt;</p>
+                                <div class="box">
+                                    <a href="#" class="box-body-wrapper">
+                                        <div class="box__body box__body--gender">
+                                            <img class="img-fit img-gender" src="./img/stranger_things.png" alt="género">
+                                            <div class="box-body__info">
+                                                <h2 class="title title-gender">Sci-fi</h2>
+                                                <p class="text-white"> 1578 resultados &gt;</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
+                                    </a>
+                                    <form action="" method="post" class="box__admin">
+                                        <input type="hidden" name="1" id="1">
+                                        <button type="submit" class="btn btn--card-admin">ELIMINAR</button>
+                                    </form>
+                                </div>
+                            `;                            
+                        }
+                        // x6 entries (user view)
+                        for (let i = 0; i < 6; i++) {
+                            mainContent.innerHTML += `
+                                <div class="box">
+                                    <a href="#" class="box-body-wrapper">
+                                        <div class="box__body box__body--gender">
+                                            <img class="img-fit img-gender" src="./img/stranger_things.png" alt="género">
+                                            <div class="box-body__info">
+                                                <h2 class="title title-gender">Sci-fi</h2>
+                                                <p class="text-white"> 1578 resultados &gt;</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
                             `; 
-                            
                         }
                     </script>
                 </div>
