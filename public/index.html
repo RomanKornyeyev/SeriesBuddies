@@ -11,13 +11,15 @@
     <meta name="copyright" content="Anabel, Román">
 
     <!-- TITLE -->
-    <title>Plantilla</title>
+    <title>SeriesBuddies - Comenta tus series favoritas</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="./css/general.css">
+    <link rel="stylesheet" href="./css/landing.css">
 
     <!-- JS -->
     <script src="./js/header.js" defer></script>
+    <script src="./js/landing.js" defer></script>
 </head>
 <body>
     <!-- global container -->
@@ -34,40 +36,86 @@
             <!-- header content (nav, etc.) -->
             <div id="header-content" class="header__content">
                 <nav class="nav nav--header">
-                    <a href="#" class="nav__link nav__link--header">opc1</a>
-                    <a href="#" class="nav__link nav__link--header">opc2</a>
-                    <a href="#" class="nav__link nav__link--header">opc3</a>
+                    <a href="./genders.html" class="nav__link nav__link--header">Géneros</a>
+                    <a href="./buddies.html" class="nav__link nav__link--header">Buddies</a>
                 </nav>
                 <a href="index.html"><h1 class="logo logo--pc">SeriesBuddies</h1></a>
                 <div class="nav nav--login">
-                    <a href="login.html" class="nav__link nav__link--login">login</a>
+                    <a href="./login.html" class="nav__link nav__link--login">Login</a>
                 </div>
             </div>
         </header>
 
         <!-- body (central container) -->
-        <div class="container limit-width">
+        <div class="container">
             <!-- main -->
             <main class="main">
-                <div class="main__content">
-                    <h2>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Id, vitae?</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio ea facilis enim assumenda,
-                        necessitatibus quisquam ratione ipsum quo quis obcaecati sunt excepturi. Reiciendis, deserunt nostrum?
-                    </p>
-                    
-                    <button class="btn btn--primary">hola</button>
-                    <button class="btn btn--secondary">hola</button>
-                    <button class="btn btn--outline">hola</button>
+                <!-- img hero -->
+                <div class="hero" id="hero">
+                    <img class="img-fit" src="./img/hero-1.jpg" alt="seriesbuddies">
+
+                    <!-- comment top -->
+                    <div class="row row--top" id="row-top">
+                        <div class="row__user">
+                            <div class="user__img user__img--top">
+                                <img class="img-fit img-user-landing" src="./img/default.png" alt="user">
+                            </div>
+                            <div class="user__medals">
+                                <div class="medal medal--top"></div>
+                                <div class="medal medal--top"></div>
+                                <div class="medal medal--top"></div>
+                            </div>
+                        </div>
+                        <div class="row__post row__post--top">
+                            <p class="post__date">15/03/2023</p>
+                            <p class="post__content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, doloremque!</p>
+                        </div>
+                    </div>
+
+                    <!-- comment bottom -->
+                    <div class="row row--bottom" id="row-bottom">
+                        <div class="row__user">
+                            <div class="user__img user__img--bottom">
+                                <img class="img-fit img-user-landing" src="./img/default.png" alt="user">
+                            </div>
+                            <div class="user__medals">
+                                <div class="medal medal--bottom"></div>
+                                <div class="medal medal--bottom"></div>
+                                <div class="medal medal--bottom"></div>
+                            </div>
+                        </div>
+                        <div class="row__post row__post--bottom">
+                            <p class="post__date">15/03/2023</p>
+                            <p class="post__content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, doloremque!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- texto -->
+                <div class="landing-info">
+                    <div class="landing-info__content">
+                        <h1 class="title title--landing">
+                            INTERCAMBIA IDEAS SOBRE
+                            <br>
+                            <span class="font-size-ultra-big">
+                                TUS SERIES FAVORITAS
+                            </span>
+                        </h1>
+                        <div class="landing-buttons">
+                            <a href="login.html" class="btn btn--primary">Inicia sesión</a>
+                            <a href="register.html" class="btn btn--outline">Hazte buddy</a>
+                        </div>
+                    </div>
                 </div>
             </main>
 
-            <!-- posible aside / divs con info extra -->
+            <!-- bg fixed -->
+            <div class="bg-fixed"></div>
         </div>
-        
+       
 
         <!-- footer -->
-        <footer class="footer">
+        <!-- <footer class="footer">
             <div class="footer__content limit-width">
                 <a href="index.html"><h1 class="logo">SeriesBuddies</h1></a>
                 <nav class="nav nav--footer">
@@ -76,7 +124,7 @@
                     <a href="#" class="nav__link--footer">opc3</a>
                 </nav>
             </div>
-        </footer>
+        </footer> -->
     </div>
 </body>
 </html>
