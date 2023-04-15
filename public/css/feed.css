@@ -37,6 +37,12 @@
     color: var(--background-800);
     font-weight: 900;
 }
+.info--comment{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-flow: row wrap;
+}
 .btn--outline_filter {
     margin-top: var(--space-xl);
     background-color: transparent;
