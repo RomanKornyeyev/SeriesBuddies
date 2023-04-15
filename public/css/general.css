@@ -97,6 +97,7 @@ img{width: 100%;}
     /* === BORDER RADIUS === */
     --br-small: var(--space-xs);
     --br-default: var(--space-s);
+    --br-m: var(--space-m);
 
     /* === WIDTHS === */
     --width-xs: 100rem;
@@ -271,7 +272,7 @@ img{width: 100%;}
 }
 .font-size-ultra-big{font-size: 5.5rem;}
 .text-align-center{text-align: center;}
-.text-white{color: #fff}
+.text-white{color: #fff;}
 
 
 /* ========== BREAK POINTS ========== */
