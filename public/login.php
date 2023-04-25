@@ -24,33 +24,14 @@
     <!-- global container -->
     <div class="global-container">
         <!-- header -->
-        <header class="header">
-            <!-- trigger menu mobile -->
-            <a href="index.html"><h1 class="logo logo--mbl">SeriesBuddies</h1></a>
-            <div id="nav-toggle" class="nav-toggle">
-                <span class="bar bar--top"></span>
-                <span class="bar bar--middle"></span>
-                <span class="bar bar--bottom"></span>
-            </div>
-            <!-- header content (nav, etc.) -->
-            <div id="header-content" class="header__content">
-                <nav class="nav nav--header">
-                    <a href="./genders.html" class="nav__link nav__link--header">Géneros</a>
-                    <a href="./buddies.html" class="nav__link nav__link--header">Buddies</a>
-                </nav>
-                <a href="index.html"><h1 class="logo logo--pc">SeriesBuddies</h1></a>
-                <div class="nav nav--login">
-                    <a href="./login.html" class="nav__link nav__link--login">Login</a>
-                </div>
-            </div>
-        </header>
+        <?php include_once('header.php'); ?>
 
         <!-- body (central container) -->
         <div class="container limit-width">
             <!-- main -->
             <main class="main">
                 <h1 class="title title--form">Bienvenido</h1>
-                <form action="login.html" method="post" class="form">
+                <form action="login.php" method="post" class="form">
                     <div class="input-wrapper">
                         <!-- necesario poner placerholder con un espacio vacío para un trick css -->
                         <input type="text" name="correo" id="correo" class="input shadow-lightgray" placeholder=" ">
@@ -74,9 +55,9 @@
                     </div>
                 </form>
                 <div class="extra-form-info">
-                    ¿Aun no eres buddy? <a href="register.html" class="link-enphasis link-body">Regístrate</a>
+                    ¿Aun no eres buddy? <a href="register.php" class="link-enphasis link-body">Regístrate</a>
                     <br>
-                    ¿Contraseña olvidada?<a href="recovery.html" class="link-enphasis link-body">Recupérala</a>
+                    ¿Contraseña olvidada?<a href="recovery.php" class="link-enphasis link-body">Recupérala</a>
                 </div>
             </main>
 
@@ -88,15 +69,7 @@
        
 
         <!-- footer -->
-        <footer class="footer">
-            <div class="footer__content limit-width">
-                <a href="index.html"><h1 class="logo">SeriesBuddies</h1></a>
-                <nav class="nav nav--footer">
-                    <a href="#" class="nav__link--footer">Contacto</a>
-                    <a href="#" class="nav__link--footer">Términos y condiciones</a>
-                </nav>
-            </div>
-        </footer>
+        <?php include_once('footer.php'); ?>
     </div>
 </body>
 </html>
