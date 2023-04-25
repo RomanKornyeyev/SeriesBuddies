@@ -15,7 +15,20 @@
         </nav>
         <a href="index.php"><h1 class="logo logo--pc">SeriesBuddies</h1></a>
         <div class="nav nav--login">
-            <a href="./login.php" class="nav__link nav__link--login">Login</a>
+            <!-- user -->
+            <div class='user-area-wrapper'>
+                <a class='user-area' href='profile.php'>
+                    <div class='img-perfil-nav'>
+                        <img class='img-fit' src='img/gazpacho.jpg' alt='img-user'>
+                    </div>
+                    <div href="profile.php" class="nav__link">
+                        <div class="nav__link--user">Román</div>
+                    </div>
+                </a>
+            </div>
+           
+            <!-- login/logout -->
+            <a href="./login.php" class="nav__link nav__link--login">Logout</a>
         </div>
     </div>
 </header>
