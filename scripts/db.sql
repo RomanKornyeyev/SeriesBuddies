@@ -1,66 +1,13 @@
-# SeriesBuddies
-Proyecto en grupo del trabajo de fin de grado de Desarrollo de Aplicaciones Web.
-
-<hr>
-
-# Tecnologías utilizadas y todo lo necesario (Quick start)
-## S.O: Ubuntu 22.04 (LTS)
-Utilizaremos Linux como S.O por las facilidades que tenemos a la hora de descargar, ejecutar y usar herramientas y desplegar el sitio web. [Descargar Ubuntu 22.04 LTS](https://releases.ubuntu.com/jammy/). Se puede hacer también en Windows, pero esta guía solo da soporte a Linux.
-### PHP
-```
-sudo apt install php-cli
-sudo apt install php-mbstring
-```
-### MariaDB (MySQL mejorado)
-```
-sudo apt install mariadb-server
-sudo apt install php-mysql
-```
-### Composer + PHPMailer
-Instrucciones sacadas del [sitio oficial](https://getcomposer.org/download/).
-<b>Recomiendo instalarlo por el sitio oficial para la última versión</b>. En caso de no estar disponible, ejecutamos los siguientes comandos (1 por 1):
-```
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php -r "if (hash_file('sha384', 'composer-setup.php') === '55ce33d7678c5a611085589f1f3ddf8b3c52d662cd01d4ba75c0ee0459970c2200a51f492d557530c71c15d8dba01eae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-php composer-setup.php
-php -r "unlink('composer-setup.php');"
-```
-lo movemos a /bin para que sea como un comando de linux (y poder utilizarlo como un programa instalado):
-```
-sudo mv composer.phar /usr/local/bin/composer
-```
-Posteriormente, <b>en la carpeta del proyecto</b>:
-```
-composer require phpmailer/phpmailer 
-```
-De manera <b>opcional (y recomendada)</b>, podemos meter las carpetas generadas por el mailer en el proyecto al .gitignore:
-```
-echo "vendor/*" >> .gitignore
-```
-Por último lo requerimos en el init del proyecto (ejecutamos esto en la carpeta raíz del proyecto):
-```
-require("../vendor/autoload.php");
-```
-<hr>
-
-## Creación de BD + tablas (todo lo necesario para poder operar)
-### Creación de la base de datos
-```sql
-CREATE DATABASE IF NOT EXISTS seriesBuddies;
-CREATE USER IF NOT EXISTS 'user_seriesBuddies'@'localhost' IDENTIFIED BY '123456';
-GRANT ALL PRIVILEGES ON seriesBuddies.* TO 'user_seriesBuddies'@'localhost' WITH GRANT OPTION;
-```
-### Script para la creación de las tablas
-<i>*Este archivo está incluído en el proyecto, scripts>db.sql</i>
-
-```sql
 DROP TABLE IF EXISTS respuestas CASCADE;
 DROP TABLE IF EXISTS series CASCADE;
 DROP TABLE IF EXISTS generos CASCADE;
+
 DROP TABLE IF EXISTS peticiones CASCADE;
 DROP TABLE IF EXISTS tokens CASCADE;
 DROP TABLE IF EXISTS usuarios CASCADE;
 DROP TABLE IF EXISTS grupos CASCADE;
+
+
 
 
 /* --- USUARIOS --- */
@@ -98,7 +45,7 @@ CREATE TABLE peticiones(
 );
 
 
-/*  --- SERIES Y RESPUESTAS --- */
+/*  --- TEMAS Y POSTS --- */
 CREATE TABLE generos(
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) UNIQUE NOT NULL,
@@ -125,12 +72,10 @@ CREATE TABLE respuestas(
     CONSTRAINT fk_post FOREIGN KEY (id_post) REFERENCES series(id) ON DELETE CASCADE,
     CONSTRAINT fk_res_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE
 );
-```
 
-### Script de inserts iniciales
-<i>*Este archivo está incluído en el proyecto, scripts>db.sql</i>
 
-```sql
+
+
 /* -------- METER LAS TABLAS UNA POR UNA -------- */
 /* --- USUARIOS/GRUPOS --- */
 /* GRUPOS */
@@ -166,7 +111,3 @@ INSERT INTO respuestas (id_post, id_usuario, contenido) VALUES (2, 4, "La verdad
 INSERT INTO respuestas (id_post, id_usuario, contenido) VALUES (3, 2, "Me encanta!");
 INSERT INTO respuestas (id_post, id_usuario, contenido) VALUES (4, 3, "Prefiero Java...");
 INSERT INTO respuestas (id_post, id_usuario, contenido) VALUES (5, 3, "Esto es una prueba");
-```
-
-## Un último paso...
-El último paso antes de empezar es renombrar config.example.php a config.php (o bien copiarlo y ponerle de nombre config.php) y meter las credenciales.
