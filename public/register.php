@@ -1,6 +1,6 @@
 <?php
 
-    require("../src/init.php");
+    require_once("../src/init.php");
     use form\campo\Atipo;
     use form\campo\Fecha;
     use form\campo\Multiple;

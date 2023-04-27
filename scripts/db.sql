@@ -12,12 +12,12 @@ DROP TABLE IF EXISTS usuarios CASCADE;
 /* --- USUARIOS --- */
 CREATE TABLE usuarios (
     id          INT AUTO_INCREMENT PRIMARY KEY,
-    nombre      VARCHAR(255) NOT NULL UNIQUE,
-    passwd      VARCHAR(255) NOT NULL,
+    nombre      VARCHAR(255) NOT NULL,
+    contra      VARCHAR(255) NOT NULL,
     img         VARCHAR(255) DEFAULT 'upload/perfiles/default.png',
     correo      VARCHAR(255) NOT NULL UNIQUE,
     descripcion TEXT,
-    privilegios ENUM('administrador', 'usuario') NOT NULL
+    privilegios ENUM('admin', 'usuario') NOT NULL
 );
 
 CREATE TABLE tokens (
@@ -70,13 +70,10 @@ CREATE TABLE respuestas(
 
 
 /* -------- METER LAS TABLAS UNA POR UNA -------- */
-/* --- USUARIOS/GRUPOS --- */
-/* GRUPOS */
-INSERT INTO grupos (nombre) VALUES ("admin");
-INSERT INTO grupos (nombre) VALUES ("usuario");
-
+/* --- USUARIOS --- */
 /* USUARIOS */
 /*todas las contraseñas son 123456*/
+INSERT INTO usuarios (nombre, contra, correo, privilegios) VALUES ("admin","$2y$10$w81xtzxbppAc00SvOZnVjeCiApXlfUh2niuqGj/GkU8usFBdVXGfC", "admin@admin.com", "admin");
 INSERT INTO usuarios (nombre, passwd, correo, id_grupo) VALUES ("admin",    "$2y$10$w81xtzxbppAc00SvOZnVjeCiApXlfUh2niuqGj/GkU8usFBdVXGfC", "admin@admin.com", 1);
 INSERT INTO usuarios (nombre, passwd, correo, id_grupo) VALUES ("roman",    "$2y$10$o.Dllzl0HX/FtowHE.q.TOyUMN808I4SrPUkKyWoh9PlLlX1sMTrm", "roman@roman.com", 2);
 INSERT INTO usuarios (nombre, passwd, correo, id_grupo) VALUES ("anabel",   "$2y$10$Bn82Utar3Et2/xOV3r54GuuCS2pZd6y04AonnX0Xxw6wvF8sIAVyi", "anabel@anabel.com", 2);

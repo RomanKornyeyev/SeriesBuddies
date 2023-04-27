@@ -1,3 +1,8 @@
+<?php
+
+    require_once("../src/init.php");
+
+?>
 <!DOCTYPE html>
 <html lang="es-ES">
 <head>
@@ -34,7 +39,7 @@
                 <div class="card">
                     <div class="card__user-img">
                         <div class="profile-img">
-                            <img class="img-fit" src="./img/default.png" alt="profile-img">
+                            <img class="img-fit" src="./upload/perfiles/default.png" alt="profile-img">
                         </div>
                     </div>
                     <div class="card__user-bio">
@@ -56,10 +61,10 @@
                         <h2 class="title title--carousel">MIS SERIES</h2>
                         <div class="img-line">
                             <a href="#" class="btn btn--carousel">&lt;</a>
-                            <div class="img img--carousel"><img src="./img/image_default.jpg" alt="" srcset=""></div>
-                            <div class="img img--carousel"><img src="./img/image_default.jpg" alt="" srcset=""></div>
-                            <div class="img img--carousel"><img src="./img/image_default.jpg" alt="" srcset=""></div>
-                            <div class="img img--carousel"><img src="./img/image_default.jpg" alt="" srcset=""></div>
+                            <div class="img img--carousel"><img src="./upload/image_default.jpg" alt="" srcset=""></div>
+                            <div class="img img--carousel"><img src="./upload/image_default.jpg" alt="" srcset=""></div>
+                            <div class="img img--carousel"><img src="./upload/image_default.jpg" alt="" srcset=""></div>
+                            <div class="img img--carousel"><img src="./upload/image_default.jpg" alt="" srcset=""></div>
                             <a href="#" class="btn btn--carousel">&gt;</a>
                         </div>
                     </div>
@@ -68,10 +73,10 @@
                         <h2 class="title title--carousel">MIS BUDDIES</h2>
                         <div class="img-line">
                             <a href="#" class="btn btn--carousel">&lt;</a>
-                            <div class="img img--carousel"><img src="./img/image_default.jpg" alt="" srcset=""></div>
-                            <div class="img img--carousel"><img src="./img/image_default.jpg" alt="" srcset=""></div>
-                            <div class="img img--carousel"><img src="./img/image_default.jpg" alt="" srcset=""></div>
-                            <div class="img img--carousel"><img src="./img/image_default.jpg" alt="" srcset=""></div>
+                            <div class="img img--carousel"><img src="./upload/image_default.jpg" alt="" srcset=""></div>
+                            <div class="img img--carousel"><img src="./upload/image_default.jpg" alt="" srcset=""></div>
+                            <div class="img img--carousel"><img src="./upload/image_default.jpg" alt="" srcset=""></div>
+                            <div class="img img--carousel"><img src="./upload/image_default.jpg" alt="" srcset=""></div>
                             <a href="#" class="btn btn--carousel">&gt;</a>
                         </div>
                     </div>
@@ -80,10 +85,10 @@
                         <h2 class="title title--carousel">MIS CHIPS</h2>
                         <div class="img-line">
                             <a href="#" class="btn btn--carousel">&lt;</a>
-                            <div class="img img--carousel"><img src="./img/image_default.jpg" alt="" srcset=""></div>
-                            <div class="img img--carousel"><img src="./img/image_default.jpg" alt="" srcset=""></div>
-                            <div class="img img--carousel"><img src="./img/image_default.jpg" alt="" srcset=""></div>
-                            <div class="img img--carousel"><img src="./img/image_default.jpg" alt="" srcset=""></div>
+                            <div class="img img--carousel"><img src="./upload/image_default.jpg" alt="" srcset=""></div>
+                            <div class="img img--carousel"><img src="./upload/image_default.jpg" alt="" srcset=""></div>
+                            <div class="img img--carousel"><img src="./upload/image_default.jpg" alt="" srcset=""></div>
+                            <div class="img img--carousel"><img src="./upload/image_default.jpg" alt="" srcset=""></div>
                             <a href="#" class="btn btn--carousel">&gt;</a>
                         </div>
                     </div>

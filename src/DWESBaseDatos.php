@@ -11,9 +11,10 @@ class DWESBaseDatos {
   private $conexion = null;
   private $sentencia = null;
   private $executed = false;
+  
   const LONG_TOKEN = 64;
   const ADMIN = "admin";
-  const ID_GRUPO_USUARIO = 2;
+  const USUARIO = "usuario";
 
   /*
     Patrón Singletone para poder usar la clase en proyectos más grandes
@@ -108,6 +109,36 @@ class DWESBaseDatos {
 
   function __destruct(){
     $this->conexion = null;
+  }
+
+  // ********** MANEJO DE DATOS **********
+
+  public static function obtenUsuarioPorMail($db, $correo)
+  {
+    $db->ejecuta(
+      "SELECT * FROM usuarios WHERE correo=?;",
+      $correo
+    );
+    $consulta = $db->obtenElDato();
+    // return $consulta;
+    if ($consulta != "") {
+      return $consulta;
+    }else{
+      return "";
+    }
+  }
+
+  public static function insertarToken($db, $token) : bool
+  {
+    $db->ejecuta(
+      "INSERT INTO tokens (id_usuario, valor) VALUES (?, ?);",
+      $_SESSION['id'], $token
+    );
+    if ($db->getExecuted()) {
+      return true;
+    }else{
+      return false;
+    }
   }
 }
 

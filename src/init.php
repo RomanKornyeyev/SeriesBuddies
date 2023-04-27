@@ -44,29 +44,35 @@
     // ********** CLASE USUARIO DESCARTADA DE MOMENTO, DEMASIADOS QUEBRADEROS DE CABEZA **********
     //en caso de usarla, debe ir por encima de session_start
     //datos del usuario (nombre, grupo, nivel de privilegios, etc.)
-    //equire("DatosUsuario.php");
+    //require_once("DatosUsuario.php");
 
     //sesión
     session_start();
 
-    //datos de usuario, sesión iniacada, etc.
-    $sesionIniciada = false;
-    $usuario;
-    if (isset($_SESSION['usuario'])) {
-        $sesionIniciada = true;
-        $usuario = $_SESSION['usuario'];
-    }
+    //cosas relacionadas con la clase DatosUsuario
+    // $sesionIniciada = false;
+    // $esAdmin = false;
+    // $usuario;
+    // if (isset($_SESSION['usuario'])) {
+    //     $usuario = $_SESSION['usuario'];
+    //     $sesionIniciada = true;
+    //     ($usuario->esAdmin())? $esAdmin = true : $esAdmin = false;
+    // }
+
+    //página anterior (DEBAJO DEL SESION)
+    require_once("paginaAnterior.php");
+
+    //datos del usuario (sesión y demás)(DEBAJO DEL SESION)
+    require_once("datosUsuario.php");
 
     //estos tienen que ir debajo del session_start(), porque si no, NO EXISTE $_SESSION
-    //recuerdame (más adelante)
-    //require("recuerdame.php");
-
-    //página anterior
-    //require("paginaAnterior.php");
-
-    //datos user iba aqui
+    //(DEBAJO DE SESSION_START Y DE DATOSUSUARIO)
+    require_once("recuerdame.php");
 
     //vendor + mailer
     // require("../vendor/autoload.php");
     // require("Mailer.php");
+
+    //errores globales de los forms (user/pass incorrectas, etc.)
+    $erroresForm = [];
 ?>

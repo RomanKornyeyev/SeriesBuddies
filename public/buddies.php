@@ -1,3 +1,8 @@
+<?php
+
+    require_once("../src/init.php");
+
+?>
 <!DOCTYPE html>
 <html lang="es-ES">
 <head>
@@ -41,7 +46,7 @@
                                 <div class="card card--buddy">
                                     <div class="buddy__body">
                                         <div class="profile-img">
-                                            <img class="img-fit" src="./img/gazpacho.jpg" alt="profile-img">
+                                            <img class="img-fit" src="./upload/perfiles/gazpacho.jpg" alt="profile-img">
                                         </div>
                                         <div class="profile-info">
                                             <h2 class="profile-name">Román</h2>
@@ -79,7 +84,7 @@
                                 <div class="card card--buddy">
                                     <div class="buddy__body">
                                         <div class="profile-img">
-                                            <img class="img-fit" src="./img/default.png" alt="profile-img">
+                                            <img class="img-fit" src="./upload/perfiles/default.png" alt="profile-img">
                                         </div>
                                         <div class="profile-info">
                                             <h2 class="profile-name">Román</h2>

@@ -16,18 +16,24 @@
         <div class="nav nav--login">
             <!-- user -->
             <div class='user-area-wrapper'>
-                <a class='user-area' href='profile.php'>
-                    <div class='img-perfil-nav'>
-                        <img class='img-fit' src='img/gazpacho.jpg' alt='img-user'>
-                    </div>
-                    <div href="profile.php" class="nav__link">
-                        <div class="nav__link--user">Román</div>
-                    </div>
-                </a>
+                <?php if($sesionIniciada){?>
+                    <a class='user-area' href='profile.php?usuario=<?=$usuarioId?>'>
+                        <div class='img-perfil-nav'>
+                            <img class='img-fit' src='<?=$usuarioImg?>' alt='img-user'>
+                        </div>
+                        <div class="nav__link">
+                            <div class="nav__link--user"><?=$usuarioNombre?></div>
+                        </div>
+                    </a>
+                <?php } ?>
             </div>
            
             <!-- login/logout -->
-            <a href="./login.php" class="nav__link nav__link--login">Logout</a>
+            <?php if($sesionIniciada){?>
+                <a href="./logout.php" class="nav__link nav__link--login">Logout</a>
+            <?php }else{ ?>
+                <a href="./login.php" class="nav__link nav__link--login">Login</a>
+            <?php } ?>
         </div>
     </div>
 </header>

@@ -9,6 +9,7 @@ class Texto extends Atipo
     private $patron;
 
     //letras mayus y minus, números, comas, puntos, exlamaciones e interrogaciones, guiones y barras bajas
+    public const EMAIL_PATTERN = "/^([a-zA-Z0-9_\.-]+){1,50}@([a-zA-Z0-9\.-]+){1,50}\.([a-z\.]{2,3})$/";
     public const DEFAULT_PATTERN_25 = "/^[a-zA-Z0-9\s\,\.\¿\?\¡\!\_\-]{1,25}$/";
     public const DEFAULT_PATTERN_500 = "/^[a-zA-Z0-9\s\,\.\¿\?\¡\!\_\-]{1,500}$/";
 
@@ -31,8 +32,13 @@ class Texto extends Atipo
         if (preg_match($this->patron, $this->cleanData($this->valor)) || (($this->valor == null || $this->valor == "") && ($this->null == Atipo::NULL_SI))){
             return true;
         }else {
-            $longitud = ($this->tipo == self::TYPE_TAREA)? 500 : 25;
-            $this->error = "No se admiten carácteres especiales y el tamaño máximo es de $longitud caracteres<br>";
+            if ($this->patron == self::EMAIL_PATTERN) {
+                $this->error = "Email no válido<br>";
+            }else{
+                $longitud = ($this->tipo == self::TYPE_TAREA)? 500 : 25;
+                $this->error = "No se admiten carácteres especiales y el tamaño máximo es de $longitud caracteres<br>";
+            }
+            
             return false;
         }
     }

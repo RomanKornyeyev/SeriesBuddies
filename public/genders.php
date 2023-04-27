@@ -1,3 +1,8 @@
+<?php
+
+    require_once("../src/init.php");
+
+?>
 <!DOCTYPE html>
 <html lang="es-ES">
 <head>
@@ -41,7 +46,7 @@
                                 <div class="box">
                                     <a href="./series.php" class="box-body-wrapper">
                                         <div class="box__body box__body--gender">
-                                            <img class="img-fit img-gender" src="./img/stranger_things.png" alt="género">
+                                            <img class="img-fit img-gender" src="./upload/stranger_things.png" alt="género">
                                             <div class="box-body__info">
                                                 <h2 class="title title-gender">Sci-fi</h2>
                                                 <p class="text-white"> 1578 resultados &gt;</p>
@@ -61,7 +66,7 @@
                                 <div class="box">
                                     <a href="./series.php" class="box-body-wrapper">
                                         <div class="box__body box__body--gender">
-                                            <img class="img-fit img-gender" src="./img/stranger_things.png" alt="género">
+                                            <img class="img-fit img-gender" src="./upload/stranger_things.png" alt="género">
                                             <div class="box-body__info">
                                                 <h2 class="title title-gender">Sci-fi</h2>
                                                 <p class="text-white"> 1578 resultados &gt;</p>

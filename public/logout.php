@@ -1,7 +1,7 @@
 <?php
 
     //acceso a BD, sesión, etc.
-    require("../src/init.php");
+    require_once("../src/init.php");
 
     //Destruimos la sesión
     session_destroy();

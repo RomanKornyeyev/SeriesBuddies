@@ -1,3 +1,9 @@
+<?php
+
+    require("../src/init.php");
+    
+
+?>
 <!DOCTYPE html>
 <html lang="es-ES">
 <head>
@@ -33,13 +39,13 @@
             <main class="main">
                 <!-- img hero -->
                 <div class="hero" id="hero">
-                    <img class="img-fit" src="./img/hero-1.png" alt="seriesbuddies">
+                    <img class="img-fit" src="./upload/hero-1.png" alt="seriesbuddies">
 
                     <!-- comment top -->
                     <div class="row row--top" id="row-top">
                         <div class="row__user">
                             <div class="user__img user__img--top">
-                                <img class="img-fit img-user-landing" src="./img/default.png" alt="user">
+                                <img class="img-fit img-user-landing" src="./upload/perfiles/default.png" alt="user">
                             </div>
                             <div class="user__medals">
                                 <div class="medal medal--top"></div>
@@ -57,7 +63,7 @@
                     <div class="row row--bottom" id="row-bottom">
                         <div class="row__user">
                             <div class="user__img user__img--bottom">
-                                <img class="img-fit img-user-landing" src="./img/default.png" alt="user">
+                                <img class="img-fit img-user-landing" src="./upload/perfiles/default.png" alt="user">
                             </div>
                             <div class="user__medals">
                                 <div class="medal medal--bottom"></div>

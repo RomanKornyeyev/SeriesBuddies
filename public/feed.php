@@ -1,3 +1,8 @@
+<?php
+
+    require_once("../src/init.php");
+
+?>
 <!DOCTYPE html>
 <html lang="es-ES">
 <head>
@@ -33,7 +38,7 @@
             <main class="main">
                 <div class="card">
                     <div class="card__serie-img">
-                        <img class="img-fit" src="./img/mc2.jpg" alt="serie-img">
+                        <img class="img-fit" src="./upload/mc2.jpg" alt="serie-img">
                         <h2 class="title title--serie">Kingdom</h2>
                     </div>
                     <div class="card__serie-info">
@@ -58,7 +63,7 @@
                     <div class="card__post">
                         <div class="card__post-img">
                             <div class="img-user-post">
-                                <img class="img-fit" src="./img/default.png" alt="serie-img">
+                                <img class="img-fit" src="./upload/perfiles/default.png" alt="serie-img">
                             </div>
                             <h2 class="title title--user">Román</h2>
                             <div class="icon">

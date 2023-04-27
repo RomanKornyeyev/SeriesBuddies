@@ -1,3 +1,8 @@
+<?php
+
+    require_once("../src/init.php");
+
+?>
 <!DOCTYPE html>
 <html lang="es-ES">
 <head>
@@ -34,7 +39,7 @@
                 <h1 class="title title--l text-align-center">Series de ficción</h1>
                 <div class="card">
                     <div class="card__serie-img">
-                        <img class="img-fit" src="./img/stranger_things-cover.jpg" alt="serie-img">
+                        <img class="img-fit" src="./upload/stranger_things-cover.jpg" alt="serie-img">
                     </div>
                     <div class="card__serie-info">
                         <div class="header__serie">
@@ -85,7 +90,7 @@
             main.innerHTML+=`
             <div class="card">
                 <div class="card__serie-img">
-                    <img class="img-fit" src="./img/stranger_things-cover.jpg" alt="serie-img">
+                    <img class="img-fit" src="./upload/stranger_things-cover.jpg" alt="serie-img">
                     </div>
                     <div class="card__serie-info">
                         <div class="header__serie">
