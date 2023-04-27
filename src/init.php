@@ -26,4 +26,35 @@
             require_once $file;
         }
     });
+
+    //conexión a BD
+    //require("config.php");
+
+    //librería de PDO
+    // require("DWESBaseDatos.php");
+
+    //instencia de acceso a BD
+    // $db = DWESBaseDatos::obtenerInstancia();
+    // $db->inicializa(
+    //     $CONFIG['db_name'],
+    //     $CONFIG['db_user'],
+    //     $CONFIG['db_pass']
+    // );
+
+    //sesión
+    session_start();
+
+    //estos tienen que ir debajo del session_start(), porque si no, NO EXISTE $_SESSION
+    //recuerdame (más adelante)
+    //require("recuerdame.php");
+
+    //página anterior
+    //require("paginaAnterior.php");
+
+    //datos del usuario (nombre, grupo, nivel de privilegios, etc.)
+    require("DatosUsuario.php");
+
+    //vendor + mailer
+    // require("../vendor/autoload.php");
+    // require("Mailer.php");
 ?>

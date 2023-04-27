@@ -25,8 +25,15 @@
     //si el formulario se ha validado
     if ($formulario->validarGlobal()) {
         //hace algo
-        echo "correcto";
+        // echo "correcto";
+        
     }
+
+    
+    //print_r($_SESSION['usuario']);
+    $user = $_SESSION['usuario'];
+    print_r($user);
+    // echo $user->getNombre();
 
 ?>
 <!DOCTYPE html>
