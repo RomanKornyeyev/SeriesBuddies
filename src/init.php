@@ -23,26 +23,39 @@
 
         // Si el archivo existe, lo requerimos
         if (file_exists($file)) {
-            require_once $file;
+            require_once($file);
         }
     });
 
-    //conexión a BD
-    //require("config.php");
+    //datos de conexión a BD
+    require_once("config.php");
 
-    //librería de PDO
-    // require("DWESBaseDatos.php");
+    //librería de PDO para acceder a BD
+    require_once("DWESBaseDatos.php");
 
     //instencia de acceso a BD
-    // $db = DWESBaseDatos::obtenerInstancia();
-    // $db->inicializa(
-    //     $CONFIG['db_name'],
-    //     $CONFIG['db_user'],
-    //     $CONFIG['db_pass']
-    // );
+    $db = DWESBaseDatos::obtenerInstancia();
+    $db->inicializa(
+        $CONFIG['db_name'],
+        $CONFIG['db_user'],
+        $CONFIG['db_pass']
+    );
+
+    // ********** CLASE USUARIO DESCARTADA DE MOMENTO, DEMASIADOS QUEBRADEROS DE CABEZA **********
+    //en caso de usarla, debe ir por encima de session_start
+    //datos del usuario (nombre, grupo, nivel de privilegios, etc.)
+    //equire("DatosUsuario.php");
 
     //sesión
     session_start();
+
+    //datos de usuario, sesión iniacada, etc.
+    $sesionIniciada = false;
+    $usuario;
+    if (isset($_SESSION['usuario'])) {
+        $sesionIniciada = true;
+        $usuario = $_SESSION['usuario'];
+    }
 
     //estos tienen que ir debajo del session_start(), porque si no, NO EXISTE $_SESSION
     //recuerdame (más adelante)
@@ -51,8 +64,7 @@
     //página anterior
     //require("paginaAnterior.php");
 
-    //datos del usuario (nombre, grupo, nivel de privilegios, etc.)
-    require("DatosUsuario.php");
+    //datos user iba aqui
 
     //vendor + mailer
     // require("../vendor/autoload.php");

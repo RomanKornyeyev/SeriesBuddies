@@ -1,5 +1,10 @@
 <?php
 
+
+    //*********** DA DEMASIADOS PROBLEMAS Y QUEBRADEROS DE CABEZA, DESCARTADA DE MOMENTO ************
+    // queda aquí el intento
+
+
 class DatosUsuario {
 
     private $id;
@@ -44,8 +49,13 @@ class DatosUsuario {
     public function getId_grupo() { return $this->id_grupo;}
     public function setId_grupo($id_grupo) { $this->id_grupo = $id_grupo; }
 
-    public function validar(){
-        return true;
+    public function esAdmin(){
+        if($_SESSION['id_grupo'] == self::ID_GRUPO_ADMIN){
+            //privilegios de admin true
+            return true;
+        }else{
+            return false;
+        }
     }
 }
 

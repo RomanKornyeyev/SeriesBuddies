@@ -5,17 +5,11 @@ DROP TABLE IF EXISTS generos CASCADE;
 DROP TABLE IF EXISTS peticiones CASCADE;
 DROP TABLE IF EXISTS tokens CASCADE;
 DROP TABLE IF EXISTS usuarios CASCADE;
-DROP TABLE IF EXISTS grupos CASCADE;
 
 
 
 
 /* --- USUARIOS --- */
-CREATE TABLE grupos (
-    id          INT AUTO_INCREMENT PRIMARY KEY,
-    nombre      VARCHAR(16) NOT NULL
-);
-
 CREATE TABLE usuarios (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     nombre      VARCHAR(255) NOT NULL UNIQUE,
@@ -23,8 +17,7 @@ CREATE TABLE usuarios (
     img         VARCHAR(255) DEFAULT 'upload/perfiles/default.png',
     correo      VARCHAR(255) NOT NULL UNIQUE,
     descripcion TEXT,
-    id_grupo    INT NOT NULL,
-    CONSTRAINT fk_id_grupo FOREIGN KEY (id_grupo) REFERENCES grupos(id)
+    privilegios ENUM('administrador', 'usuario') NOT NULL
 );
 
 CREATE TABLE tokens (
