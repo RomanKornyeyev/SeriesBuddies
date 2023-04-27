@@ -119,6 +119,7 @@
 .error{
     width: 100%;
     text-align: left;
+    font-weight: bold;
     color: var(--white);
     padding: var(--space-sm);
     border-radius: var(--br-small);

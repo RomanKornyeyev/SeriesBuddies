@@ -22,6 +22,12 @@
     // claseWrappSubmit                           idSubmit  nameSubm  txtSubmit  clseSubmit
     ), ["input-wrapper","input-wrapper--submit"], "enviar", "enviar", "ENVIAR", ["btn", "btn--primary", "shadow-lightgray"]);
 
+    //si el formulario se ha validado
+    if ($formulario->validarGlobal()) {
+        //hace algo
+        echo "correcto";
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="es-ES">
@@ -56,30 +62,8 @@
             <!-- main -->
             <main class="main">
                 <h1 class="title title--form">Bienvenido</h1>
-                <!-- <form action="login.php" method="post" class="form">
-                    <div class="input-wrapper">
-                        necesario poner placerholder con un espacio vacío para un trick css
-                        <input type="text" name="correo" id="correo" class="input shadow-lightgray" placeholder=" ">
-                        <label for="correo" class="label label--text">Email</label>
-                    </div>
-                    <div class="input-wrapper">
-                        <input type="password" name="correo" id="correo" class="input shadow-lightgray" placeholder=" ">
-                        <label for="correo" class="label label--text">Contraseña</label>
-                    </div>
-                   <div class="input-wrapper input-wrapper--checkbox">
-                        <label class="label label--checkbox">
-                            <input type="checkbox" name="recuerdame" id="recuerdame" class="checkbox">
-                            <span class="visual-check"></span>
-                            Recuerdame
-                        </label>
-                    </div>
-                    
-                    
-                    <div class="input-wrapper input-wrapper--submit">
-                        <input type="submit" value="LOGIN" class="btn btn--primary shadow-lightgray">
-                    </div>
-                </form> -->
                 <!-- pintar global lleva implicito los errores personalizados -->
+                <!-- necesario poner placerholder con un espacio vacío para un trick css -->
                 <?php $formulario->pintarGlobal(); ?>
                 <div class="extra-form-info">
                     ¿Aun no eres buddy? <a href="register.php" class="link-enphasis link-body">Regístrate</a>
@@ -87,8 +71,6 @@
                     ¿Contraseña olvidada?<a href="recovery.php" class="link-enphasis link-body">Recupérala</a>
                 </div>
             </main>
-
-            <!-- posible aside / divs con info extra -->
 
              <!-- bg fixed -->
             <div class="bg-fixed"></div>

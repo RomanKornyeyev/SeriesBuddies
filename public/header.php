@@ -1,4 +1,3 @@
-<!-- header -->
 <header class="header">
     <!-- trigger menu mobile -->
     <a href="index.php"><h1 class="logo logo--mbl">SeriesBuddies</h1></a>

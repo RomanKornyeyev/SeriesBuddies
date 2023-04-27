@@ -1,4 +1,3 @@
-<!-- footer -->
 <footer class="footer">
     <div class="footer__content limit-width">
         <a href="index.php"><h1 class="logo">SeriesBuddies</h1></a>

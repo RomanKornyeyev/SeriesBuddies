@@ -1,3 +1,31 @@
+<?php
+
+    require("../src/init.php");
+    use form\campo\Atipo;
+    use form\campo\Fecha;
+    use form\campo\Multiple;
+    use form\campo\Numero;
+    use form\campo\Texto;
+    use form\campo\File;
+    use form\claseMain\Formulario;
+
+    // ================================= INICIALIZACIÓN DEL FORM =================================
+    //                        ACTION        METHOD         clases-css-form     ¿Vaciar al validar?   atr-extra(para forms con img)   CAMPOS
+    $formulario = new Formulario("", Formulario::METHOD_POST, ["form"],        Formulario::VACIAR_NO,          "",                   array(
+        //                         ====================================== COMÚN ==============================================================================  //  ======================== ESPECÍFICO ========================
+        //                     ¿Puede estar vacío?  valor    name       label       clases-css-label         clases-css-wrapper  clases-css-input                  tipoCampo       placeholder         regex
+        $email = new Texto         (Atipo::NULL_NO, null, "email",     "Email",    ["label","label--text"], ["input-wrapper"],  ["input","shadow-lightgray"],  Texto::TYPE_TEXT, " ",  Texto::DEFAULT_PATTERN_25)
+    // === SUBMIT ===
+    // claseWrappSubmit                           idSubmit  nameSubm  txtSubmit  clseSubmit
+    ), ["input-wrapper","input-wrapper--submit"], "enviar", "enviar", "RECUPERAR", ["btn", "btn--primary", "shadow-lightgray"]);
+
+    //si el formulario se ha validado
+    if ($formulario->validarGlobal()) {
+        //hace algo
+        echo "correcto";
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="es-ES">
 <head>
@@ -36,19 +64,9 @@
                     <br>
                     Déjanos tu email y te enviaremos un enlace para recuperar tu contraseña =)
                 </p>
-                <form action="login.php" method="post" class="form">
-                    <div class="input-wrapper">
-                        <!-- necesario poner placerholder con un espacio vacío para un trick css -->
-                        <input type="text" name="correo" id="correo" class="input shadow-lightgray" placeholder=" ">
-                        <label for="correo" class="label label--text">Email</label>
-                        <!-- <div class="error">Error del campo</div> -->
-                    </div>
-                    
-                    
-                    <div class="input-wrapper input-wrapper--submit">
-                        <input type="submit" value="RECUPERAR" class="btn btn--primary shadow-lightgray">
-                    </div>
-                </form>
+                <!-- pintar global lleva implicito los errores personalizados -->
+                <!-- necesario poner placerholder con un espacio vacío para un trick css -->
+                <?php $formulario->pintarGlobal(); ?>
                 <div class="extra-form-info">
                     ¿La has recordado? <a href="login.php" class="link-enphasis link-body">Inicia sesión</a>
                 </div>

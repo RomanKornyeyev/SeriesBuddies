@@ -1,3 +1,37 @@
+<?php
+
+    require("../src/init.php");
+    use form\campo\Atipo;
+    use form\campo\Fecha;
+    use form\campo\Multiple;
+    use form\campo\Numero;
+    use form\campo\Texto;
+    use form\campo\File;
+    use form\claseMain\Formulario;
+
+    // ================================= INICIALIZACIÓN DEL FORM =================================
+    //                             ACTION            METHOD           clases-css-form   ¿Vaciar al validar?   atr-extra(para forms con img)   CAMPOS
+    $formulario = new Formulario("",         Formulario::METHOD_POST, ["form"],        Formulario::VACIAR_NO,          "",                   array(
+        //                         ====================================== COMÚN ==============================================================================  //  ======================== ESPECÍFICO ========================
+        //                     ¿Puede estar vacío?  valor    name       label       clases-css-label         clases-css-wrapper  clases-css-input                  tipoCampo     placeholder     regex
+        $nombre = new Texto        (Atipo::NULL_NO, null, "nombre",    "Nombre",   ["label","label--text"], ["input-wrapper"],  ["input","shadow-lightgray"],  Texto::TYPE_TEXT, " ",  Texto::DEFAULT_PATTERN_25),
+        $email = new Texto         (Atipo::NULL_NO, null, "email",     "Email",    ["label","label--text"], ["input-wrapper"],  ["input","shadow-lightgray"],  Texto::TYPE_TEXT, " ",  Texto::DEFAULT_PATTERN_25),
+        $pass = new Texto          (Atipo::NULL_NO, null, "passwd",    "Password", ["label","label--text"], ["input-wrapper"],  ["input","shadow-lightgray"],  Texto::TYPE_PSWD, " ",  Texto::DEFAULT_PATTERN_25),
+        //                                                                                                                                          f_ini             f_fin
+        $fecha = new Fecha         (Atipo::NULL_SI, null, "fecha",     "Fecha",    ["label","label--text"], ["input-wrapper"],  ["input"],       Fecha::NOW, Fecha::PLUS_ONE_WEEK),
+        //                                                                                                                                                     clase-label-cada-check       clase-wrapper(chboxes)                             tipoCampo         array (checkboxes, radios, selects)                                               
+        $generos = new Multiple    (Atipo::NULL_SI, null, "generos",     NULL,     ["label","label--checkbox"],["input-wrapper"],        ["checkbox"],           ["label", "label--checkbox"],["input-wrapper","input-wrapper--checkbox"], Multiple::TYPE_CHECKBOX, ["Recuérdame"])
+    // === SUBMIT ===
+    // claseWrappSubmit                           idSubmit  nameSubm  txtSubmit  clseSubmit
+    ), ["input-wrapper","input-wrapper--submit"], "enviar", "enviar", "REGISTRARME", ["btn", "btn--primary", "shadow-lightgray"]);
+
+    //si el formulario se ha validado
+    if ($formulario->validarGlobal()) {
+        //hace algo
+        echo "correcto";
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="es-ES">
 <head>
@@ -31,50 +65,14 @@
             <!-- main -->
             <main class="main">
                 <h1 class="title title--form">Regístrate</h1>
-                <form action="login.php" method="post" class="form">
-                    <div class="input-wrapper">
-                        <!-- necesario poner placerholder con un espacio vacío para un trick css -->
-                        <input type="text" name="nombre" id="nombre" class="input shadow-lightgray" placeholder=" ">
-                        <label for="nombre" class="label label--text">Nombre de usuario</label>
-                        <div class="error">Error del campo</div>
-                    </div>
-                    <div class="input-wrapper">
-                        <input type="password" name="correo" id="correo" class="input shadow-lightgray" placeholder=" ">
-                        <label for="correo" class="label label--text">Contraseña</label>
-                        <!-- <div class="error">Error del campo</div> -->
-                    </div>
-                    <div class="input-wrapper">
-                        <input type="text" name="correo" id="correo" class="input shadow-lightgray" placeholder=" ">
-                        <label for="correo" class="label label--text">Email</label>
-                        <!-- <div class="error">Error del campo</div> -->
-                    </div>
-                    <div class="input-wrapper">
-                        <input type="date" name="correo" id="correo" class="input shadow-lightgray" placeholder=" ">
-                        <label for="correo" class="label label--text">Email</label>
-                        <!-- <div class="error">Error del campo</div> -->
-                    </div>
-                    <div class="input-wrapper input-wrapper--checkbox">
-                        <label class="label label--checkbox">
-                            <input type="checkbox" name="recuerdame" id="recuerdame" class="checkbox">
-                            <span class="visual-check"></span>
-                            Recuerdame
-                        </label>
-                        <!-- <div class="error">Error del campo</div> -->
-                    </div>
-                    
-                    
-                    <div class="input-wrapper input-wrapper--submit">
-                        <input type="submit" value="REGÍSTRATE" class="btn btn--primary shadow-lightgray">
-                    </div>
-                </form>
+                <!-- pintar global lleva implicito los errores personalizados -->
+                <!-- necesario poner placerholder con un espacio vacío para un trick css -->
+                <?php $formulario->pintarGlobal(); ?>
                 <div class="extra-form-info">
                     ¿Ya eres buddy? <a href="login.php" class="link-enphasis link-body">Inicia sesión</a>
                 </div>
             </main>
-
-            <!-- posible aside / divs con info extra -->
-
-             <!-- bg fixed -->
+            <!-- bg fixed -->
             <div class="bg-fixed"></div>
         </div>
        
