@@ -20,10 +20,10 @@
         $recuerdame = new Multiple(Atipo::NULL_SI, null,"recuerdame",NULL,["label","label--checkbox"],["input-wrapper"],        ["checkbox"],           ["label", "label--checkbox"],["input-wrapper","input-wrapper--checkbox"], Multiple::TYPE_CHECKBOX, ["Recuérdame"])
     // === SUBMIT ===
     // claseWrappSubmit                           idSubmit  nameSubm  txtSubmit  clseSubmit
-    ), ["input-wrapper","input-wrapper--submit"], "enviar", "enviar", "ENVIAR", ["btn", "btn--primary", "shadow-lightgray"]);
+    ), ["input-wrapper","input-wrapper--submit"], "enviar", "enviar", "LOGIN", ["btn", "btn--primary", "shadow-lightgray"]);
 
     //si el user tiene la sesión iniciada
-    if($sesionIiniciada){
+    if($sesionIniciada){
         //redirect al index
         header("Location: index.php");
         die();
@@ -94,7 +94,7 @@
     <meta name="copyright" content="Anabel, Román">
 
     <!-- TITLE -->
-    <title>Login</title>
+    <title>Iniciar sesión - SeriesBuddies</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="./css/general.css">

@@ -7,8 +7,6 @@ DROP TABLE IF EXISTS tokens CASCADE;
 DROP TABLE IF EXISTS usuarios CASCADE;
 
 
-
-
 /* --- USUARIOS --- */
 CREATE TABLE usuarios (
     id          INT AUTO_INCREMENT PRIMARY KEY,
@@ -27,6 +25,23 @@ CREATE TABLE tokens (
     expiracion DATETIME NOT NULL DEFAULT (NOW() + INTERVAL 7 DAY),
     CONSTRAINT fk_id_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 );
+
+/* BARRIDO DE TOKENS EXPIRADOS */
+/* evento que elimina los tokens expirados (barrido 1vez/día) */
+CREATE EVENT eliminar_tokens_expirados
+ON SCHEDULE EVERY 1 DAY
+DO
+    DELETE FROM tokens WHERE expiracion < NOW();
+
+/* podemos ver si se nos ha creado */
+SHOW EVENTS \G;
+
+/* IMPORTANTE: para que esto funcione es necesario habilitar el planificador de eventos CON PRIVILEGIOS DE ROOT */
+SET GLOBAL event_scheduler = ON;
+
+/* podemos ver si se nos ha habilitado correctamente y si se ha ejecutado */
+SHOW GLOBAL VARIABLES WHERE Variable_name LIKE 'e%';
+SHOW GLOBAL STATUS WHERE Variable_name LIKE 'E%';
 
 CREATE TABLE peticiones(
     id              INT AUTO_INCREMENT PRIMARY KEY,

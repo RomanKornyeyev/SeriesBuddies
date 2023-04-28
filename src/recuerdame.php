@@ -1,7 +1,7 @@
 <?php
 
     //si el usuario NO tiene la sesión iniciada
-    if (!$sesionIniciada) {
+    if (!isset($_SESSION['nombre'])) {
         //comprobamos si el user tiene la cookie de recuerdame
         if(isset($_COOKIE['recuerdame'])){
             //si la tiene, cogemos el valor y comprobamos a ver si coincide con alguno de la base de datos
@@ -21,6 +21,13 @@
                 $_SESSION['img'] = $consulta['img'];
                 $_SESSION['correo'] = $consulta['correo'];
                 $_SESSION['privilegios'] = $consulta['privilegios'];
+
+                
+                //alargamos la vida del token (7 días)
+                $db->ejecuta(
+                    "UPDATE tokens SET expiracion=(NOW() + INTERVAL 7 DAY) WHERE valor=?",
+                    $tkn
+                );
             }
         }
     }

@@ -33,7 +33,7 @@
     //librería de PDO para acceder a BD
     require_once("DWESBaseDatos.php");
 
-    //instencia de acceso a BD
+    //instancia de acceso a BD
     $db = DWESBaseDatos::obtenerInstancia();
     $db->inicializa(
         $CONFIG['db_name'],
@@ -62,12 +62,12 @@
     //página anterior (DEBAJO DEL SESION)
     require_once("paginaAnterior.php");
 
+    //estos tienen que ir debajo del session_start(), porque si no, NO EXISTE $_SESSION
+    //(DEBAJO DE SESSION_START Y ENCIMA DE DATOSUSUARIO)
+    require_once("recuerdame.php");
+
     //datos del usuario (sesión y demás)(DEBAJO DEL SESION)
     require_once("datosUsuario.php");
-
-    //estos tienen que ir debajo del session_start(), porque si no, NO EXISTE $_SESSION
-    //(DEBAJO DE SESSION_START Y DE DATOSUSUARIO)
-    require_once("recuerdame.php");
 
     //vendor + mailer
     // require("../vendor/autoload.php");
