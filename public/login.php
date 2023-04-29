@@ -79,60 +79,33 @@
         }
     }
     
+    // ********* INFO PARA EL TEMPLATE **********
+    $tituloHead = "Iniciar sesión - SeriesBuddies";
+    $estiloEspecifico = "./css/login.css";
+    $scriptEspecifico = "";
+    $content;
 
+    // ********* COMIENZO BUFFER **********
+    ob_start();
 ?>
-<!DOCTYPE html>
-<html lang="es-ES">
-<head>
-    <!-- META -->
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Intercambia ideas sobre tus series favoritas">
-    <meta name="keywords" content="series, opiniones, ideas">
-    <meta name="author" content="Anabel, Román">
-    <meta name="copyright" content="Anabel, Román">
 
-    <!-- TITLE -->
-    <title>Iniciar sesión - SeriesBuddies</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="./css/general.css">
-    <link rel="stylesheet" href="./css/login.css">
-
-    <!-- JS -->
-    <script src="./js/header.js" defer></script>
-</head>
-<body>
-    <!-- global container -->
-    <div class="global-container">
-        <!-- header -->
-        <?php include_once('header.php'); ?>
-
-        <!-- body (central container) -->
-        <div class="container limit-width">
-            <!-- main -->
-            <main class="main">
-                <h1 class="title title--form">Bienvenido</h1>
-                <!-- pintar global lleva implicito los errores personalizados -->
-                <!-- necesario poner placerholder con un espacio vacío para un trick css -->
-                <?php $formulario->pintarGlobal(); ?>
-                <!-- user/pass incorrectas -->
-                <?php if(isset($erroresForm['incorrecto'])) echo "<p class='error'>".$erroresForm['incorrecto']."</p>" ?>
-                <div class="extra-form-info">
-                    ¿Aun no eres buddy? <a href="register.php" class="link-enphasis link-body">Regístrate</a>
-                    <br>
-                    ¿Contraseña olvidada? <a href="recovery.php" class="link-enphasis link-body">Recupérala</a>
-                </div>
-            </main>
-
-             <!-- bg fixed -->
-            <div class="bg-fixed"></div>
-        </div>
-       
-
-        <!-- footer -->
-        <?php include_once('footer.php'); ?>
+    <h1 class="title title--form">Bienvenido</h1>
+    <!-- pintar global lleva implicito los errores personalizados -->
+    <!-- necesario poner placerholder con un espacio vacío para un trick css -->
+    <?php $formulario->pintarGlobal(); ?>
+    <!-- user/pass incorrectas -->
+    <?php if(isset($erroresForm['incorrecto'])) echo "<p class='error'>".$erroresForm['incorrecto']."</p>" ?>
+    <div class="extra-form-info">
+        ¿Aun no eres buddy? <a href="register.php" class="link-enphasis link-body">Regístrate</a>
+        <br>
+        ¿Contraseña olvidada? <a href="recovery.php" class="link-enphasis link-body">Recupérala</a>
     </div>
-</body>
-</html>
+
+<?php
+
+    // ********* FIN BUFFER + LLAMADA AL TEMPLATE **********
+    $content = ob_get_contents();
+    ob_end_clean();
+    require("template.php");
+    
+?>
