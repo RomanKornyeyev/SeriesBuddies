@@ -11,11 +11,11 @@
 
     // ================================= INICIALIZACIÓN DEL FORM =================================
     //                             ACTION            METHOD           clases-css-form   ¿Vaciar al validar?   atr-extra(para forms con img)   CAMPOS
-    $formulario = new Formulario("",         Formulario::METHOD_POST, ["form"],        Formulario::VACIAR_NO,          "",                   array(
+    $formulario = new Formulario("",         Formulario::METHOD_POST, ["form"],        Formulario::VACIAR_NO,  Formulario::ATR_IMG,           array(
         //                         ====================================== COMÚN ==============================================================================  //  ======================== ESPECÍFICO ========================
         //                     ¿Puede estar vacío?  valor    name       label       clases-css-label         clases-css-wrapper  clases-css-input                  tipoCampo     placeholder     regex
         $nombre = new Texto        (Atipo::NULL_NO, null, "nombre",    "Nombre",  ["label","label--text"],    ["input-wrapper"], ["input","shadow-lightgray"],  Texto::TYPE_TEXT, " ",  Texto::DEFAULT_PATTERN_25),
-        $email = new Texto         (Atipo::NULL_NO, null, "email",     "Email",   ["label","label--text"],    ["input-wrapper"], ["input","shadow-lightgray"],  Texto::TYPE_TEXT, " ",  Texto::DEFAULT_PATTERN_25),
+        $email = new Texto         (Atipo::NULL_NO, null, "email",     "Email",   ["label","label--text"],    ["input-wrapper"], ["input","shadow-lightgray"],  Texto::TYPE_TEXT, " ",  Texto::EMAIL_PATTERN),
         $pass = new Texto          (Atipo::NULL_NO, null, "passwd",    "Password",["label","label--text"],    ["input-wrapper"], ["input","shadow-lightgray"],  Texto::TYPE_PSWD, " ",  Texto::DEFAULT_PATTERN_25),
         //                                                                                                                                                          f_ini             f_fin
         $fecha = new Fecha         (Atipo::NULL_SI, null, "fecha",     "Fecha",   ["label","label--text"],    ["input-wrapper"], ["input"],                     Fecha::NOW, Fecha::PLUS_ONE_WEEK),

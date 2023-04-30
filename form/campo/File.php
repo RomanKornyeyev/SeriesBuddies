@@ -62,12 +62,18 @@ class File extends Atipo {
             ($_FILES[$this->name]["size"] <= $this->size)
             &&
             ($_FILES[$this->name]['error'] == 0))
+
             ||
-            ($this->null == Atipo::NULL_SI && ($this->valor == "" || $this->valor == null))
+
+            (($this->null == Atipo::NULL_SI) && ($this->valor == "" || $this->valor == null)
+            &&
+            (strlen($_FILES[$this->name]["type"]) == 0)
+            &&
+            ($_FILES[$this->name]["size"] == 0))
             ) {
             return true;
         }else{
-            $this->error="Formato no admitido (no es $this->accept) o tamaño excedido (".$this->size / 1000000 ."MB)";
+            $this->error="Formato no admitido (no es $this->accept) o tamaño excedido (".$this->size / 1000000 ."MB). EL tipo es: ".$_FILES[$this->name]['error'];
             return false;
         } 
     }
