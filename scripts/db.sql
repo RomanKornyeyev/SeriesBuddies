@@ -15,7 +15,8 @@ CREATE TABLE usuarios (
     img         VARCHAR(255) DEFAULT 'upload/perfiles/default.png',
     correo      VARCHAR(255) NOT NULL UNIQUE,
     descripcion TEXT,
-    privilegios ENUM('admin', 'usuario') NOT NULL
+    privilegio  ENUM('admin', 'usuario') NOT NULL,
+    verificado  ENUM('si', 'no') NOT NULL
 );
 
 CREATE TABLE tokens (
@@ -23,10 +24,10 @@ CREATE TABLE tokens (
     id_usuario int,
     valor VARCHAR(255),
     expiracion DATETIME NOT NULL DEFAULT (NOW() + INTERVAL 7 DAY),
-    CONSTRAINT fk_id_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+    CONSTRAINT fk_id_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
-/* BARRIDO DE TOKENS EXPIRADOS */
+/************* BARRIDO DE TOKENS EXPIRADOS ***************/
 /* evento que elimina los tokens expirados (barrido 1vez/día) */
 CREATE EVENT eliminar_tokens_expirados
 ON SCHEDULE EVERY 1 DAY
@@ -42,6 +43,7 @@ SET GLOBAL event_scheduler = ON;
 /* podemos ver si se nos ha habilitado correctamente y si se ha ejecutado */
 SHOW GLOBAL VARIABLES WHERE Variable_name LIKE 'e%';
 SHOW GLOBAL STATUS WHERE Variable_name LIKE 'E%';
+/************* FIN BARRIDO ***************/
 
 CREATE TABLE peticiones(
     id              INT AUTO_INCREMENT PRIMARY KEY,
@@ -88,7 +90,7 @@ CREATE TABLE respuestas(
 /* --- USUARIOS --- */
 /* USUARIOS */
 /*todas las contraseñas son 123456*/
-INSERT INTO usuarios (nombre, contra, correo, privilegios) VALUES ("admin","$2y$10$w81xtzxbppAc00SvOZnVjeCiApXlfUh2niuqGj/GkU8usFBdVXGfC", "admin@admin.com", "admin");
+INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("admin","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "admin@admin.com", "admin", "si");
 INSERT INTO usuarios (nombre, passwd, correo, id_grupo) VALUES ("admin",    "$2y$10$w81xtzxbppAc00SvOZnVjeCiApXlfUh2niuqGj/GkU8usFBdVXGfC", "admin@admin.com", 1);
 INSERT INTO usuarios (nombre, passwd, correo, id_grupo) VALUES ("roman",    "$2y$10$o.Dllzl0HX/FtowHE.q.TOyUMN808I4SrPUkKyWoh9PlLlX1sMTrm", "roman@roman.com", 2);
 INSERT INTO usuarios (nombre, passwd, correo, id_grupo) VALUES ("anabel",   "$2y$10$Bn82Utar3Et2/xOV3r54GuuCS2pZd6y04AonnX0Xxw6wvF8sIAVyi", "anabel@anabel.com", 2);

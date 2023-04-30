@@ -15,6 +15,8 @@ class DWESBaseDatos {
   const LONG_TOKEN = 64;
   const ADMIN = "admin";
   const USUARIO = "usuario";
+  const VERIFICADO_SI = "si";
+  const VERIFICADO_NO = "no";
 
   /*
     Patrón Singletone para poder usar la clase en proyectos más grandes
@@ -111,7 +113,7 @@ class DWESBaseDatos {
     $this->conexion = null;
   }
 
-  // ********** MANEJO DE DATOS **********
+  // ***************** MANEJO DE DATOS *****************
 
   public static function obtenUsuarioPorMail($db, $correo)
   {
@@ -128,11 +130,37 @@ class DWESBaseDatos {
     }
   }
 
-  public static function insertarToken($db, $token) : bool
+  public static function insertarUsuario($db, $nombre, $contra, $correo, $privilegio, $verificado) : bool
+  {
+    $db->ejecuta(
+      "INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES (?,?,?,?,?);",
+      $nombre, $contra, $correo, $privilegio, $verificado
+    );
+    if ($db->getExecuted()) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  public static function insertarToken($db, $id, $token) : bool
   {
     $db->ejecuta(
       "INSERT INTO tokens (id_usuario, valor) VALUES (?, ?);",
-      $_SESSION['id'], $token
+      $id, $token
+    );
+    if ($db->getExecuted()) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  public static function actualizarImgUsuario($db, $id, $img) : bool
+  {
+    $db->ejecuta(
+      "UPDATE usuarios SET img = ? WHERE id = ?;",
+      $img, $id
     );
     if ($db->getExecuted()) {
       return true;

@@ -30,47 +30,53 @@
     }else{
         //si el formulario se ha validado
         if ($formulario->validarGlobal()) {
-            //hacemos una consulta para ese user
+            //buscamos si el user existe
             $consulta = DWESBaseDatos::obtenUsuarioPorMail($db, $email->getValor());
             //si el user existe (si la consulta no está vacía)
             if($consulta != ""){
-                //si la pass es correcta
-                if (password_verify($pass->getValor(), $consulta["contra"])) {
-                    //nos traemos todos los datos del user
-                    $_SESSION['id'] = $consulta['id'];
-                    $_SESSION['nombre'] = $consulta['nombre'];
-                    $_SESSION['contra'] = $consulta['contra'];
-                    $_SESSION['img'] = $consulta['img'];
-                    $_SESSION['correo'] = $consulta['correo'];
-                    $_SESSION['privilegios'] = $consulta['privilegios'];
+                //si el user está verificado
+                if ($consulta['verificado'] == DWESBaseDatos::VERIFICADO_SI) {
+                    //si la pass es correcta
+                    if (password_verify($pass->getValor(), $consulta["contra"])) {
+                        //nos traemos todos los datos del user
+                        $_SESSION['id'] = $consulta['id'];
+                        $_SESSION['nombre'] = $consulta['nombre'];
+                        $_SESSION['contra'] = $consulta['contra'];
+                        $_SESSION['img'] = $consulta['img'];
+                        $_SESSION['correo'] = $consulta['correo'];
+                        $_SESSION['privilegios'] = $consulta['privilegios'];
 
-                    //si el usuario ha pedido recuerdame
-                    if ($recuerdame->getValor() != null && in_array("Recuérdame", $recuerdame->getValor())) {
-                        //generamos token
-                        $token = bin2hex(openssl_random_pseudo_bytes(DWESBaseDatos::LONG_TOKEN));
+                        //si el usuario ha pedido recuerdame
+                        if ($recuerdame->getValor() != null && in_array("Recuérdame", $recuerdame->getValor())) {
+                            //generamos token
+                            $token = bin2hex(openssl_random_pseudo_bytes(DWESBaseDatos::LONG_TOKEN));
 
-                        //insertamos token en BD
-                        DWESBaseDatos::insertarToken($db, $token);
+                            //insertamos token en BD
+                            DWESBaseDatos::insertarToken($db, $_SESSION['id'], $token);
 
-                        //creamos la cookie
-                        setcookie(
-                            "recuerdame",
-                            $token,
-                            [
-                                "expires" => time() + 7 * 24 * 60 * 60,
-                                /*"secure" => true,*/
-                                "httponly" => true
-                            ]
-                        );
+                            //creamos la cookie
+                            setcookie(
+                                "recuerdame",
+                                $token,
+                                [
+                                    "expires" => time() + 7 * 24 * 60 * 60,
+                                    /*"secure" => true,*/
+                                    "httponly" => true
+                                ]
+                            );
+                        }
+
+                        //redirect a página anterior
+                        header("Location: ".$paginaAnterior);
+                        die();
+
+                    // --- PASS INCORRECTA ---
+                    }else{
+                        $erroresForm['incorrecto'] = "email/pass incorrectas";
                     }
-
-                    //redirect a página anterior
-                    header("Location: ".$paginaAnterior);
-                    die();
-                    
-                // --- PASS INCORRECTA --- 
+                // --- USUARIO NO VERIFICADO ---
                 }else{
-                    $erroresForm['incorrecto'] = "email/pass incorrectas";
+                    $erroresForm['incorrecto'] = "Verifica tu cuenta antes de iniciar sesión, consulta tu email"; 
                 }
             // --- USER NO EXISTE --- 
             }else{

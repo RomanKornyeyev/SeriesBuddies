@@ -63,6 +63,8 @@ img{width: 100%;}
     --secondary-50: #D0EBFF;
     --secondary-500: #1DD6FF;
     --secondary-600: #00c1ec;
+    --success-500: #28a745;
+    --success-600: #158a30;
     --error-500: #ff4949;
     --error-600: #e62d2d;
     --error-700: #ca1818;
