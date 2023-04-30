@@ -305,6 +305,7 @@ img{width: 100%;}
 .font-size-ultra-big{font-size: 5.5rem;}
 .text-align-center{text-align: center;}
 .text-white{color: #fff;}
+.d-none{display: none;}
 
 
 /* ========== BREAK POINTS ========== */

@@ -6,7 +6,7 @@ class File extends Atipo {
 
     private $imgWrapper = array();
     private $claseImg = array();
-    private $fileWrapper = array();
+    private $inputWrapperAux = array();
     private $imgDefault;
     private $accept;
     private $size;
@@ -35,18 +35,18 @@ class File extends Atipo {
         $claseLabel,
         $claseWrapper,
         $claseInput,
+        $inputWrapperAux = [],
         $imgWrapper = [],
         $claseImg = [],
-        $fileWrapper = [],
         $imgDefault = self::IMG_DEFAULT,
         $accept = self::ACCEPT_BOTH,
         $size = self::SIZE_DEFAULT,
         $ruta = self::RUTA_PERFIL) 
         {
         parent::__construct($null,$valor,$name,$label,$claseLabel,$claseWrapper,$claseInput);
+        $this->inputWrapperAux = $inputWrapperAux;
         $this->imgWrapper = $imgWrapper;
         $this->claseImg = $claseImg;
-        $this->fileWrapper = $fileWrapper;
         $this->imgDefault = $imgDefault;
         $this->accept = $accept;
         $this->size = $size;
@@ -73,12 +73,14 @@ class File extends Atipo {
     }
 
     function pintar() {
-        echo "<div class='".implode(" ", $this->imgWrapper)."'>";
-            echo "<img id='image' src='$this->imgDefault' alt='img' class='".implode(" ", $this->claseImg)."'>";
-        echo "</div>";
-        echo "<div class='".implode(" ", $this->fileWrapper)."'>";
-            echo "<label for='$this->name' class='".implode(" ", $this->claseLabel)."'>Imagen: &nbsp;</label>";
-            echo "<input type='file' accept='$this->accept' name='$this->name' id='$this->name' value='hola'>";
+        echo "<div class='".implode(" ", $this->inputWrapperAux)."'>";
+            echo "<div class='".implode(" ", $this->imgWrapper)."'>";
+                echo "<img id='image' src='$this->imgDefault' alt='img' class='".implode(" ", $this->claseImg)."'>";
+            echo "</div>";
+            echo "<label for='$this->name' class='".implode(" ", $this->claseLabel)."'>";
+                echo "<i class='fa fa-camera' style ='color: #fff'></i>";
+            echo "</label>";
+            echo "<input type='file' class='".implode(" ", $this->claseInput)."' accept='$this->accept' name='$this->name' id='$this->name' value=''>";
         echo "</div>";
         
         echo "<script>";
