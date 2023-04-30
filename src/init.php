@@ -70,8 +70,8 @@
     require_once("datosUsuario.php");
 
     //vendor + mailer
-    // require("../vendor/autoload.php");
-    // require("Mailer.php");
+    require_once("../vendor/autoload.php");
+    require_once("Mailer.php");
 
     //errores globales de los forms (user/pass incorrectas, etc.)
     $erroresForm = [];
