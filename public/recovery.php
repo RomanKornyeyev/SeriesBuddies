@@ -69,6 +69,8 @@
                 <?php $formulario->pintarGlobal(); ?>
                 <div class="extra-form-info">
                     ¿La has recordado? <a href="login.php" class="link-enphasis link-body">Inicia sesión</a>
+                    <br>
+                    ¿Necesitas verificar tu cuenta? <a href="verify.php" class="link-enphasis link-body">Verifícala</a>
                 </div>
             </main>
 

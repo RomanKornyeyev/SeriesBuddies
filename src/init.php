@@ -75,4 +75,5 @@
 
     //errores globales de los forms (user/pass incorrectas, etc.)
     $erroresForm = [];
+    $exitosForm = [];
 ?>

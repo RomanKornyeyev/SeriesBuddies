@@ -308,6 +308,10 @@ img{width: 100%;}
 .text-align-center{text-align: center;}
 .text-white{color: #fff;}
 .d-none{display: none;}
+.flex-center-center{
+    justify-content: center;
+    align-items: center;
+}
 
 
 /* ========== BREAK POINTS ========== */

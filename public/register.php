@@ -97,6 +97,8 @@
         <?php if(isset($erroresForm['incorrecto'])) echo "<p class='error'>".$erroresForm['incorrecto']."</p>" ?>
         <div class="extra-form-info">
             ¿Ya eres buddy? <a href="login.php" class="link-enphasis link-body">Inicia sesión</a>
+            <br>
+            ¿Necesitas verificar tu cuenta? <a href="verify.php" class="link-enphasis link-body">Verifícala</a>
         </div>
     <?php }?>
     

@@ -16,7 +16,8 @@ CREATE TABLE usuarios (
     correo      VARCHAR(255) NOT NULL UNIQUE,
     descripcion TEXT,
     privilegio  ENUM('admin', 'usuario') NOT NULL,
-    verificado  ENUM('si', 'no') NOT NULL
+    verificado  ENUM('si', 'no') NOT NULL,
+    ult_tkn_solicitado DATETIME DEFAULT (NOW() - INTERVAL 1 DAY)
 );
 
 CREATE TABLE tokens (
@@ -50,8 +51,8 @@ CREATE TABLE peticiones(
     id_remitente    INT NOT NULL,
     id_receptor     INT NOT NULL,
     estado          ENUM('ACEPTADA', 'PENDIENTE', 'RECHAZADA') NOT NULL,
-    CONSTRAINT fk_id_remitente FOREIGN KEY (id_remitente) REFERENCES usuarios(id),
-    CONSTRAINT fk_id_recepetor FOREIGN KEY (id_receptor) REFERENCES usuarios(id)
+    CONSTRAINT fk_id_remitente FOREIGN KEY (id_remitente) REFERENCES usuarios(id) ON DELETE CASCADE,
+    CONSTRAINT fk_id_recepetor FOREIGN KEY (id_receptor) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
 

@@ -130,6 +130,36 @@ class DWESBaseDatos {
     }
   }
 
+  public static function obtenUsuarioPorToken($db, $tkn)
+  {
+    $db->ejecuta(
+      "SELECT * FROM usuarios WHERE id=(SELECT id_usuario FROM tokens WHERE valor=?);",
+      $tkn
+    );
+    $consulta = $db->obtenElDato();
+    // return $consulta;
+    if ($consulta != "") {
+      return $consulta;
+    }else{
+      return "";
+    }
+  }
+
+  public static function obtenToken($db, $tkn)
+  {
+    $db->ejecuta(
+      "SELECT * FROM tokens WHERE valor=?;",
+      $tkn
+    );
+    $consulta = $db->obtenElDato();
+    // return $consulta;
+    if ($consulta != "") {
+      return $consulta;
+    }else{
+      return "";
+    }
+  }
+
   public static function insertarUsuario($db, $nombre, $contra, $correo, $privilegio, $verificado) : bool
   {
     $db->ejecuta(
@@ -161,6 +191,19 @@ class DWESBaseDatos {
     $db->ejecuta(
       "UPDATE usuarios SET img = ? WHERE id = ?;",
       $img, $id
+    );
+    if ($db->getExecuted()) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  public static function verificaUsuario($db, $id) : bool
+  {
+    $db->ejecuta(
+      "UPDATE usuarios SET verificado = ? WHERE id = ?;",
+      self::VERIFICADO_SI, $id
     );
     if ($db->getExecuted()) {
       return true;
