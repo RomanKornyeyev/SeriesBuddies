@@ -25,6 +25,7 @@
     /* border: 5px solid red; */
 }
 .hero{
+    z-index: 1;
     position: relative;
     /* height: 100%; */
     height: calc(100% - 10rem);
@@ -40,16 +41,18 @@
     overflow: hidden;
 }
 .row--top{
+    z-index: -1;
     right: -1rem;
     top: 15%;
     box-shadow: 0 3px 2px var(--secondary-500);
 }
 .row--bottom{
+    z-index: 2;
     left: -1rem;
     bottom: 15%;
     box-shadow: 0 3px 2px var(--primary-500);
 }
-.row__post, .row__user{z-index: 1;}
+/* .row__post, .row__user{z-index: 1;} */
 .row__user{
     display: flex;
     flex-flow: column;

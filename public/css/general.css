@@ -1,8 +1,8 @@
 /*
     ===== Z-INDEX: =====
-    -1: bg-fixed
-    0:
-    1: [.row__post, .row__user (landing.css)]
+    -1: bg-fixed, [.row--top (index.css)]
+    0: [.hero (index.css)]
+    1: [.row__post(quitado), .row__user(quitado), row--bottom (index.css)]
     2: 
     3:
     4:
