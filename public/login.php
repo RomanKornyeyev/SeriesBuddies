@@ -76,7 +76,8 @@
                     }
                 // --- USUARIO NO VERIFICADO ---
                 }else{
-                    $erroresForm['incorrecto'] = "Verifica tu cuenta antes de iniciar sesión, consulta tu email"; 
+                    $erroresForm['incorrecto'] = "El usuario ".$email->getValor()." ya existe, pero no está verificado.
+                    Por favor <a href='http://localhost:8000/public/verify.php' class='underline'>verifícalo</a>.";
                 }
             // --- USER NO EXISTE --- 
             }else{

@@ -68,7 +68,11 @@
 
                 $verificacionPendiente = true;
 
-            // --- EL USER YA EXISTE --- 
+            // --- EL USER YA EXISTE (SIN VERIFICAR) --- 
+            }else if($consulta['verificado'] == DWESBaseDatos::VERIFICADO_NO){
+                $erroresForm['incorrecto'] = "El usuario ".$email->getValor()." ya existe, pero no está verificado.
+                Por favor <a href='http://localhost:8000/public/verify.php' class='underline'>verifícalo</a>.";
+            // --- EL USER YA EXISTE (VERIFICADO) --- 
             }else{
                 $erroresForm['incorrecto'] = "El usuario ".$email->getValor()." ya existe";
             }

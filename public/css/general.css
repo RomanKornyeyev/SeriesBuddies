@@ -312,6 +312,9 @@ img{width: 100%;}
     justify-content: center;
     align-items: center;
 }
+.underline{
+    text-decoration: underline;
+}
 
 
 /* ========== BREAK POINTS ========== */
