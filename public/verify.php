@@ -37,61 +37,69 @@
                 $estado = "con-link-valido";
                 //comprobamos que no esté expirado
                 if ($consulta['expiracion'] > date('Y-m-d H:i:s')) {
-                    //si el formulario se ha validado
-                    if ($formGet->validarGlobal()) {
-                        $consulta = DWESBaseDatos::obtenUsuarioPorToken($db, $_GET['token']);
-                        if($consulta != ""){
-                            //acciones para verificar user
-                            DWESBaseDatos::verificaUsuario($db, $consulta['id']);
+                    //obtenemos el user vinculado al token
+                    $consulta = DWESBaseDatos::obtenUsuarioPorToken($db, $_GET['token']);
+                    //comprobamos si el usuario no está verificado
+                    if ($consulta['verificado'] == DWESBaseDatos::VERIFICADO_NO) {
+                        //si el formulario se ha validado
+                        if ($formGet->validarGlobal()) {
+                            if($consulta != ""){
+                                //acciones para verificar user
+                                DWESBaseDatos::verificaUsuario($db, $consulta['id']);
 
-                            //nos traemos todos los datos del user
-                            $_SESSION['id'] = $consulta['id'];
-                            $_SESSION['nombre'] = $consulta['nombre'];
-                            $_SESSION['contra'] = $consulta['contra'];
-                            $_SESSION['img'] = $consulta['img'];
-                            $_SESSION['correo'] = $consulta['correo'];
-                            $_SESSION['privilegios'] = $consulta['privilegios'];
+                                //nos traemos todos los datos del user
+                                $_SESSION['id'] = $consulta['id'];
+                                $_SESSION['nombre'] = $consulta['nombre'];
+                                $_SESSION['contra'] = $consulta['contra'];
+                                $_SESSION['img'] = $consulta['img'];
+                                $_SESSION['correo'] = $consulta['correo'];
+                                $_SESSION['privilegios'] = $consulta['privilegios'];
 
-                            //eliminamos posibles tokens residuales
-                            DWESBaseDatos::eliminaTokensUsuario($db, $consulta['id']);
+                                //eliminamos posibles tokens residuales
+                                DWESBaseDatos::eliminaTokensUsuario($db, $consulta['id']);
 
-                            //una vez que se verifica la cuenta, "reseteamos" la posibilidad de mandar más enlaces de verificación (recovery)
-                            DWESBaseDatos::actualizarSolicitudTkn($db, $consulta['id'], date('Y-m-d H:i:s', strtotime('-1 day')));
+                                //una vez que se verifica la cuenta, "reseteamos" la posibilidad de mandar más enlaces de verificación (recovery)
+                                DWESBaseDatos::actualizarSolicitudTkn($db, $consulta['id'], date('Y-m-d H:i:s', strtotime('-1 day')));
 
-                            //si el usuario ha pedido recuerdame
-                            if ($recuerdame->getValor() != null && in_array("Recuérdame", $recuerdame->getValor())) {
-                                //generamos token
-                                $token = bin2hex(openssl_random_pseudo_bytes(DWESBaseDatos::LONG_TOKEN));
+                                //si el usuario ha pedido recuerdame
+                                if ($recuerdame->getValor() != null && in_array("Recuérdame", $recuerdame->getValor())) {
+                                    //generamos token
+                                    $token = bin2hex(openssl_random_pseudo_bytes(DWESBaseDatos::LONG_TOKEN));
 
-                                //insertamos token en BD
-                                DWESBaseDatos::insertarToken($db, $consulta['id'], $token);
+                                    //insertamos token en BD
+                                    DWESBaseDatos::insertarToken($db, $consulta['id'], $token);
 
-                                //creamos la cookie
-                                setcookie(
-                                    "recuerdame",
-                                    $token,
-                                    [
-                                        "expires" => time() + 7 * 24 * 60 * 60,
-                                        /*"secure" => true,*/
-                                        "httponly" => true
-                                    ]
+                                    //creamos la cookie
+                                    setcookie(
+                                        "recuerdame",
+                                        $token,
+                                        [
+                                            "expires" => time() + 7 * 24 * 60 * 60,
+                                            /*"secure" => true,*/
+                                            "httponly" => true
+                                        ]
+                                    );
+                                }
+
+                                //manda un mail de confirmación
+                                Mailer::sendEmail(
+                                    $consulta['correo'],
+                                    "Registro completado - SeriesBuddies",
+                                    "¡Bienvenido a SeriesBuddies ".$consulta['nombre']."! Has completado tu registro."                
                                 );
+
+                                //estado verificado para pintar el OKEY
+                                $estado = "verificado";
+
+                            // --- si el user enlazado al token no se ha encontrado (raro) --- 
+                            }else{
+                                $erroresForm['usuarioNoEncontrado'] = "Error, usuario no encontrado";
                             }
-
-                            //manda un mail de confirmación
-                            Mailer::sendEmail(
-                                $consulta['correo'],
-                                "Registro completado - SeriesBuddies",
-                                "¡Bienvenido a SeriesBuddies ".$consulta['nombre']."! Has completado tu registro."                
-                            );
-
-                            //estado verificado para pintar el OKEY
-                            $estado = "verificado";
-
-                        // --- si el user enlazado al token no se ha encontrado (raro) --- 
-                        }else{
-                            $erroresForm['usuarioNoEncontrado'] = "Error, usuario no encontrado";
                         }
+                    // --- usuario ya verificado --- 
+                    }else{
+                        //estado verificado para pintar el OKEY
+                        $estado = "verificado";
                     }
                 // --- token expirado --- 
                 }else{

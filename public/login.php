@@ -46,6 +46,9 @@
                         $_SESSION['correo'] = $consulta['correo'];
                         $_SESSION['privilegios'] = $consulta['privilegios'];
 
+                        //eliminamos posibles tokens residuales
+                        DWESBaseDatos::eliminaTokensUsuario($db, $consulta['id']);
+
                         //si el usuario ha pedido recuerdame
                         if ($recuerdame->getValor() != null && in_array("Recuérdame", $recuerdame->getValor())) {
                             //generamos token
