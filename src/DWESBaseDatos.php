@@ -199,11 +199,37 @@ class DWESBaseDatos {
     }
   }
 
+  public static function actualizarSolicitudTkn($db, $id, $fecha) : bool
+  {
+    $db->ejecuta(
+      "UPDATE usuarios SET ult_tkn_solicitado = ? WHERE id = ?;",
+      $fecha, $id
+    );
+    if ($db->getExecuted()) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   public static function verificaUsuario($db, $id) : bool
   {
     $db->ejecuta(
       "UPDATE usuarios SET verificado = ? WHERE id = ?;",
       self::VERIFICADO_SI, $id
+    );
+    if ($db->getExecuted()) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  public static function eliminaTokensUsuario($db, $id) : bool
+  {
+    $db->ejecuta(
+      "DELETE FROM tokens WHERE id_usuario=?",
+      $id
     );
     if ($db->getExecuted()) {
       return true;

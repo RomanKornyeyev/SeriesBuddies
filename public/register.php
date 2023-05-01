@@ -25,49 +25,55 @@
 
     $verificacionPendiente = false;
     
-    //si el formulario se ha validado
-    if ($formulario->validarGlobal()) {
-        //comprobamos si el user ya existe
-        $consulta = DWESBaseDatos::obtenUsuarioPorMail($db, $email->getValor());
+    //si tiene sesión iniciada, al index
+    if ($sesionIniciada) {
+        header("Location: index.php");
+        die();
+    }else{
+        //si el formulario se ha validado
+        if ($formulario->validarGlobal()) {
+            //comprobamos si el user ya existe
+            $consulta = DWESBaseDatos::obtenUsuarioPorMail($db, $email->getValor());
 
-        //si el user está disponible
-        if($consulta == ""){
-            //insertamos nuevo user (sin img todavía)
-            DWESBaseDatos::insertarUsuario($db, $nombre->getValor(), password_hash($pass->getValor(), PASSWORD_DEFAULT), $email->getValor(), DWESBaseDatos::USUARIO, DWESBaseDatos::VERIFICADO_NO);
+            //si el user está disponible
+            if($consulta == ""){
+                //insertamos nuevo user (sin img todavía)
+                DWESBaseDatos::insertarUsuario($db, $nombre->getValor(), password_hash($pass->getValor(), PASSWORD_DEFAULT), $email->getValor(), DWESBaseDatos::USUARIO, DWESBaseDatos::VERIFICADO_NO);
 
-            //buscamos el nuevo user (para sacar el ID)
-            $nuevoUsuario = DWESBaseDatos::obtenUsuarioPorMail($db, $email->getValor());
+                //buscamos el nuevo user (para sacar el ID)
+                $nuevoUsuario = DWESBaseDatos::obtenUsuarioPorMail($db, $email->getValor());
 
-            //subimos la imagen y la insertamos en el user
-            if (isset($_FILES[$img->getName()]) && $_FILES[$img->getName()]['error'] == 0) {
-                //subimos y guardamos la img en:                              ruta          nombre         ext
-                move_uploaded_file($_FILES[$img->getName()]['tmp_name'], $img->getRuta().$nuevoUsuario['id'].".png");
+                //subimos la imagen y la insertamos en el user
+                if (isset($_FILES[$img->getName()]) && $_FILES[$img->getName()]['error'] == 0) {
+                    //subimos y guardamos la img en:                              ruta          nombre         ext
+                    move_uploaded_file($_FILES[$img->getName()]['tmp_name'], $img->getRuta().$nuevoUsuario['id'].".png");
 
-                //actualizamos la img en el user
-                DWESBaseDatos::actualizarImgUsuario($db, $nuevoUsuario['id'], $img->getRuta().$nuevoUsuario['id'].".png");
+                    //actualizamos la img en el user
+                    DWESBaseDatos::actualizarImgUsuario($db, $nuevoUsuario['id'], $img->getRuta().$nuevoUsuario['id'].".png");
+                }
+
+                //generamos token
+                $token = bin2hex(openssl_random_pseudo_bytes(DWESBaseDatos::LONG_TOKEN));
+
+                //insertamos token en BD
+                DWESBaseDatos::insertarToken($db, $nuevoUsuario['id'], $token);
+
+                //mandamos mail de confirmación
+                Mailer::sendEmail(
+                    $email->getValor(),
+                    "Completa tu registro - SeriesBuddies",
+                    "¡Bienvenido a SeriesBuddies ".$nuevoUsuario['nombre']."! Completa tu registro con el siguiente enlace: 
+                    <a target='_blank' href='http://localhost:8000/public/verify.php?token=".$token."'>COMPLETAR MI REGISTRO</a>"                
+                );
+
+                $verificacionPendiente = true;
+
+            // --- EL USER YA EXISTE --- 
+            }else{
+                $erroresForm['incorrecto'] = "El usuario ".$email->getValor()." ya existe";
             }
 
-            //generamos token
-            $token = bin2hex(openssl_random_pseudo_bytes(DWESBaseDatos::LONG_TOKEN));
-
-            //insertamos token en BD
-            DWESBaseDatos::insertarToken($db, $nuevoUsuario['id'], $token);
-
-            //mandamos mail de confirmación
-            Mailer::sendEmail(
-                $email->getValor(),
-                "Completa tu registro - SeriesBuddies",
-                "¡Bienvenido a SeriesBuddies ".$nuevoUsuario['nombre']."! Completa tu registro con el siguiente enlace: 
-                <a target='_blank' href='http://localhost:8000/public/verify.php?token=".$token."'>COMPLETAR MI REGISTRO</a>"                
-            );
-
-            $verificacionPendiente = true;
-
-        // --- EL USER YA EXISTE --- 
-        }else{
-            $erroresForm['incorrecto'] = "El usuario ".$email->getValor()." ya existe";
         }
-
     }
 
     // ********* INFO PARA EL TEMPLATE **********

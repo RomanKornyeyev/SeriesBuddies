@@ -21,79 +21,136 @@
         $email = new Texto         (Atipo::NULL_NO, null, "email",     "Email",   ["label","label--text"],    ["input-wrapper"], ["input","shadow-lightgray"],  Texto::TYPE_TEXT, " ",  Texto::EMAIL_PATTERN)
     ), ["input-wrapper","input-wrapper--submit"], "enviar", "enviar", "ENVIAR", ["btn", "btn--primary", "shadow-lightgray"]);
 
+    //mostrar unas cosas u otras (depende de si hay GET o no)
     $estado = "sin-link";
-    
-    // ********** USER LLEGA SIN LINK DE VERIFICACIÓN **********
-    if (isset($_GET['token'])) {
-        //comprobamos que el token exista
-        $consulta = DWESBaseDatos::obtenToken($db, $_GET['token']);
-        if($consulta != ""){
-            $estado = "con-link-valido";
-            //comprobamos que no esté expirado
-            if ($consulta['expiracion'] > date('Y-m-d H:i:s')) {
-                //si el formulario se ha validado
-                if ($formGet->validarGlobal()) {
-                    $consulta = DWESBaseDatos::obtenUsuarioPorToken($db, $_GET['token']);
-                    if($consulta != ""){
-                        //acciones para verificar user
-                        DWESBaseDatos::verificaUsuario($db, $consulta['id']);
 
-                        //nos traemos todos los datos del user
-                        $_SESSION['id'] = $consulta['id'];
-                        $_SESSION['nombre'] = $consulta['nombre'];
-                        $_SESSION['contra'] = $consulta['contra'];
-                        $_SESSION['img'] = $consulta['img'];
-                        $_SESSION['correo'] = $consulta['correo'];
-                        $_SESSION['privilegios'] = $consulta['privilegios'];
+    //si tiene sesión iniciada, al index
+    if ($sesionIniciada) {
+        header("Location: index.php");
+        die();
+    }else{
+        // ********** USER LLEGA CON LINK DE VERIFICACIÓN **********
+        if (isset($_GET['token'])) {
+            //comprobamos que el token exista
+            $consulta = DWESBaseDatos::obtenToken($db, $_GET['token']);
+            if($consulta != ""){
+                $estado = "con-link-valido";
+                //comprobamos que no esté expirado
+                if ($consulta['expiracion'] > date('Y-m-d H:i:s')) {
+                    //si el formulario se ha validado
+                    if ($formGet->validarGlobal()) {
+                        $consulta = DWESBaseDatos::obtenUsuarioPorToken($db, $_GET['token']);
+                        if($consulta != ""){
+                            //acciones para verificar user
+                            DWESBaseDatos::verificaUsuario($db, $consulta['id']);
 
-                        //si el usuario ha pedido recuerdame
-                        if ($recuerdame->getValor() != null && in_array("Recuérdame", $recuerdame->getValor())) {
-                            //generamos token
-                            $token = bin2hex(openssl_random_pseudo_bytes(DWESBaseDatos::LONG_TOKEN));
+                            //nos traemos todos los datos del user
+                            $_SESSION['id'] = $consulta['id'];
+                            $_SESSION['nombre'] = $consulta['nombre'];
+                            $_SESSION['contra'] = $consulta['contra'];
+                            $_SESSION['img'] = $consulta['img'];
+                            $_SESSION['correo'] = $consulta['correo'];
+                            $_SESSION['privilegios'] = $consulta['privilegios'];
 
-                            //insertamos token en BD
-                            DWESBaseDatos::insertarToken($db, $consulta['id'], $token);
+                            //eliminamos posibles tokens residuales
+                            DWESBaseDatos::eliminaTokensUsuario($db, $consulta['id']);
 
-                            //creamos la cookie
-                            setcookie(
-                                "recuerdame",
-                                $token,
-                                [
-                                    "expires" => time() + 7 * 24 * 60 * 60,
-                                    /*"secure" => true,*/
-                                    "httponly" => true
-                                ]
+                            //una vez que se verifica la cuenta, "reseteamos" la posibilidad de mandar más enlaces de verificación (recovery)
+                            DWESBaseDatos::actualizarSolicitudTkn($db, $consulta['id'], date('Y-m-d H:i:s', strtotime('-1 day')));
+
+                            //si el usuario ha pedido recuerdame
+                            if ($recuerdame->getValor() != null && in_array("Recuérdame", $recuerdame->getValor())) {
+                                //generamos token
+                                $token = bin2hex(openssl_random_pseudo_bytes(DWESBaseDatos::LONG_TOKEN));
+
+                                //insertamos token en BD
+                                DWESBaseDatos::insertarToken($db, $consulta['id'], $token);
+
+                                //creamos la cookie
+                                setcookie(
+                                    "recuerdame",
+                                    $token,
+                                    [
+                                        "expires" => time() + 7 * 24 * 60 * 60,
+                                        /*"secure" => true,*/
+                                        "httponly" => true
+                                    ]
+                                );
+                            }
+
+                            //manda un mail de confirmación
+                            Mailer::sendEmail(
+                                $consulta['correo'],
+                                "Registro completado - SeriesBuddies",
+                                "¡Bienvenido a SeriesBuddies ".$consulta['nombre']."! Has completado tu registro."                
                             );
+
+                            //estado verificado para pintar el OKEY
+                            $estado = "verificado";
+
+                        // --- si el user enlazado al token no se ha encontrado (raro) --- 
+                        }else{
+                            $erroresForm['usuarioNoEncontrado'] = "Error, usuario no encontrado";
                         }
-
-                        //recarga de la página para reload de la img del user
-                        // header("Location: verify.php?verificado=si");
-                        // die();
-
-                        //estado verificado para pintar el OKEY
-                        $estado = "verificado";
-                        
-                    }else{
-                        $erroresForm['usuarioNoEncontrado'] = "Error, usuario no encontrado";
                     }
+                // --- token expirado --- 
+                }else{
+                    $estado = "con-link-no-valido";
                 }
-            //token expirado
+            // --- token no encontrado --- 
             }else{
                 $estado = "con-link-no-valido";
             }
-        //token no encontrado
+            
+
+
+        // ********** USER LLEGA SIN LINK DE VERIFICACIÓN **********
         }else{
-            $estado = "con-link-no-valido";
-        }
-        
+            $estado = "sin-link";
+            //si el formulario se ha validado
+            if ($formNoGet->validarGlobal()) {
+                //si existe el user
+                $consulta = DWESBaseDatos::obtenUsuarioPorMail($db, $email->getValor());
+                if ($consulta != "") {
+                    //y si no está verificado
+                    if ($consulta['verificado'] == DWESBaseDatos::VERIFICADO_NO) {
+                        //miramos si ha solicitado ya un token hoy (max 1/dia)
+                        if ($consulta['ult_tkn_solicitado'] <= date('Y-m-d H:i:s', strtotime('-1 day'))) {
 
+                            //elimina todos los tokens del usuario
+                            DWESBaseDatos::eliminaTokensUsuario($db, $consulta['id']);
 
-    // ********** USER LLEGA SIN LINK DE VERIFICACIÓN **********
-    }else{
-        $estado = "sin-link";
-        //si el formulario se ha validado
-        if ($formNoGet->validarGlobal()) {
-            $estado = "sin-link-enviado";
+                            //genera e inserta un nuevo token
+                            $token = bin2hex(openssl_random_pseudo_bytes(DWESBaseDatos::LONG_TOKEN));
+                            DWESBaseDatos::insertarToken($db, $consulta['id'], $token);
+
+                            //actualizamos la fecha de la solicitud del token (limite 1/día)
+                            DWESBaseDatos::actualizarSolicitudTkn($db, $consulta['id'], date('Y-m-d H:i:s'));
+
+                            //manda un mail de confirmación
+                            Mailer::sendEmail(
+                                $email->getValor(),
+                                "Completa tu registro - SeriesBuddies",
+                                "¡Bienvenido a SeriesBuddies ".$consulta['nombre']."! Completa tu registro con el siguiente enlace: 
+                                <a target='_blank' href='http://localhost:8000/public/verify.php?token=".$token."'>COMPLETAR MI REGISTRO</a>"                
+                            );
+
+                            $estado = "sin-link-enviado";
+
+                        // --- superado el límite de peticiones (1/día) --- 
+                        }else{
+                            $erroresForm['demasiadosIntentos'] = "Ya te hemos enviado un enlace de verificación, revisa tu bandeja de entrada, no puedes solicitar otro hasta ".
+                            date('Y-m-d H:i:s', strtotime($consulta['ult_tkn_solicitado'] . ' +1 day')); 
+                        }
+                    // --- el usuario ya está verificado --- 
+                    }else{
+                        $erroresForm['yaVerificado'] = "Este usuario ya está verificado";
+                    }
+                // --- user no existe --- 
+                }else{
+                    $erroresForm['noExiste'] = "Este usuario no existe";
+                }
+            }
         }
     }
     
@@ -116,7 +173,7 @@
             Un último paso <strong>¿Quieres que te recordemos en este dispositivo?</strong>
         </p>
         <?php $formGet->pintarGlobal(); ?>
-        <?php foreach ($erroresForm as $value) { echo "<p class='error'>".$value."</p>";} ?> 
+        <?php foreach ($erroresForm as $value) { echo "<p class='error'>".$value."</p>";} ?>
     <?php }else if($estado == "con-link-no-valido"){ ?>
         <p class="extra-form-info">
             <i class="fa-solid fa-circle-xmark xmark-form"></i>
@@ -145,6 +202,7 @@
             Introduce tu email y te lo mandamos de nuevo =)
         </p>
         <?php $formNoGet->pintarGlobal(); ?>
+        <?php foreach ($erroresForm as $value) { echo "<p class='error'>".$value."</p>";} ?>
         <p class="extra-form-info">
             ¿Ya tienes cuenta verificada? <a href="login.php" class="link-enphasis link-body">Login</a>
             <br>
