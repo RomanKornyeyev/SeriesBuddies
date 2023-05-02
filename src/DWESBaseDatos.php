@@ -186,6 +186,19 @@ class DWESBaseDatos {
     }
   }
 
+  public static function actualizarContra($db, $id, $pass) : bool
+  {
+    $db->ejecuta(
+      "UPDATE usuarios SET contra = ? WHERE id = ?;",
+      $pass, $id
+    );
+    if ($db->getExecuted()) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   public static function actualizarImgUsuario($db, $id, $img) : bool
   {
     $db->ejecuta(
