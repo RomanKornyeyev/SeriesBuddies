@@ -1,5 +1,5 @@
 <?php
-
+    
     require_once("../src/init.php");
     use form\campo\Atipo;
     use form\campo\Fecha;
@@ -11,7 +11,8 @@
 
     // ========================================= FORM RECOVERY (LINK) =========================================
     $formGet = new Formulario("", Formulario::METHOD_POST, ["form"],        Formulario::VACIAR_NO,          "",                   array(
-        $pass = new Texto       (Atipo::NULL_NO, null,"contra","Password",["label","label--text"],    ["input-wrapper"],  ["input","shadow-lightgray"],  Texto::TYPE_PSWD, " ",  Texto::DEFAULT_PATTERN_25)
+        $pass = new Texto       (Atipo::NULL_NO, null,"contra","Password",["label","label--text"],    ["input-wrapper"],  ["input","shadow-lightgray"],  Texto::TYPE_PSWD, " ",  Texto::DEFAULT_PSWD),
+        $passDos = new Texto       (Atipo::NULL_NO, null,"contraDos","Password",["label","label--text"],    ["input-wrapper"],  ["input","shadow-lightgray"],  Texto::TYPE_PSWD, " ",  Texto::DEFAULT_PSWD)
     ), ["input-wrapper","input-wrapper--submit"], "enviar", "enviar", "CAMBIAR CONTRASEÑA", ["btn", "btn--primary", "shadow-lightgray"]);
 
     // ================================= FORM RECOVERY (EMAIL) =================================
@@ -40,22 +41,27 @@
                     if ($consulta['verificado'] == DWESBaseDatos::VERIFICADO_SI) {
                         //si el formulario se ha validado
                         if ($formGet->validarGlobal()) {
-                            
-                            //eliminamos posibles tokens residuales
-                            DWESBaseDatos::eliminaTokensUsuario($db, $consulta['id']);
-
-                            //actualizamos la contraseña
-                            DWESBaseDatos::actualizarContra($db, $consulta['id'], password_hash($pass->getValor(), PASSWORD_DEFAULT));
-                            
-                            //mandamos un mail de confirmación
-                            Mailer::sendEmail(
-                                $consulta['correo'],
-                                "Contraseña modificada - SeriesBuddies",
-                                "Hola ".$consulta['nombre']." tu contraseña ha sido modificada correctamente."                
-                            );
-
-                            //estado verificado para pintar el OKEY
-                            $estado = "contra-modificada-exito";
+                            //si las contraseñas son iguales
+                            if ($pass->getValor() == $passDos->getValor()) {
+                                //eliminamos posibles tokens residuales
+                                DWESBaseDatos::eliminaTokensUsuario($db, $consulta['id']);
+                                
+                                //actualizamos la contraseña
+                                DWESBaseDatos::actualizarContra($db, $consulta['id'], password_hash($pass->getValor(), PASSWORD_DEFAULT));
+                    
+                                //mandamos un mail de confirmación
+                                Mailer::sendEmail(
+                                    $consulta['correo'],
+                                    "Contraseña modificada - SeriesBuddies",
+                                    "Hola ".$consulta['nombre']." tu contraseña ha sido modificada correctamente."                
+                                );
+                    
+                                //estado verificado para pintar el OKEY
+                                $estado = "contra-modificada-exito";
+                            //si las contraseñas no coinciden
+                            } else {
+                                $erroresForm['noCoincide'] = "Las contraseñas deben coincidir.";
+                            }
                         }
                     // --- usuario no verificado --- 
                     }else{

@@ -16,7 +16,7 @@
         //                     ¿Puede estar vacío?  valor    name       label       clases-css-label         clases-css-wrapper  clases-css-input                  tipoCampo     placeholder     regex
         $nombre = new Texto        (Atipo::NULL_NO, null, "nombre",    "Nombre",  ["label","label--text"],    ["input-wrapper"], ["input","shadow-lightgray"],  Texto::TYPE_TEXT, " ",  Texto::DEFAULT_PATTERN_25),
         $email = new Texto         (Atipo::NULL_NO, null, "email",     "Email",   ["label","label--text"],    ["input-wrapper"], ["input","shadow-lightgray"],  Texto::TYPE_TEXT, " ",  Texto::EMAIL_PATTERN),
-        $pass = new Texto          (Atipo::NULL_NO, null, "passwd",    "Password",["label","label--text"],    ["input-wrapper"], ["input","shadow-lightgray"],  Texto::TYPE_PSWD, " ",  Texto::DEFAULT_PATTERN_25),
+        $pass = new Texto          (Atipo::NULL_NO, null, "passwd",    "Password",["label","label--text"],    ["input-wrapper"], ["input","shadow-lightgray"],  Texto::TYPE_PSWD, " ",  Texto::DEFAULT_PSWD),
         //                                                                                                                                                      auxGlobalWrapper        imgWrp            clsImg      imgDflt            accept           max size         ruta guardado
         $img = new File            (Atipo::NULL_SI, null, "img",       "",        ["label", "label--img"],["input-wrapper", "input-wrapper--img"], ["d-none"],  ["input-wrapper-aux-center"], ["profile-img"], ["img-fit"],File::IMG_DEFAULT, File::ACCEPT_BOTH, File::SIZE_LOW, File::RUTA_PERFIL)
     // === SUBMIT ===
