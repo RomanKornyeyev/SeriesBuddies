@@ -30,7 +30,7 @@
                         <img class="img-fit img-gender" src="./upload/stranger_things.png" alt="género">
                         <div class="box-body__info">
                             <h2 class="title title-gender"><?=$response[$key]['name']?></h2>
-                            <p class="text-white"> <?=$resultados['total_results']?> resultados &gt;</p>
+                            <p class="text-white"> <?php echo $resultados['total_results']?> resultados &gt;</p>
                         </div>
                     </div>
                 </a>
