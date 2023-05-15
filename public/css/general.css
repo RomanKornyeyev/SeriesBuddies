@@ -228,6 +228,10 @@ img{width: 100%;}
     display: block;
 }
 .logo--mbl{display: none;}
+.logo-footer{
+    display: block;
+    height: 3rem;
+}
 
 /* ===== BODY (CENTRAL CONTAINER) ===== */
 .container{
@@ -423,6 +427,7 @@ img{width: 100%;}
         line-height: 2.5rem;
     }
     .font-size-ultra-big{font-size: 3rem;}
+    .footer__content{justify-content: center;}
 }
 
 /* ===== EXTRA/EFFECTS (ALWAYS DOWN, EVEN AFTER MQ) ===== */
