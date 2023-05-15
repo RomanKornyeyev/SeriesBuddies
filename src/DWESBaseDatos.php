@@ -225,6 +225,19 @@ class DWESBaseDatos {
     }
   }
 
+  public static function actualizarContactoStaff($db, $id, $fecha) : bool
+  {
+    $db->ejecuta(
+      "UPDATE usuarios SET ult_contacto = ? WHERE id = ?;",
+      $fecha, $id
+    );
+    if ($db->getExecuted()) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   public static function verificaUsuario($db, $id) : bool
   {
     $db->ejecuta(

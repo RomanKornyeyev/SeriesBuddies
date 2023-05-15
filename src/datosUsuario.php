@@ -13,10 +13,6 @@
     $usuarioCorreo;
     //privilegios user
     $usuarioPrivilegios = DWESBaseDatos::USUARIO;
-    //ultimo token solicitado (recovery y verify)
-    $usuarioTokenSolicitado;
-    //ultimo contacto con staff
-    $usuarioContactoEnviado;
 
     // --- INFO ADICIONAL ---
     //¿tiene la sesión iniciada?
@@ -33,8 +29,6 @@
         $usuarioImg = $_SESSION['img'];
         $usuarioCorreo = $_SESSION['correo'];
         $usuarioPrivilegios = $_SESSION['privilegios'];
-        $usuarioTokenSolicitado = $_SESSION['token'];
-        $usuarioContactoEnviado = $_SESSION['contacto'];
 
 
         // --- INFO ADICIONAL ---

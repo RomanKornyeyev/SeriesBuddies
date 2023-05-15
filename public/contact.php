@@ -41,20 +41,39 @@
         $estado = 'no-enviado';
         //si el formulario se ha validado
         if ($formulario->validarGlobal()) {
-            
-            if ($consulta['ult_tkn_solicitado'] <= date('Y-m-d H:i:s', strtotime('-1 day'))) {
-                # code...
+
+            //buscamos el user
+            $consulta = DWESBaseDatos::obtenUsuarioPorMail($db, $_SESSION['correo']);
+
+            foreach ($consulta as $key => $value) {
+                $key." = ".$value."<br>";
             }
-            //mandamos mail de confirmación
-            Mailer::sendEmail(
-                'no.reply.seriesbuddies@gmail.com',
-                'Una persona te quiere contactar: ',
-                'Asunto: '.$asunto->getValor().
-                '<br>Nombre: '.$nombre->getValor().
-                '<br>Email: '.$email->getValor().
-                '<br>Mensaje: '.$mensaje->getValor()         
-            );
-            $estado = 'enviado';
+
+            //si no ha superado el límite de contacto (1/día)
+            if ($consulta['ult_contacto'] <= date('Y-m-d H:i:s', strtotime('-1 day'))) {
+                
+                //mandamos mail de confirmación
+                Mailer::sendEmail(
+                    'no.reply.seriesbuddies@gmail.com',
+                    'Una persona te quiere contactar: ',
+                    'Asunto: '.$asunto->getValor().
+                    '<br>Nombre: '.$nombre->getValor().
+                    '<br>Email: '.$email->getValor().
+                    '<br>Mensaje: '.$mensaje->getValor()         
+                );
+
+                //estado enviado (para el HTML)
+                $estado = 'enviado';
+
+                //actualizamos la fecha de la última petición de contacto
+                DWESBaseDatos::actualizarContactoStaff($db, $consulta['id'], date('Y-m-d H:i:s'));
+
+
+            // --- si el user intenta contactar más de 1vez/día --- 
+            }else{
+                $erroresForm['limiteDiario'] = "Solo puedes ponerte en contacto con nosotros 1 vez por día. Próximo disponible: ".
+                date('Y-m-d H:i:s', strtotime($consulta['ult_tkn_solicitado'] . ' +1 day')); 
+            }
         }
     }
     
@@ -67,6 +86,7 @@
     // ********* COMIENZO BUFFER **********
     ob_start();
 ?>
+
     <h1 class="title title--form">Contacto</h1>
     <?php if ($estado == 'sesion-no-iniciada') { ?>
         <p class="extra-form-info">
@@ -82,6 +102,7 @@
             Si quieres dejarnos alguna sugerencia a mejorar sobre SeriesBuddies ponte en contacto con nosotros mediante este formulario.
         </p>
         <?php $formulario->pintarGlobal(); ?>
+        <?php foreach ($erroresForm as $value) { echo "<p class='error'>".$value."</p>";} ?>
     <?php } else { ?>
         <p class="extra-form-info">
             <i class="fa-sharp fa-solid fa-circle-check checkmark-form"></i>
