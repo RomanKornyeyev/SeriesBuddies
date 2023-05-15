@@ -12,7 +12,10 @@
             <a href="./genders.php" class="nav__link nav__link--header">Géneros</a>
             <a href="./buddies.php" class="nav__link nav__link--header">Buddies</a>
         </nav>
-        <a href="index.php"><h1 class="logo logo--pc">SeriesBuddies</h1></a>
+        <a href="index.php">
+            <!-- <h1 class="logo logo--pc">SeriesBuddies</h1> -->
+            <img src="upload/logos/logo-principal.png" alt="Logo SeriesBuddies">
+        </a>
         <div class="nav nav--login">
             <!-- user -->
             <div class='user-area-wrapper'>

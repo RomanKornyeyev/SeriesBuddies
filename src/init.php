@@ -73,6 +73,9 @@
     require_once("../vendor/autoload.php");
     require_once("Mailer.php");
 
+    //objeto TMDB para la conexión con la API
+    //$tmdb = new TMDB ();
+
     //errores globales de los forms (user/pass incorrectas, etc.)
     $erroresForm = [];
     $exitosForm = [];
