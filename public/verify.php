@@ -54,6 +54,8 @@
                                 $_SESSION['img'] = $consulta['img'];
                                 $_SESSION['correo'] = $consulta['correo'];
                                 $_SESSION['privilegios'] = $consulta['privilegios'];
+                                $_SESSION['ult_tkn_solicitado'] = $consulta['ult_tkn_solicitado'];
+                                $_SESSION['ult_contacto'] = $consulta['ult_contacto'];
 
                                 //eliminamos posibles tokens residuales
                                 DWESBaseDatos::eliminaTokensUsuario($db, $consulta['id']);

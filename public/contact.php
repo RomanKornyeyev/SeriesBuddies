@@ -30,16 +30,32 @@
     // claseWrappSubmit                           idSubmit  nameSubm  txtSubmit  clseSubmit
     ), ["input-wrapper","input-wrapper--submit"], "enviar", "enviar", "Enviar", ["btn", "btn--primary", "shadow-lightgray"]);
 
-    $estado = 'no-enviado';
-    //si el formulario se ha validado
-    if ($formulario->validarGlobal()) {
-        //mandamos mail de confirmación
-        Mailer::sendEmail(
-            'no.reply.seriesbuddies@gmail.com',
-            'Una persona te quiere contactar: ',
-            'Asunto: '.$asunto->getValor().'<br>Nombre: '.$nombre->getValor().'<br>Email: '.$email->getValor().'<br>Mensaje: '.$mensaje->getValor()           
-        );
-        $estado = 'enviado';
+
+    // ********** EL USER NO TIENE LA SESIÓN INICIADA **********
+    if (!$sesionIniciada) {
+        $estado = 'sesion-no-iniciada';
+
+
+    // ********** EL USER SÍ TIENE LA SESIÓN INICIADA **********
+    }else{
+        $estado = 'no-enviado';
+        //si el formulario se ha validado
+        if ($formulario->validarGlobal()) {
+            
+            if ($consulta['ult_tkn_solicitado'] <= date('Y-m-d H:i:s', strtotime('-1 day'))) {
+                # code...
+            }
+            //mandamos mail de confirmación
+            Mailer::sendEmail(
+                'no.reply.seriesbuddies@gmail.com',
+                'Una persona te quiere contactar: ',
+                'Asunto: '.$asunto->getValor().
+                '<br>Nombre: '.$nombre->getValor().
+                '<br>Email: '.$email->getValor().
+                '<br>Mensaje: '.$mensaje->getValor()         
+            );
+            $estado = 'enviado';
+        }
     }
     
     // ********* INFO PARA EL TEMPLATE **********
@@ -51,8 +67,15 @@
     // ********* COMIENZO BUFFER **********
     ob_start();
 ?>
-    <?php if ($estado == 'no-enviado') { ?>
-        <h1 class="title title--form">Contacto</h1>
+    <h1 class="title title--form">Contacto</h1>
+    <?php if ($estado == 'sesion-no-iniciada') { ?>
+        <p class="extra-form-info">
+            Si quieres contactar con nosotros, dejarnos sugerencias o preguntarnos algo, no lo dudes:
+            <br><br>
+            <a href="login.php" class="link-enphasis link-body">Inicia sesión</a> &nbsp;&nbsp;|&nbsp;&nbsp; <a href="register.php" class="link-enphasis link-body">Regístrate</a>
+        </p>
+    <?php } else if ($estado == 'no-enviado') { ?>
+        
         <!-- pintar global lleva implicito los errores personalizados -->
         <!-- necesario poner placerholder con un espacio vacío para un trick css -->
         <p class="extra-form-info text-align-justify">
@@ -63,12 +86,13 @@
         <p class="extra-form-info">
             <i class="fa-sharp fa-solid fa-circle-check checkmark-form"></i>
             <br><br>
-            <strong>¡Sugerencia enviada!</strong> Nos pondremos en contacto lo más pronto posible.
+            <strong>¡Mensaje enviado!</strong> Nos pondremos en contacto lo más pronto posible.
             <br><br>
             <a href="index.php" class="link-enphasis link-body">Ir al inicio</a>
         </p>
     <?php } ?>
     
+
 <?php
 
     // ********* FIN BUFFER + LLAMADA AL TEMPLATE **********
