@@ -12,7 +12,7 @@
     $tituloHead = "Géneros - SeriesBuddies";
     $estiloEspecifico = "./css/genders.css";
     $scriptEspecifico = "./js/genders.js";
-    $scriptLoadMode = "";
+    $scriptLoadMode = "defer";
     $content;
 
     // ********* COMIENZO BUFFER **********
@@ -20,8 +20,10 @@
 ?>
     <h1 class="title title--l text-align-center">GÉNEROS</h1>
     <div class="main__content">
+
+
         <?php
-            $i = 0;
+            // *** generación de cajas ***
             foreach ($response as $key => $value) {
             $url = $tmdb->urlSeriesGeneros($response[$key]['id']);
         ?>
@@ -29,24 +31,18 @@
             <div class="box">
                 <a href="./series.php?id=<?=$response[$key]['id']?>" class="box-body-wrapper">
                     <div class="box__body box__body--gender">
-                        <img class="img-fit img-gender" src="./upload/generos/<?=$response[$key]['id']?>.png" alt="género">
+                        <img class="img-fit img-gender" src="./upload/generos/<?=$response[$key]['id']?>.png" alt="género" loading="lazy">
                         <div class="box-body__info">
                             <h2 class="title title-gender"><?=$response[$key]['name']?></h2>
-                            <p class="text-white" id="r-<?=$i?>"> <?php echo $resultados['total_results']?> resultados &gt;</p>
+                            <p class="text-white resultados" id="r-<?=$i?>" data-url="<?=$url?>">
+                                <?php echo $resultados['total_results']?> resultados &gt;
+                            </p>
                         </div>
                     </div>
                 </a>
-            </div>
-            <!-- petición AJAX para resultados (optimización de carga) -->
-            <script>
-                elemento = document.getElementById("r-<?php echo $i?>");
-                url = "<?php echo $url?>";
-                contarResultados(elemento, url);
-            </script>
-        <?php
-            $i++; 
-            }
-        ?>
+            </div>            
+        <?php } ?>
+
 
     </div>
 
