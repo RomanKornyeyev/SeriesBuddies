@@ -23,7 +23,7 @@
 
     <!-- JS -->
     <script src="./js/header.js" defer></script>
-    <script src="<?=$scriptEspecifico?>" defer></script>
+    <script src="<?=$scriptEspecifico?>" <?=$scriptLoadMode?>></script>
 </head>
 <body>
     <!-- global container -->
