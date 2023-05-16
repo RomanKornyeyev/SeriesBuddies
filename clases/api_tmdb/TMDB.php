@@ -1,5 +1,7 @@
 <?php
-namespace form\claseMain;
+
+namespace clases\api_tmdb;
+
 class TMDB
 {
     //$apiKey = '4ed281c2a8c566b11358f1307c78ee21'; 

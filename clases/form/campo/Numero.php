@@ -1,6 +1,6 @@
 <?php
 
-namespace form\campo;
+namespace clases\form\campo;
 
 class Numero extends Atipo {
 

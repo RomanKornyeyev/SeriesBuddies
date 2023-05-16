@@ -2,10 +2,10 @@
     //autoload
     spl_autoload_register(function ($class) {
         // Prefijo del namespace de tu proyecto
-        $prefix = 'form\\';
+        $prefix = 'clases\\';
 
         // Directorio base para el prefijo del namespace
-        $base_dir = __DIR__ . '/../form/';
+        $base_dir = __DIR__ . '/../clases/';
 
         // Verificar si la clase utiliza el prefijo del namespace
         $len = strlen($prefix);
@@ -71,7 +71,7 @@
 
     //vendor + mailer
     require_once("../vendor/autoload.php");
-    require_once("Mailer.php");
+    //require_once("Mailer.php");
 
     //objeto TMDB para la conexión con la API
     //$tmdb = new TMDB ();

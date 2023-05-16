@@ -1,13 +1,18 @@
 <?php
 
     require_once("../src/init.php");
-    use form\campo\Atipo;
-    use form\campo\Fecha;
-    use form\campo\Multiple;
-    use form\campo\Numero;
-    use form\campo\Texto;
-    use form\campo\File;
-    use form\claseMain\Formulario;
+    
+    // ***** MAILER *****
+    use clases\mailer\Mailer;
+
+    // ***** FORMULARIOS *****
+    use clases\form\campo\Atipo;
+    use clases\form\campo\Fecha;
+    use clases\form\campo\Multiple;
+    use clases\form\campo\Numero;
+    use clases\form\campo\Texto;
+    use clases\form\campo\File;
+    use clases\form\claseMain\Formulario;
 
     // ================================= FORM CON UN LINK DE CONFIRMACIÓN =================================
     //                             ACTION            METHOD           clases-css-form   ¿Vaciar al validar?   atr-extra(para forms con img)   CAMPOS

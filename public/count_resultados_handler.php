@@ -1,7 +1,9 @@
 <?php
 
     require_once("../src/init.php");
-    use form\claseMain\TMDB;
+
+    // ***** API TMDB *****
+    use clases\api_tmdb\TMDB;
 
     //instanciamos un nuevo objeto de la clase de la API
     $tmdb = new TMDB();

@@ -1,6 +1,6 @@
 <?php
 
-namespace form\claseMain;
+namespace clases\form\claseMain;
 
 class Formulario
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace form\campo;
+namespace clases\form\campo;
 
 abstract class Atipo
 {    
