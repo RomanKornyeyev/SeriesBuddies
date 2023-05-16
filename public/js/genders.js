@@ -1,17 +1,19 @@
+//delay opcional (loader)
+//const delay = ms => new Promise(res => setTimeout(res, ms));
+
+
 //función que pinta los resultados de cada género recibiendo un node list como parámetro
-async function contarResultados(arreglo) {
+function contarResultados(arreglo) {
 
     //iteramos el array de elementos HTML
     arreglo.forEach(elemento => {
-        //la consulta aun no se ha hecho, elemento cargando, se pinta "..."
-        elemento.innerHTML = "... resultados &gt;";
-
+        
         //nuevo objeto XMLHttpRequest
         var xhttp = new XMLHttpRequest();
 
         //se comprueba si el estado de la respuesta es 4 (indicando que la respuesta está completa)
         //y si el estado HTTP es 200 (indicando que la solicitud se ha completado correctamente)
-        xhttp.onreadystatechange = async function() {
+        xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 // respuesta del handler, la pintamos en el elemento
                 elemento.innerHTML = this.responseText+" resultados &gt;";

@@ -32,12 +32,12 @@
             <!-- caja género -->
             <div class="box">
                 <a href="./series.php?id=<?=$response[$key]['id']?>" class="box-body-wrapper">
-                    <div class="box__body box__body--gender">
+                    <div class="box__body box__body--gender loader">
                         <img class="img-fit img-gender" src="./upload/generos/<?=$response[$key]['id']?>.png" alt="género" loading="lazy">
                         <div class="box-body__info">
                             <h2 class="title title-gender"><?=$response[$key]['name']?></h2>
                             <p class="text-white resultados" id="r-<?=$i?>" data-url="<?=$url?>">
-                                <?php echo $resultados['total_results']?> resultados &gt;
+                                ... resultados &gt;
                             </p>
                         </div>
                     </div>
@@ -45,7 +45,19 @@
             </div>            
         <?php } ?>
 
-
+        <div class="box">
+                <a href="./series.php?id=<?=$response[$key]['id']?>" class="box-body-wrapper">
+                    <div class="box__body box__body--gender loader">
+                        <!-- <img class="img-fit img-gender" src="./upload/generos/<?=$response[$key]['id']?>.png" alt="género" loading="lazy"> -->
+                        <div class="box-body__info">
+                            <h2 class="title title-gender">*** LOADER ***</h2>
+                            <p class="text-white resultados" id="r-<?=$i?>" data-url="<?=$url?>">
+                                resultados &gt;
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div> 
     </div>
 
     <div class="pagination">

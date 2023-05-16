@@ -300,6 +300,32 @@ img{width: 100%;}
 }
 .nav__link--footer:hover{text-decoration: underline;}
 
+/* ===== LOADERS ===== */
+.loader{
+    /* background: linear-gradient(90deg, #a5a5a5 25%, #ebebeb 50%, #a5a5a5 75%); */
+    background: linear-gradient(90deg,
+        #a5a5a5 9%,
+        #b6b6b6 21%,
+        #cdcdcd 32%,
+        #dadada 42%,
+        #ebebeb 50%,
+        #dadada 58%,
+        #cdcdcd 68%,
+        #b6b6b6 79%,
+        #a5a5a5 90%
+    );
+    background-size: 400%;
+    animation: inf-gradient-background-horizontal 3s linear forwards infinite;
+}
+@keyframes inf-gradient-background-horizontal {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
 /* ===== UTILITIES ===== */
 .limit-width{max-width: var(--width-default);}
 .img-fit{
