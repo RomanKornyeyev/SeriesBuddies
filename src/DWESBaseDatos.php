@@ -115,6 +115,20 @@ class DWESBaseDatos {
 
   // ***************** MANEJO DE DATOS *****************
 
+  public static function obtenUsuarios($db)
+  {
+    $db->ejecuta(
+      "SELECT * FROM usuarios"
+    );
+    $consulta = $db->obtenDatos();
+    
+    if ($consulta != "") {
+      return $consulta;
+    }else{
+      return "";
+    }
+  }
+
   public static function obtenUsuarioPorMail($db, $correo)
   {
     $db->ejecuta(

@@ -22,6 +22,8 @@ CREATE TABLE usuarios (
     ult_contacto DATETIME DEFAULT (NOW() - INTERVAL 1 DAY)
 );
 
+INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("admin","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "admin", "admin", "si");
+
 CREATE TABLE peticiones (
     id              INT AUTO_INCREMENT PRIMARY KEY,
     id_remitente    INT NOT NULL,
