@@ -138,3 +138,40 @@
     </div>
 </body>
 </html>
+<?php
+
+    require_once("../src/init.php");
+
+    // ***** API TMDB *****
+    use clases\api_tmdb\TMDB;
+    
+    $tmdb = new TMDB();
+
+    $url = $tmdb->urlListadoGeneros();
+    $response = $tmdb->peticionHTTP($url)['genres'];
+
+    // ********* INFO PARA EL TEMPLATE **********
+    $tituloHead = "Géneros - SeriesBuddies";
+    $estiloEspecifico = "./css/genders.css";
+    $scriptEspecifico = "./js/genders.js";
+    $scriptLoadMode = "defer";
+    $content;
+
+    // ********* COMIENZO BUFFER **********
+    ob_start();
+?>
+    <h1 class="title title--l text-align-center">BUDDIES</h1>
+    <div class="main__content">
+
+    
+
+    </div>
+
+<?php
+
+    // ********* FIN BUFFER + LLAMADA AL TEMPLATE **********
+    $content = ob_get_contents();
+    ob_end_clean();
+    require("template.php");
+    
+?>

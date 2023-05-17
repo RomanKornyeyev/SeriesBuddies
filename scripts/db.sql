@@ -22,6 +22,15 @@ CREATE TABLE usuarios (
     ult_contacto DATETIME DEFAULT (NOW() - INTERVAL 1 DAY)
 );
 
+CREATE TABLE peticiones (
+    id              INT AUTO_INCREMENT PRIMARY KEY,
+    id_remitente    INT NOT NULL,
+    id_receptor     INT NOT NULL,
+    estado          ENUM('aceptada', 'pendiente', 'rechazada') NOT NULL,
+    CONSTRAINT fk_remitente FOREIGN KEY (id_remitente) REFERENCES usuarios(id) ON DELETE CASCADE,
+    CONSTRAINT fk_receptor FOREIGN KEY (id_receptor) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
 CREATE TABLE tokens (
     id int auto_increment PRIMARY KEY,
     id_usuario int,
