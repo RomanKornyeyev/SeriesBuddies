@@ -17,6 +17,8 @@ class DWESBaseDatos {
   const USUARIO = "usuario";
   const VERIFICADO_SI = "si";
   const VERIFICADO_NO = "no";
+  const PENDIENTE = "pendiente";
+  const ACEPTADA = "aceptada";
 
   /*
     Patrón Singletone para poder usar la clase en proyectos más grandes
@@ -118,9 +120,24 @@ class DWESBaseDatos {
   public static function obtenUsuarios($db)
   {
     $db->ejecuta(
-      "SELECT * FROM usuarios"
+      "SELECT * FROM usuarios;"
     );
     $consulta = $db->obtenDatos();
+    
+    if ($consulta != "") {
+      return $consulta;
+    }else{
+      return "";
+    }
+  }
+
+  public static function obtenPeticion($db, $remitente, $receptor)
+  {
+    $db->ejecuta(
+      "SELECT * FROM peticiones WHERE (id_receptor=? AND id_remitente=?) OR (id_receptor=? AND id_remitente=?);",
+      $receptor, $remitente, $remitente, $receptor
+    );
+    $consulta = $db->obtenElDato();
     
     if ($consulta != "") {
       return $consulta;

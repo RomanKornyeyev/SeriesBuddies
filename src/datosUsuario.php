@@ -12,7 +12,7 @@
     //correo user
     $usuarioCorreo;
     //privilegios user
-    $usuarioPrivilegios = DWESBaseDatos::USUARIO;
+    $usuarioPrivilegio = DWESBaseDatos::USUARIO;
 
     // --- INFO ADICIONAL ---
     //¿tiene la sesión iniciada?
@@ -28,14 +28,14 @@
         $usuarioContra = $_SESSION['contra'];
         $usuarioImg = $_SESSION['img'];
         $usuarioCorreo = $_SESSION['correo'];
-        $usuarioPrivilegios = $_SESSION['privilegios'];
+        $usuarioPrivilegio = $_SESSION['privilegio'];
 
 
         // --- INFO ADICIONAL ---
         //sesión iniciada en true (genius)
         $sesionIniciada = true;
         //¿Es admin?
-        ($_SESSION['privilegios'] == DWESBaseDatos::ADMIN) ? $esAdmin = true : $esAdmin = false;
+        ($_SESSION['privilegio'] == DWESBaseDatos::ADMIN) ? $esAdmin = true : $esAdmin = false;
     }
 
 ?>
