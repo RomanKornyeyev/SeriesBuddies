@@ -61,15 +61,33 @@
     gap: var(--space-l);
 }
 .barrita{border: 1px solid var(--primary-500);}
+.buddy__footer-external-layer{
+    position: relative;
+    width: 100%;
+    height: 20%;
+    overflow: hidden;
+}
+.buddy__footer-internal-layer{
+    position: absolute;
+    height: 200%;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    transition: all 250ms ease-out;
+}
 .buddy__footer{
     display: grid;
     grid-template-columns: repeat(2,1fr);
-    height: 20%;
+    height: 50%;
     background-color: var(--primary-500);
 }
 
 /* ===== UTILITIES (SPECIFIC, DON'T MOVE IT FROM HERE) ===== */
 .grid-col-3{grid-template-columns: repeat(3, 1fr);}
+.grid-col-2{grid-template-columns: repeat(2, 1fr);}
+.grid-col-1{grid-template-columns: 1fr;}
+.subir{bottom: 0;}
+.bajar{bottom: -100%;}
 
 /* ===== EXTRA (1000px) ===== */
 @media screen and (max-width: 1000px) {

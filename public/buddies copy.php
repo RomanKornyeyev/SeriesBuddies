@@ -114,6 +114,51 @@
                             `; 
                         }
                     </script>
+                    <div class="card card--buddy">
+                        <div class="buddy__body">
+                            <div class="profile-img">
+                                <img class="img-fit" src="upload/perfiles/default.png" alt="profile-img">
+                            </div>
+                            <div class="profile-info">
+                                <h2 class="profile-name">admin</h2>
+                                <p class="profile-hashtag">@admin</p>
+                                <div class="profile-achievements">
+                                    <div class="achievements">
+                                        <p>xx Buddies</p>
+                                        <p>xxxx Posts</p>
+                                    </div>
+                                    <div class="barrita"></div>
+                                    <div class="achievements">
+                                        <p>xx Series</p>
+                                        <p>xx Chips</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buddy__footer-external-layer">
+                            <div class="buddy__footer-internal-layer">
+                                <div class="buddy__footer buddy__footer--primary grid-col-3">
+                                    <a class="btn btn--card-success" href="#">ACEPTAR</a>
+                                    <a class="btn btn--card-admin" href="#">RECHAZAR</a>
+                                    <button class="btn btn--card" onclick="subir(this)">
+                                        <i class="fa-solid fa-id-card"></i>&nbsp;
+                                        <span class="primary-font">Volver</span>
+                                        &nbsp;<i class="fa-solid fa-arrow-down"></i>
+                                    </button>
+                        
+                                </div>
+                                <div class="buddy__footer buddy__footer--primary grid-col-3">
+                                    <button class="btn btn--card" onclick="bajar(this)">
+                                        <i class="fa-solid fa-user-group"></i>&nbsp;
+                                        <span class="primary-font">Recibida</span>
+                                        &nbsp;<i class="fa-solid fa-arrow-up"></i>
+                                    </button>
+                                    <a class="btn btn--card" href="./profile.php">Perfil</a>
+                                    <a class="btn btn--card-admin" href="#">Eliminar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="pagination">
                     <a href="#" class="btn btn--primary btn--sm">&lt;</a>

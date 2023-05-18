@@ -65,6 +65,7 @@ img{width: 100%;}
     --secondary-600: #00c1ec;
     --success-500: #28a745;
     --success-600: #158a30;
+    --success-700: #0e8029;
     --error-500: #ff4949;
     --error-600: #e62d2d;
     --error-700: #ca1818;
@@ -108,6 +109,9 @@ img{width: 100%;}
     --width-l: 130rem;
     --width-xl: 140rem;
     --width-xxl: 150rem;
+
+    /* === FONTS === */
+    --primary-font: 'Nunito', sans-serif;
 }
 /* ===== GLOBAL CONTAINER ===== */
 .global-container{
@@ -350,9 +354,8 @@ img{width: 100%;}
     justify-content: center;
     align-items: center;
 }
-.underline{
-    text-decoration: underline;
-}
+.underline{text-decoration: underline;}
+.primary-font{font-family: var(--primary-font);}
 
 /* ========== BREAK POINTS ========== */
 /* ===== EXTRA (1600px) ===== */

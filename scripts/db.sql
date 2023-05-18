@@ -23,13 +23,16 @@ CREATE TABLE usuarios (
 );
 
 INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("admin","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "admin", "admin", "si");
+INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("anabel","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "anabel", "usuario", "si");
+INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("francis","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "francis", "usuario", "si");
+
 
 CREATE TABLE peticiones (
     id              INT AUTO_INCREMENT PRIMARY KEY,
-    id_remitente    INT NOT NULL,
+    id_emisor       INT NOT NULL,
     id_receptor     INT NOT NULL,
     estado          ENUM('aceptada', 'pendiente', 'rechazada') NOT NULL,
-    CONSTRAINT fk_remitente FOREIGN KEY (id_remitente) REFERENCES usuarios(id) ON DELETE CASCADE,
+    CONSTRAINT fk_emisor FOREIGN KEY (id_emisor) REFERENCES usuarios(id) ON DELETE CASCADE,
     CONSTRAINT fk_receptor FOREIGN KEY (id_receptor) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
@@ -58,16 +61,6 @@ SET GLOBAL event_scheduler = ON;
 SHOW GLOBAL VARIABLES WHERE Variable_name LIKE 'e%';
 SHOW GLOBAL STATUS WHERE Variable_name LIKE 'E%';
 /************* FIN BARRIDO ***************/
-
-CREATE TABLE peticiones(
-    id              INT AUTO_INCREMENT PRIMARY KEY,
-    id_remitente    INT NOT NULL,
-    id_receptor     INT NOT NULL,
-    estado          ENUM('ACEPTADA', 'PENDIENTE', 'RECHAZADA') NOT NULL,
-    CONSTRAINT fk_id_remitente FOREIGN KEY (id_remitente) REFERENCES usuarios(id) ON DELETE CASCADE,
-    CONSTRAINT fk_id_recepetor FOREIGN KEY (id_receptor) REFERENCES usuarios(id) ON DELETE CASCADE
-);
-
 
 /*  --- TEMAS Y POSTS --- */
 CREATE TABLE generos(

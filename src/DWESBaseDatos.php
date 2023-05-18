@@ -131,11 +131,11 @@ class DWESBaseDatos {
     }
   }
 
-  public static function obtenPeticion($db, $remitente, $receptor)
+  public static function obtenPeticion($db, $emisor, $receptor)
   {
     $db->ejecuta(
-      "SELECT * FROM peticiones WHERE (id_receptor=? AND id_remitente=?) OR (id_receptor=? AND id_remitente=?);",
-      $receptor, $remitente, $remitente, $receptor
+      "SELECT * FROM peticiones WHERE (id_receptor=? AND id_emisor=?) OR (id_receptor=? AND id_emisor=?);",
+      $receptor, $emisor, $emisor, $receptor
     );
     $consulta = $db->obtenElDato();
     
