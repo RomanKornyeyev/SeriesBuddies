@@ -3,6 +3,11 @@
     // ********* INIT **********
     require_once("../src/init.php");
 
+    // ********* PETICIONES **********
+    use clases\peticiones\Peticion;
+
+    $peticionFooter = new Peticion($esAdmin);
+
     // ********* INFO PARA EL TEMPLATE **********
     $tituloHead = "Buddies - SeriesBuddies";
     $estiloEspecifico = "./css/buddies.css";
@@ -18,16 +23,18 @@
     <div class="main__content">
 
 
-
-
-    <?php 
+    <?php // ***** GENERACIÓN DE USERS ***** ?>
+    <?php
     //obtenemos todos los users
     $consulta = DWESBaseDatos::obtenUsuarios($db);
+
     //por cada user pintamos una tarjeta
-    foreach ($consulta as $value) 
-    {?>
-        
+    foreach ($consulta as $value){?>
+
+        <!-- CARD (GLOBAL) -->
         <div class="card card--buddy">
+
+            <!-- CARD BODY -->
             <div class="buddy__body">
                 <div class="profile-img">
                     <img class="img-fit" src="<?=$value['img']?>" alt="profile-img">
@@ -48,86 +55,41 @@
                     </div>
                 </div>
             </div>
+
+            <!-- CARD FOOTER -->
             <div class="buddy__footer-external-layer">
-                <div class="buddy__footer-internal-layer">
-                    
-                    <?php //obtenemos info sobre el estado de petición de amistad ?>
-                    <?php $peticion = DWESBaseDatos::obtenPeticion($db, $_SESSION['id'], $value['id']);?>
+                <?php
+                    //si el user no tiene sesión iniciada
+                    if (!$sesionIniciada) {
+                        $peticionFooter->pintaSesionNoIniciada($value['id']);
 
-                    <?php if ($peticion == "" || $peticion == null) { ?>
-                        <div class="buddy__footer buddy__footer--primary grid-col-1">
-                            <button class="btn btn--card" onclick="subir(this)">
-                                <i class="fa-solid fa-id-card"></i>&nbsp;
-                                <span class="primary-font">Volver</span>
-                                &nbsp;<i class="fa-solid fa-arrow-down"></i>
-                            </button>
-                        </div>
-                        <div class="buddy__footer buddy__footer--primary <?php if($esAdmin) echo "grid-col-3";?>">
-                            <a class="btn btn--card" href="#">Conectar</a>
-                    <?php }else if($peticion['estado'] == DWESBaseDatos::PENDIENTE && $peticion['id_emisor'] == $_SESSION['id']) { ?>
-                        <div class="buddy__footer buddy__footer--primary grid-col-2">
-                            <a class="btn btn--card btn--error" href="#">CANCELAR&nbsp;<i class="fa-solid fa-xmark"></i></a>
-                            <button class="btn btn--card" onclick="subir(this)">
-                                <i class="fa-solid fa-id-card"></i>&nbsp;
-                                <span class="primary-font">Volver</span>
-                                &nbsp;<i class="fa-solid fa-arrow-down"></i>
-                            </button>
-                        </div>
-                        <div class="buddy__footer buddy__footer--primary <?php if($esAdmin) echo "grid-col-3";?>">
-                            <button class="btn btn--card" onclick="bajar(this)">
-                                <i class="fa-solid fa-user-group"></i>&nbsp;
-                                <span class="primary-font">Enviada</span>
-                                &nbsp;<i class="fa-solid fa-arrow-up"></i>
-                            </button>
-                    <?php }else if($peticion['estado'] == DWESBaseDatos::PENDIENTE && $peticion['id_receptor'] == $_SESSION['id']) { ?>
-                        <div class="buddy__footer buddy__footer--primary grid-col-3">
-                            <a class="btn btn--card btn--success" href="#">ACEPTAR&nbsp;<i class="fa-solid fa-check"></i></a>
-                            <a class="btn btn--card btn--error" href="#">RECHAZAR&nbsp;<i class="fa-solid fa-xmark"></i></a>
-                            <button class="btn btn--card" onclick="subir(this)">
-                                <i class="fa-solid fa-id-card"></i>&nbsp;
-                                <span class="primary-font">Volver</span>
-                                &nbsp;<i class="fa-solid fa-arrow-down"></i>
-                            </button>
-                        </div>
-                        <div class="buddy__footer buddy__footer--primary <?php if($esAdmin) echo "grid-col-3";?>">
-                            <button class="btn btn--card" onclick="bajar(this)">
-                                <i class="fa-solid fa-user-group"></i>&nbsp;
-                                <span class="primary-font">Recibida</span>
-                                &nbsp;<i class="fa-solid fa-arrow-up"></i>
-                            </button>
-                        <?php }else if($peticion['estado'] == DWESBaseDatos::ACEPTADA) { ?>
-                            <div class="buddy__footer buddy__footer--primary grid-col-2">
-                                <a class="btn btn--card btn--error" href="#">ELIMINAR&nbsp;<i class="fa-solid fa-xmark"></i></a>
-                                <button class="btn btn--card" onclick="subir(this)">
-                                    <i class="fa-solid fa-id-card"></i>&nbsp;
-                                    <span class="primary-font">Volver</span>
-                                    &nbsp;<i class="fa-solid fa-arrow-down"></i>
-                                </button>
-                            </div>
-                            <div class="buddy__footer buddy__footer--primary <?php if($esAdmin) echo "grid-col-3";?>">
-                                <button class="btn btn--card" onclick="bajar(this)">
-                                    <i class="fa-solid fa-user-group"></i>&nbsp;
-                                    <span class="primary-font">Es amig@</span>
-                                    &nbsp;<i class="fa-solid fa-arrow-up"></i>
-                                </button>
-                        <?php } ?>
-                        <a class="btn btn--card" href="./profile.php">Perfil</a>
-                        <?php if($esAdmin){ ?>
-                            <a class="btn btn--card btn--error" href="#">Eliminar</a>
-                        <?php }?>
-                    </div>
-                </div>
+                    //si el user SI TIENE la sesión iniciada
+                    }else{
+
+                        //obtenemos info sobre el estado de petición de amistad
+                        $peticion = DWESBaseDatos::obtenPeticion($db, $_SESSION['id'], $value['id']);
+
+                        //si ninguno ha mandado petición de amistad
+                        if ($peticion == "" || $peticion == null) {
+                            $peticionFooter->pintaAmistadNula($value['id']);
+                        
+                        //si el user actual (SESIÓN) ha ENVIADO peti al user seleccioando
+                        }else if($peticion['estado'] == DWESBaseDatos::PENDIENTE && $peticion['id_emisor'] == $_SESSION['id']) {
+                            $peticionFooter->pintaAmistadEnviada($value['id']);
+
+                        //si el user actual (SESIÓN) ha RECIBIDO peti del user seleccioando    
+                        }else if($peticion['estado'] == DWESBaseDatos::PENDIENTE && $peticion['id_receptor'] == $_SESSION['id']) {
+                            $peticionFooter->pintaAmistadRecibida($value['id']);
+
+                        //si son AMOGUS  
+                        }else if($peticion['estado'] == DWESBaseDatos::ACEPTADA) {
+                            $peticionFooter->pintaAmistadMutua($value['id']);
+                        }
+                    }
+                ?>
             </div>
-
-
-            
         </div>
-        
     <?php } ?>
-    
-
-
-
 
     </div>
 
