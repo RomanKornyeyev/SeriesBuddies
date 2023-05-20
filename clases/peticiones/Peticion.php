@@ -105,16 +105,16 @@
             $eliminar = "";
             if ($this->esAdmin) {
                 $grid = "grid-col-3";
-                $eliminar = "<button class='btn btn--card btn--error-card' href='#'>Eliminar</button>";
+                $eliminar = "<button class='btn btn--card btn--error-card'>Eliminar</button>";
             }
             echo "
                 <div class='buddy__footer-internal-layer' id='$id'>
                     <div class='buddy__footer buddy__footer--primary grid-col-3'>
-                        <button class='btn btn--card btn--success-card' href='#'>
+                        <button class='btn btn--card btn--success-card' onclick='peticion(this, $id, `".self::ACCION_ACEPTAR."`)'>
                             <span class='primary-font'>Aceptar&nbsp;</span>
                             <i class='fa-solid fa-check'></i>
                         </button>
-                        <button class='btn btn--card btn--error-card' href='#'>
+                        <button class='btn btn--card btn--error-card' onclick='peticion(this, $id, `".self::ACCION_RECHAZAR."`)'>
                             <span class='primary-font'>Rechazar&nbsp;</span>
                             <i class='fa-solid fa-xmark'></i>
                         </button>
@@ -143,12 +143,12 @@
             $eliminar = "";
             if ($this->esAdmin) {
                 $grid = "grid-col-3";
-                $eliminar = "<button class='btn btn--card btn--error-card' href='#'>Eliminar</button>";
+                $eliminar = "<button class='btn btn--card btn--error-card'>Eliminar</button>";
             }
             echo "
                 <div class='buddy__footer-internal-layer' id='$id'>
                     <div class='buddy__footer buddy__footer--primary grid-col-2'>
-                        <button class='btn btn--card btn--error-card' href='#'>
+                        <button class='btn btn--card btn--error-card' onclick='peticion(this, $id, `".self::ACCION_ELIMINAR."`)'>
                             <span class='primary-font'>Eliminar&nbsp;</span>
                             <i class='fa-solid fa-xmark'></i>
                         </button>

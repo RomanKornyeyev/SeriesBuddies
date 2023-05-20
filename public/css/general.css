@@ -23,6 +23,7 @@
 html{font-size: 62.5%;font-family: 'Nunito', sans-serif;}
 body{font-size: 1.6rem}
 a{text-decoration: none; color: var(--white);}
+button{font-family: var(--primary-font);}
 ul,ol{list-style: none;}
 input,textarea,button,select,a{
     border: none;
@@ -359,6 +360,7 @@ img{width: 100%;}
 .underline{text-decoration: underline;}
 .primary-font{font-family: var(--primary-font);}
 .pos-absolute{position: absolute;}
+.font-size-default{font-size: 1.6rem;}
 
 .rotate-infinite{animation: rotate 1s linear infinite;}
 @keyframes rotate {
