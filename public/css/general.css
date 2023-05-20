@@ -358,6 +358,18 @@ img{width: 100%;}
 }
 .underline{text-decoration: underline;}
 .primary-font{font-family: var(--primary-font);}
+.pos-absolute{position: absolute;}
+
+.rotate-infinite{animation: rotate 1s linear infinite;}
+@keyframes rotate {
+    to{transform: rotate(360deg);}
+}
+
+.opacity-fade{animation: opacity-fade 1s linear forwards;}
+@keyframes opacity-fade {
+    0%, 50%{opacity: 1}
+    100%{opacity:0;}
+}
 
 /* ========== BREAK POINTS ========== */
 /* ===== EXTRA (1600px) ===== */

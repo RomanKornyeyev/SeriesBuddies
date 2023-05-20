@@ -162,3 +162,49 @@
 
 /* == RADIUS == */
 .btn--br-m{border-radius: var(--br-m);}
+
+
+/* ===== EXTRA STUFF ===== */
+/* == EXTRA BUTTONS (NO CLICKABLES) == */
+.btn-no-clickable-primary{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    font-weight: 700;
+    background-color: var(--primary-500);
+    border-color: var(--primary-500);
+    color: var(--primary-900);
+}
+.btn-no-clickable-success{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    font-weight: 700;
+    background-color: var(--success-500);
+    border-color: var(--success-500);
+    color: var(--almost-white);
+}
+.btn-no-clickable-error{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    font-weight: 700;
+    background-color: var(--error-500);
+    border-color: var(--error-500);
+    color: var(--almost-white);
+}
+
+/* == CURSORS == */
+.cursor-default{cursor: default;}

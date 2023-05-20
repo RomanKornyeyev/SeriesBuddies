@@ -6,6 +6,16 @@
 
         private $esAdmin;
 
+        public const ESTADO_PENDIENTE = "pendiente";
+        public const ESTADO_ACEPTADO = "aceptada";
+
+        public const ACCION_ENVIAR = "enviar";
+        public const ACCION_CANCELAR = "cancelar";
+        public const ACCION_ACEPTAR = "aceptar";
+        public const ACCION_RECHAZAR = "rechazar";
+        public const ACCION_ELIMINAR = "eliminar";
+
+
         public function __construct($esAdmin = false){
             $this->esAdmin = $esAdmin;
         }
@@ -30,6 +40,7 @@
 
         public function pintaAmistadNula($id)
         {
+            $prueba = "enviar";
             $grid = "";
             $eliminar = "";
             if ($this->esAdmin) {
@@ -46,7 +57,7 @@
                         </button>
                     </div>
                     <div class='buddy__footer buddy__footer--primary $grid'>
-                        <button class='btn btn--card'>Conectar</button>
+                        <button class='btn btn--card' onclick='peticion(this, $id, `".self::ACCION_ENVIAR."`)'>Conectar</button>
                         <a class='btn btn--card' href='./profile.php?id=$id'>Perfil</a>
                         $eliminar
                     </div>
@@ -60,12 +71,12 @@
             $eliminar = "";
             if ($this->esAdmin) {
                 $grid = "grid-col-3";
-                $eliminar = "<button class='btn btn--card btn--error-card' href='#'>Eliminar</button>";
+                $eliminar = "<button class='btn btn--card btn--error-card'>Eliminar</button>";
             }
             echo "
                 <div class='buddy__footer-internal-layer' id='$id'>
                     <div class='buddy__footer buddy__footer--primary grid-col-2'>
-                        <button class='btn btn--card btn--error-card' href='#'>
+                        <button class='btn btn--card btn--error-card' onclick='peticion(this, $id, `".self::ACCION_CANCELAR."`)'>
                             <span class='primary-font'>Cancelar&nbsp;</span>
                             <i class='fa-solid fa-xmark'></i>
                         </button>
@@ -150,7 +161,7 @@
                     <div class='buddy__footer buddy__footer--primary $grid'>
                         <button class='btn btn--card' onclick='bajar(this)'>
                             <i class='fa-solid fa-user-group'></i>&nbsp;
-                            <span class='primary-font'>Es amig@</span>
+                            <span class='primary-font'>Sois amig@s</span>
                             &nbsp;<i class='fa-solid fa-arrow-up'></i>
                         </button>
                         <a class='btn btn--card' href='./profile.php?id=$id'>Perfil</a>

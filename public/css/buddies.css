@@ -76,6 +76,7 @@
     transition: all 250ms ease-out;
 }
 .buddy__footer{
+    position: relative;
     display: grid;
     grid-template-columns: repeat(2,1fr);
     height: 50%;
