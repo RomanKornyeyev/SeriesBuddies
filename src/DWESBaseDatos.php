@@ -20,6 +20,10 @@ class DWESBaseDatos {
   const PENDIENTE = "pendiente";
   const ACEPTADA = "aceptada";
 
+  const REGISTROS_POR_PAGINA = 20;
+  const MAX_BUDDIES_FEED = 5;
+  const MAX_PAG_PAGINADOR = 3;
+
   /*
     Patrón Singletone para poder usar la clase en proyectos más grandes
   */
@@ -294,6 +298,85 @@ class DWESBaseDatos {
       return false;
     }
   }
+
+  //Nombre, comentario, fecha e imagen del usuario + id de la serie en determinado rango
+  public static function getRespuestasSerie ($db, $idSerie, $registroInicial)
+  {
+    $db->ejecuta("SELECT u.nombre, id_post, contenido, DATE_FORMAT(fecha, '%d %b %Y', 'es-ES') as fecha, img 
+                  FROM respuestas r 
+                  INNER JOIN usuarios u 
+                  ON u.id=r.id_usuario 
+                  WHERE id_post=? 
+                  ORDER BY fecha 
+                  LIMIT ?, ?;", 
+    $idSerie, $registroInicial, self::REGISTROS_POR_PAGINA);
+    
+    return $db->obtenDatos();
+  }
+
+  //Total de comentarios que hay de esa serie
+  public static function getTotalRespuestas ($db, $idSerie)
+  {
+    $db->ejecuta('SELECT COUNT(*) FROM respuestas where id_post = ?;', $idSerie);
+    return $db->obtenElDato()['COUNT(*)'];  
+  }
+
+  //Fotos de los primeros 5 usuarios que han comentado esta serie
+  public static function getPrimerosBuddiesSerie ($db, $idSerie) {
+    $db->ejecuta('SELECT DISTINCT(id_post), img 
+    FROM respuestas r 
+    INNER JOIN usuarios u 
+    ON u.id=r.id_usuario 
+    WHERE id_post=? 
+    LIMIT ?;', 
+    $idSerie, self::MAX_BUDDIES_FEED);
+    return $db->obtenDatos();
+  }
+
+  public static function getLimitesPaginacion ($paginaActual, $totalPaginas) {
+    $limites['primera'] = $paginaActual - ($paginaActual % self::MAX_PAG_PAGINADOR) + 1;
+
+    if ($limites['primera'] > $paginaActual) { 
+      $limites['primera'] = $limites['primera'] - self::MAX_PAG_PAGINADOR; 
+    }
+
+    if ($limites['primera'] + (self::MAX_PAG_PAGINADOR-1) > $totalPaginas ) {
+      $limites['ultima'] = $totalPaginas;
+    } else {
+      $limites['ultima'] = $limites['primera'] + (self::MAX_PAG_PAGINADOR-1);
+    }
+
+    return $limites;
+  }
+
+  public static function getListadoBuddies ($db, $idSerie) {
+    //Devuelve la informacion del usuario que ha comentado en esa serie
+    $db->ejecuta ("SELECT DISTINCT(id_post), u.id, nombre, img FROM respuestas r INNER JOIN usuarios u ON u.id=r.id_usuario WHERE id_post=? LIMIT ?;", $idSerie, self::MAX_BUDDIES_FEED);
+    $listadoBuddies = $db->obtenDatos();
+
+    //Devuelve el usuario y el total de comentarios/respuestas que ha hecho en la pagina en general
+    $db->ejecuta("SELECT id_usuario, COUNT(id_usuario) FROM respuestas GROUP BY id_usuario;");
+    $totalRespuestas = $db->obtenDatos();
+    
+    //Devuelve el total de series en las que ha comentado un usuario
+    $db->ejecuta("WITH t AS (SELECT id_post, id_usuario FROM respuestas GROUP BY id_usuario, id_post ORDER BY id_usuario, id_post) SELECT COUNT(id_post) FROM t GROUP BY id_usuario;");
+    $totalSeries = $db->obtenDatos();
+
+    foreach ($listadoBuddies as $key => $value) {
+        if ($listadoBuddies[$key]['id'] == $totalRespuestas[$key]['id_usuario']) {
+            $listadoBuddies[$key]['alias'] = "@".$listadoBuddies[$key]['nombre']."#".$listadoBuddies[$key]['id'];
+            $listadoBuddies[$key]['total_series'] = $totalSeries[$key]['COUNT(id_post)'];
+            $listadoBuddies[$key]['total_respuestas'] = $totalRespuestas[$key]['COUNT(id_usuario)'];
+            $listadoBuddies[$key]['total_buddies'] = random_int(1, 20);
+            $listadoBuddies[$key]['total_chips'] = random_int(1, 20);
+        }
+    }
+
+    return $listadoBuddies;
+  }
+
+
+
 }
 
 ?>
