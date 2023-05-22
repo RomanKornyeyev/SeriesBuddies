@@ -11,6 +11,7 @@
 .card{
     position: relative;
     min-height: 17.5rem;
+    transition: all 250ms ease-out;
 }
 .card--buddy{
     display: flex;

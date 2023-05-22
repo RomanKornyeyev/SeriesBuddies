@@ -86,20 +86,29 @@ function eliminar(elemento, id){
     //confirmación
     // confirmacion();
     mostrarConfirmacion()
-        .then(function(resultado) {
+        .then(async function(resultado) {
+            // El usuario ha confirmado
             if (resultado) {
-                // El usuario ha confirmado
-                // Coloca aquí el código que deseas ejecutar si el usuario confirmaç
+                //tarjeta user
+                let globalElementOverwrite = elemento.parentNode.parentNode.parentNode.parentNode;
+                console.log(globalElementOverwrite);
+                var div = document.createElement("div");
+                div.className = "card-dark-loader opacity-fade-in-short";
+                div.innerHTML = "<i class='fa-solid fa-spinner rotate-infinite'></i>";
+                globalElementOverwrite.insertAdjacentElement("beforeend", div);
+                await delay(1000);
+                globalElementOverwrite.remove();
+                
                 console.log("si");
+            // El usuario ha cancelado
             } else {
-                // El usuario ha cancelado
-                // Coloca aquí el código que deseas ejecutar si el usuario cancela
+                
+                
                 console.log("no");
             }
         });
 
-    //tarjeta user
-    //let globalElementOverwrite = elemento.parentNode.parentNode.parentNode.parentNode.parentNode;
+    
 
 
 

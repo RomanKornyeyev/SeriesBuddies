@@ -67,7 +67,8 @@ var si = document.getElementById("si");
 var no = document.getElementById("no");
 
 function mostrarConfirmacion(mensaje = "Esta accion no se puede deshacer ¿Quieres continuar?") {
-    confirmacionWrapper.classList.remove("d-none"); // Mostrar la ventana de confirmación
+    // Mostrar la ventana de confirmación
+    confirmacionWrapper.classList.remove("d-none");
     confirmacionWrapper.classList.add("opacity-fade-in-short");
     confirmacionCard.classList.add("scale-in-short");
     confirmacionBody.innerHTML = mensaje;

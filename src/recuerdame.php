@@ -30,7 +30,7 @@
                     $_SESSION['contra'] = $consulta['contra'];
                     $_SESSION['img'] = $consulta['img'];
                     $_SESSION['correo'] = $consulta['correo'];
-                    $_SESSION['privilegios'] = $consulta['privilegios'];
+                    $_SESSION['privilegio'] = $consulta['privilegio'];
 
 
                     //alargamos la vida del token (7 días)
