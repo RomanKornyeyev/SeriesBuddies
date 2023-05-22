@@ -63,7 +63,7 @@ SHOW GLOBAL STATUS WHERE Variable_name LIKE 'E%';
 /************* SERIES, RESPUESTAS, ETC ***************/
 CREATE TABLE respuestas(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    id_post INT NOT NULL,
+    id_serie INT NOT NULL,
     id_usuario INT NOT NULL,
     contenido VARCHAR(500) NOT NULL,
     fecha DATETIME NOT NULL DEFAULT NOW(),
