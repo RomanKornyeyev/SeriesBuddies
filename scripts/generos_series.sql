@@ -1,3 +1,4 @@
+/* ********** LEGACY (WITHOUT API) ********** */
 INSERT INTO generos_series VALUES (16, 1);   --1899
 INSERT INTO generos_series VALUES (6,  1);   --1899
 INSERT INTO generos_series VALUES (11, 2);   --28 Moons

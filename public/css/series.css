@@ -21,7 +21,7 @@
     overflow: hidden;
 }
 .card__serie-img {
-    width: 25%;
+    width: 15%;
 }
 .header__serie {
     display: flex;
@@ -35,6 +35,7 @@
 }
 .title--serie {
     font-size: 3rem;
+    -webkit-line-clamp: 1;
 }
 .extra-actions{
     display: flex;
@@ -42,14 +43,23 @@
     gap: var(--space-m)
 }
 .card__serie-info {
-    width: 75%;
+    width: 85%;
     padding: var(--space-xxl);
 }
-.body__serie, .footer__serie {
+.body_serie, .footer_serie {
     margin-top: 2%;
 }
 .text--serie {
     text-align: justify;
+    -webkit-line-clamp: 3;
+}
+.title--serie, .text--serie {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
 }
 .footer__serie {
     display: flex;

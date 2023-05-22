@@ -1,3 +1,4 @@
+/* ********** LEGACY (WITHOUT API) ********** */
 INSERT INTO generos (nombre) VALUES ('Terror');
 INSERT INTO generos (nombre) VALUES ('Zombie');
 INSERT INTO generos (nombre) VALUES ('Gore');
