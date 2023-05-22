@@ -45,7 +45,7 @@
             $eliminar = "";
             if ($this->esAdmin) {
                 $grid = "grid-col-3";
-                $eliminar = "<button class='btn btn--card btn--error-card'>Eliminar</button>";
+                $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id)'>Eliminar</button>";
             }
             echo "
                 <div class='buddy__footer-internal-layer' id='$id'>

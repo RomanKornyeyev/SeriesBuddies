@@ -41,3 +41,47 @@ window.addEventListener("resize", function(){
         window.onscroll = null;
     }
 });
+
+
+//confirmación, devuelve un boolean
+//function confirmacion(mensaje = "Esta acción no se puede deshacer ¿Quieres continuar?"){
+    // document.body.innerHTML += `
+    //     <div class="confirmation-wrapper opacity-fade-in-short" id="confirmacion-wrapper">
+    //         <div class="confirmation-card scale-in-short" id="confirmacion">
+    //             <div class="confirmation-card__body">
+    //                 ${mensaje}
+    //             </div>
+    //             <div class="confirmation-card__footer">
+    //                 <button class='btn btn--success' id='si'>SÍ</button>
+    //                 <button class='btn btn--error' id='no'>NO</button>
+    //             </div>
+    //         </div>
+    //     </div>
+    // `; 
+//}
+
+var confirmacionWrapper = document.getElementById("confirmation-wrapper");
+var confirmacionCard = document.getElementById("confirmation-card");
+var confirmacionBody = document.getElementById("confirmation-body");
+var si = document.getElementById("si");
+var no = document.getElementById("no");
+
+function mostrarConfirmacion(mensaje = "Esta accion no se puede deshacer ¿Quieres continuar?") {
+    confirmacionWrapper.classList.remove("d-none"); // Mostrar la ventana de confirmación
+    confirmacionWrapper.classList.add("opacity-fade-in-short");
+    confirmacionCard.classList.add("scale-in-short");
+    confirmacionBody.innerHTML = mensaje;
+
+    return new Promise(function(resolve, reject) {
+        si.addEventListener("click", function() {
+            confirmacionWrapper.classList.add("d-none");// Ocultar la ventana de confirmación
+            resolve(true); // El usuario ha confirmado
+        });
+
+        no.addEventListener("click", function() {
+            confirmacionWrapper.classList.add("d-none"); // Ocultar la ventana de confirmación
+            resolve(false); // El usuario ha cancelado
+        });
+    });
+}
+

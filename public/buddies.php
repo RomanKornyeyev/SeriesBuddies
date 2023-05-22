@@ -21,7 +21,7 @@
     // ********* INFO PARA EL TEMPLATE **********
     $tituloHead = "Buddies - SeriesBuddies";
     $estiloEspecifico = "./css/buddies.css";
-    $scriptEspecifico = "./js/peticiones.js";
+    $scriptEspecifico = "./js/buddies.js";
     $scriptLoadMode = "defer";
     $content;
 

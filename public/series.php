@@ -69,33 +69,33 @@
         <?php if ($totalPaginas > 1) {
             //Te saca el boton de ir hacia atras si no estas en la primera pagina
             if ($paginaActual != 1) { ?>
-                <a href="/series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=<?=($paginaActual-1)?>" class="btn btn--primary btn--sm">&lt;</a>
+                <a href="./series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=<?=($paginaActual-1)?>" class="btn btn--primary btn--sm">&lt;</a>
             <?php }
 
             //Mostramos la primera pagina y los ...
             if ($limites['primera'] != 1) { ?>
-                <a href="/series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=1" class="btn btn--outline btn--sm">1</a>
+                <a href="./series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=1" class="btn btn--outline btn--sm">1</a>
                 <span class="btn btn--outline btn--sm">...</span>
             <?php }
 
             //Te pinta el boton de la pagina en la que estas, las anteriores y las siguientes (intervalo de 5)
             for ($i=$limites['primera']; $i <= $limites['ultima']; $i++) { 
                 if ($paginaActual == $i) { ?>
-                    <a href="/series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=<?=$paginaActual?>" class="btn btn--primary btn--sm"><?=$paginaActual?></a>
+                    <a href="./series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=<?=$paginaActual?>" class="btn btn--primary btn--sm"><?=$paginaActual?></a>
                 <?php } else { ?>
-                <a href="/series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=<?=$i?>" class="btn btn--outline btn--sm"><?=$i?></a>
+                <a href="./series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=<?=$i?>" class="btn btn--outline btn--sm"><?=$i?></a>
             <?php }
             }
             
             //Saca la ultima página que hay en el registro
             if ($limites['ultima'] != $totalPaginas) { ?>
                 <span class="btn btn--outline btn--sm">...</span>
-                <a href="/series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=<?=$totalPaginas?>" class="btn btn--outline btn--sm"><?=$totalPaginas?></a>;
+                <a href="./series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=<?=$totalPaginas?>" class="btn btn--outline btn--sm"><?=$totalPaginas?></a>;
             <?php }
 
             //Te saca el boton de ir hacia adelante si no estas en la última pagina
             if ($paginaActual != $totalPaginas) { ?>
-                <a href="/series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=<?=($paginaActual+1)?>" class="btn btn--primary btn--sm">&gt;</a>
+                <a href="./series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=<?=($paginaActual+1)?>" class="btn btn--primary btn--sm">&gt;</a>
             <?php } ?>
             
         <?php } ?>

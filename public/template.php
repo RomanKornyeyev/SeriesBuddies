@@ -53,5 +53,16 @@
         <!-- footer -->
         <?php include_once('footer.php'); ?>
     </div>
+    <div class="confirmation-wrapper d-none" id="confirmation-wrapper">
+        <div class="confirmation-card" id="confirmation-card">
+            <div class="confirmation-card__body" id="confirmation-body">
+                
+            </div>
+            <div class="confirmation-card__footer">
+                <button class='btn btn--success' id='si'>SÍ</button>
+                <button class='btn btn--error' id='no'>NO</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
