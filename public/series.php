@@ -17,7 +17,7 @@
     array_pop($response);
 
     //Devuelve la primera y la ultima pagina disponible
-    $limites = $db->getLimitesPaginacion($paginaActual, $totalPaginas);
+    $limites = $db->obtenLimitesPaginacion($paginaActual, $totalPaginas);
 
 
     // ********* INFO PARA EL TEMPLATE **********

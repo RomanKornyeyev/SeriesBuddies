@@ -23,19 +23,19 @@
     $registroInicial = ($paginaActual-1)*$registrosPagina;
 
     //Nombre, comentario, fecha e imagen del usuario + id de la serie en determinado rango
-    $comentarios = $db->getRespuestasSerie($db, $idSerie, $registroInicial);
+    $comentarios = $db->obtenRespuestasSerie($db, $idSerie, $registroInicial);
 
     //Total de los comentarios que hay de esa serie
-    $totalRegistros = $db->getTotalRespuestas($db, $idSerie);
+    $totalRegistros = $db->obtenTotalRespuestas($db, $idSerie);
 
     //Total de paginas que hay que mostrar
     $totalPaginas   = ceil($totalRegistros / $registrosPagina);
 
     //Devuelve la primera y la ultima pagina disponible
-    $limites = $db->getLimitesPaginacion($paginaActual, $totalPaginas);
+    $limites = $db->obtenLimitesPaginacion($paginaActual, $totalPaginas);
 
     //Fotos de los primeros 5 usuarios que han comentado esta serie
-    $listadoBuddies = $db->getPrimerosBuddiesSerie($db, $idSerie);
+    $listadoBuddies = $db->obtenPrimerosBuddiesSerie($db, $idSerie);
 
     // ********* INFO PARA EL TEMPLATE **********
     $tituloHead = $response['serieTitle']." - SeriesBuddies";
