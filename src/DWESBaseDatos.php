@@ -123,12 +123,12 @@ class DWESBaseDatos {
   
   // ====== SELECTS ======
 
-  public static function obtenUsuarios($db)
+  public static function obtenTotalUsuarios($db)
   {
     $db->ejecuta(
-      "SELECT * FROM usuarios;"
+      "SELECT COUNT(id) AS total_usuarios FROM usuarios;"
     );
-    $consulta = $db->obtenDatos();
+    $consulta = $db->obtenElDato();
     
     if ($consulta != "") {
       return $consulta;
@@ -247,7 +247,22 @@ class DWESBaseDatos {
     return $limites;
   }
 
-  public static function obtenListadoBuddies ($db, $idSerie) {
+  public static function obtenListadoBuddies ($db, $registroInicial) {
+    //Devuelve la informacion del usuario que ha comentado en esa serie
+    $db->ejecuta (
+      "SELECT u.id, u.nombre, u.correo, u.img, CONCAT('@',u.nombre,'#', u.id) AS alias, COUNT(DISTINCT r.id_serie) AS total_series, COUNT(r.id_serie) AS total_respuestas
+      FROM usuarios u
+      LEFT JOIN respuestas r ON u.id=r.id_usuario
+      GROUP BY u.id, u.nombre, u.correo
+      LIMIT ?, ?;",
+      $registroInicial ,self::REGISTROS_POR_PAGINA
+    );
+    $listadoBuddies = $db->obtenDatos();
+
+    return $listadoBuddies;
+  }
+
+  public static function obtenListadoBuddiesPorSerie ($db, $idSerie) {
     //Devuelve la informacion del usuario que ha comentado en esa serie
     $db->ejecuta ("SELECT DISTINCT(id_serie), u.id, nombre, img FROM respuestas r INNER JOIN usuarios u ON u.id=r.id_usuario WHERE id_serie=? LIMIT ?;", $idSerie, self::MAX_BUDDIES_FEED);
     $listadoBuddies = $db->obtenDatos();

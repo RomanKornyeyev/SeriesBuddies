@@ -22,6 +22,11 @@ CREATE TABLE usuarios (
 INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("admin","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "admin@admin.com", "admin", "si");
 INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("anabel","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "anabel@anabel.com", "usuario", "si");
 INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("francis","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "francis@francis.com", "usuario", "si");
+INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("nataly","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "nataly@nataly.com", "usuario", "si");
+INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("doryan","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "doryan@doryan.com", "usuario", "si");
+INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("javi","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "javi@javi.com", "usuario", "si");
+INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("librerias","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "librerias@librerias.com", "usuario", "si");
+INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("henry","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "henry@henry.com", "usuario", "si");
 
 CREATE TABLE peticiones (
     id              INT AUTO_INCREMENT PRIMARY KEY,

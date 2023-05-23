@@ -7,15 +7,44 @@
     use clases\peticiones\Peticion;
     $peticionFooter = new Peticion($esAdmin);
 
+    if (isset($_GET['pagina'])) {
+        $paginaActual = $_GET['pagina'];
+    } else {
+        $paginaActual = 1;
+    }
+
+    //Comentarios por pagina a mostrar
+    $registrosPagina = DWESBaseDatos::REGISTROS_POR_PAGINA;
+
+    //Registro/comentario desde el que empezar a recorrer la tabla
+    $registroInicial = ($paginaActual-1)*$registrosPagina;
+
     // si hay un get, significa que están filtrados por serie
     if (isset($_GET['id-serie'])) {
         $idSerie = $_GET['id-serie'];
-        //obtenemos todos los users filtrados
-        $consulta = $db->getListadoBuddies($db, $idSerie);
+        //obtenemos todos los users filtrados por serie
+        $consulta = DWESBaseDatos::obtenListadoBuddiesPorSerie($db, $idSerie);
     }else{
         //obtenemos todos los users
-        $consulta = DWESBaseDatos::obtenUsuarios($db);
+        $consulta = DWESBaseDatos::obtenListadoBuddies($db, $registroInicial);
     }
+
+    
+    
+    //total registros
+    $totalRegistros = DWESBaseDatos::obtenTotalUsuarios($db)['total_usuarios'];
+    
+    //Total de paginas que hay que mostrar
+    $totalPaginas = ceil($totalRegistros / $registrosPagina);
+
+    // if (!$totalPaginas >= $paginaActual) {
+    //     $paginaActual = 1;
+    // }
+    
+    
+
+    //Devuelve la primera y la ultima pagina disponible
+    $limites = DWESBaseDatos::obtenLimitesPaginacion($paginaActual, $totalPaginas);
     
 
     // ********* INFO PARA EL TEMPLATE **********
@@ -36,7 +65,7 @@
     <?php // ***** GENERACIÓN DE USERS ***** ?>
     <?php //por cada user pintamos una tarjeta ?>
     <?php foreach ($consulta as $value){?>
-            <?php if($value['id'] != $_SESSION['id']){ ?>
+            <?php //if($value['id'] != $_SESSION['id']){ ?>
             <!-- CARD (GLOBAL) -->
             <div class="card card--buddy">
 
@@ -47,15 +76,15 @@
                     </div>
                     <div class="profile-info">
                         <h2 class="profile-name"><?=$value['nombre']?></h2>
-                        <p class="profile-hashtag">@<?=$value['nombre']?></p>
+                        <p class="profile-hashtag"><?=$value['alias']?></p>
                         <div class="profile-achievements">
                             <div class="achievements">
                                 <p>xx Buddies</p>
-                                <p>xxxx Posts</p>
+                                <p><?=$value['total_respuestas']?> Posts</p>
                             </div>
                             <div class="barrita"></div>
                             <div class="achievements">
-                                <p>xx Series</p>
+                                <p><?=$value['total_series']?> Series</p>
                                 <p>xx Chips</p>
                             </div>
                         </div>
@@ -95,9 +124,45 @@
                     ?>
                 </div>
             </div>
-        <?php } ?>
+        <?php //} ?>
     <?php } ?>
 
+    </div>
+
+    <div class="pagination">
+        <?php if ($totalPaginas > 1) {
+            //Te saca el boton de ir hacia atras si no estas en la primera pagina
+            if ($paginaActual != 1) { ?>
+                <a href="./buddies.php?pagina=<?=($paginaActual-1)?>" class="btn btn--primary btn--sm">&lt;</a>
+            <?php }
+
+            //Mostramos la primera pagina y los ...
+            if ($limites['primera'] != 1) { ?>
+                <a href="./buddies.php?pagina=1" class="btn btn--outline btn--sm">1</a>
+                <span class="btn btn--outline btn--sm">...</span>
+            <?php }
+
+            //Te pinta el boton de la pagina en la que estas, las anteriores y las siguientes (intervalo de 5)
+            for ($i=$limites['primera']; $i <= $limites['ultima']; $i++) { 
+                if ($paginaActual == $i) { ?>
+                    <a href="./buddies.php?pagina=<?=$paginaActual?>" class="btn btn--primary btn--sm"><?=$paginaActual?></a>
+                <?php } else { ?>
+                <a href="./buddies.php?pagina=<?=$i?>" class="btn btn--outline btn--sm"><?=$i?></a>
+            <?php }
+            }
+            
+            //Saca la ultima página que hay en el registro
+            if ($limites['ultima'] != $totalPaginas) { ?>
+                <span class="btn btn--outline btn--sm">...</span>
+                <a href="./buddies.php?pagina=<?=$totalPaginas?>" class="btn btn--outline btn--sm"><?=$totalPaginas?></a>;
+            <?php }
+
+            //Te saca el boton de ir hacia adelante si no estas en la última pagina
+            if ($paginaActual != $totalPaginas) { ?>
+                <a href="./buddies.php?pagina=<?=($paginaActual+1)?>" class="btn btn--primary btn--sm">&gt;</a>
+            <?php } ?>
+            
+        <?php } ?>
     </div>
 
 <?php
