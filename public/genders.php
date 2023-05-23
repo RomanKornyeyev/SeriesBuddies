@@ -37,7 +37,7 @@
                         <div class="box-body__info">
                             <h2 class="title title-gender"><?=$response[$key]['name']?></h2>
                             <p class="text-white resultados" id="r-<?=$i?>" data-url="<?=$url?>">
-                                ... resultados &gt;
+                                <i class='fa-solid fa-spinner rotate-infinite'></i> series &gt;
                             </p>
                         </div>
                     </div>

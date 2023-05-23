@@ -1,9 +1,11 @@
 //delay opcional (loader)
-//const delay = ms => new Promise(res => setTimeout(res, ms));
+const delay = ms => new Promise(res => setTimeout(res, ms));
 
 
 //función que pinta los resultados de cada género recibiendo un node list como parámetro
-function contarResultados(arreglo) {
+async function contarResultados(arreglo) {
+
+    await delay(1000);
 
     //iteramos el array de elementos HTML
     arreglo.forEach(elemento => {
@@ -16,7 +18,7 @@ function contarResultados(arreglo) {
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 // respuesta del handler, la pintamos en el elemento
-                elemento.innerHTML = this.responseText+" resultados &gt;";
+                elemento.innerHTML = this.responseText+" series &gt;";
             }
         };
 
