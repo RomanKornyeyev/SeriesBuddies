@@ -79,7 +79,7 @@
                         <p class="profile-hashtag"><?=$value['alias']?></p>
                         <div class="profile-achievements">
                             <div class="achievements">
-                                <p>xx Buddies</p>
+                                <p><?=$value['total_amigos']?> Buddies</p>
                                 <p><?=$value['total_respuestas']?> Posts</p>
                             </div>
                             <div class="barrita"></div>

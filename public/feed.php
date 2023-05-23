@@ -1,7 +1,14 @@
 <?php
     require_once("../src/init.php");
     use clases\api_tmdb\TMDB;
-    
+    use clases\form\campo\Atipo;
+    use clases\form\campo\Fecha;
+    use clases\form\campo\Multiple;
+    use clases\form\campo\Numero;
+    use clases\form\campo\Texto;
+    use clases\form\campo\File;
+    use clases\form\claseMain\Formulario;
+
     $tmdb = new TMDB();
     
     $idSerie = $_GET['id'];
@@ -37,6 +44,74 @@
     //Fotos de los primeros 5 usuarios que han comentado esta serie
     $listadoBuddies = $db->obtenPrimerosBuddiesSerie($db, $idSerie);
 
+
+    //Pintar formulario para publicar una respuesta
+    //Si la sesion esta iniciada le va a redirigir a answers y si no a index
+    if (isset($_GET['action'])) {
+        if (!$sesionIniciada) {
+            header('Location: index.php');
+            die();
+        } else {
+            $valorCampo = "";
+            $labelCampo = "";
+            
+            //Si el usuario responde a una serie
+            if ($_GET['action'] == 'publicando') {
+                
+                $labelCampo = 'Publica tu respuesta';
+                // ========================================= FORM DE LOGIN =========================================
+                //                             ACTION            METHOD           clases-css-form   ¿Vaciar al validar?   atr-extra(para forms con img)   CAMPOS
+                $formulario = new Formulario("", Formulario::METHOD_POST, ["form"],        Formulario::VACIAR_NO,          "",                   array(
+                    //                       ====================================== COMÚN =======================================================================  //  ======================== ESPECÍFICO ========================
+                    //                  ¿Puede estar vacío? valor  name    label         clases-css-label         clases-css-wrapper       clases-css-input            tipoCampo    placeholder    regex
+                    $mensaje =  new Texto (Atipo::NULL_NO, $valorCampo,  "mensaje",    $labelCampo,  ["label","label--text"],    ["input-wrapper"],  ["input","shadow-lightgray"],  Texto::TYPE_TAREA, " ",  Texto::DEFAULT_PATTERN_500),
+                // === SUBMIT ===
+                // claseWrappSubmit                           idSubmit  nameSubm  txtSubmit  clseSubmit
+                ), ["input-wrapper","input-wrapper--submit"], "enviar", "enviar", "Publicar", ["btn", "btn--primary", "shadow-lightgray"]);
+
+                if ($formulario->validarGlobal()) {
+                    //Insert del comentario
+                    $db->ejecuta('INSERT INTO respuestas (id_post, id_usuario, contenido) VALUES (?, ?, ?)', $idSerie, $_SESSION['id'], $mensaje->getValor());
+                    
+                    header('Location: feed.php?id='.$idSerie);
+                    die();
+                }
+    
+
+                //Si el usuario edita una respuesta suya en concreto
+            } else if ($_GET['action'] == 'editando') {
+                $infoRespuesta = $db->ejecuta('SELECT u.id, contenido FROM respuestas r INNER JOIN usuarios u ON r.id_usuario=u.id WHERE r.id=?;', $_GET['id_respuesta']);
+                $infoRespuesta = $db->obtenElDato();
+                if ($_SESSION['id'] == $infoRespuesta['id'] || $esAdmin) {
+                    $labelCampo = 'Edita tu respuesta';
+                    $valorCampo = $infoRespuesta['contenido'];
+
+                    // ========================================= FORM DE LOGIN =========================================
+                    //                             ACTION            METHOD           clases-css-form   ¿Vaciar al validar?   atr-extra(para forms con img)   CAMPOS
+                    $formulario = new Formulario("", Formulario::METHOD_POST, ["form"],        Formulario::VACIAR_NO,          "",                   array(
+                        //                       ====================================== COMÚN =======================================================================  //  ======================== ESPECÍFICO ========================
+                        //                  ¿Puede estar vacío? valor  name    label         clases-css-label         clases-css-wrapper       clases-css-input            tipoCampo    placeholder    regex
+                        $mensaje =  new Texto (Atipo::NULL_NO, $valorCampo,  "mensaje",    $labelCampo,  ["label","label--text"],    ["input-wrapper"],  ["input","shadow-lightgray"],  Texto::TYPE_TAREA, " ",  Texto::DEFAULT_PATTERN_500),
+                    // === SUBMIT ===
+                    // claseWrappSubmit                           idSubmit  nameSubm  txtSubmit  clseSubmit
+                    ), ["input-wrapper","input-wrapper--submit"], "enviar", "enviar", "Publicar", ["btn", "btn--primary", "shadow-lightgray"]);
+
+                    
+                    if ($formulario->validarGlobal()) {
+                        //Update del comentario
+                        $db->ejecuta('UPDATE respuestas SET contenido=? WHERE id=?', $mensaje->getValor(), $_GET['id_respuesta']);
+                        
+                        header('Location: feed.php?id='.$idSerie);
+                        die(); 
+                    }
+                }
+            }
+
+        }
+    }
+
+
+
     // ********* INFO PARA EL TEMPLATE **********
     $tituloHead = $response['serieTitle']." - SeriesBuddies";
     $estiloEspecifico = "./css/feed.css";
@@ -57,6 +132,7 @@
                 <?php foreach ($response['serieGenres'] as $key => $value) { ?>
                     <a href="./series.php?id=<?=$response['serieGenres'][$key]['id']?>&nombre=<?=$response['serieGenres'][$key]['name']?>" class="btn btn--outline_filter">#<?=$response['serieGenres'][$key]['name']?></a>
                 <?php } ?>
+                <a href="./feed.php?id=<?=$idSerie?>&action=publicando" class="btn">Responder</a>
             </div>
             <a href="./buddies.php?id=<?=$idSerie?>" class="links__buddy">
                 <div class="icon">
@@ -68,7 +144,7 @@
             </a> 
         </div>
     </div>
-
+    <?php if ($_GET['action']=='publicando' || ($_GET['action'] == 'editando' && ($_SESSION['id'] == $infoRespuesta['id'] || $esAdmin))) { $formulario->pintarGlobal(); } ?>
     <?php foreach ($comentarios as $key => $value) { ?>
         <div class="card">
             <div class="card__post">
@@ -95,7 +171,7 @@
                     <div class="info info--comment">
                         <div class="date-post">Publicado el <?=$comentarios[$key]['fecha']?></div>
                         <div class="admin-area">
-                            <a href="" class="btn btn--secondary btn--sm btn--bold">Editar</a>
+                            <a href="./feed.php?id=<?=$idSerie?>&action=editando&id_respuesta=<?=$comentarios[$key]['id_respuesta']?>" class="btn btn--secondary btn--sm btn--bold">Editar</a>
                             <a href="" class="btn btn--error btn--sm btn--bold">Eliminar</a>
                         </div>
                     </div>
