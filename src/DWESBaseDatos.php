@@ -251,17 +251,17 @@ class DWESBaseDatos {
     //Devuelve la informacion del usuario que ha comentado en esa serie
     $db->ejecuta (
       "WITH t as (select u.id, u.nombre, u.img, CONCAT('@',u.nombre,'#', u.id) AS alias, count(p.id) as total_amigos 
-      from peticiones p 
-      right join usuarios u 
+      from usuarios u 
+      left join peticiones p 
       on u.id=p.id_emisor 
       and p.estado='aceptada'
-      group by p.id_emisor)
+      group by u.id)
       
-      SELECT *, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas
+      SELECT t.id, t.nombre, t.img, t.alias, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas, t.total_amigos
       FROM t
       LEFT JOIN respuestas r ON t.id=r.id_usuario
       GROUP BY t.id LIMIT ?,?;",
-      $registroInicial ,self::REGISTROS_POR_PAGINA
+      $registroInicial, self::REGISTROS_POR_PAGINA
     );
     $listadoBuddies = $db->obtenDatos();
 
