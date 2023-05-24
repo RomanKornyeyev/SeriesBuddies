@@ -12,7 +12,21 @@
                     case 'usuario':
                         if ($esAdmin || $_SESSION['id'] == $_GET['id']) {
                             //QUERY
-                            echo "borrado con éxito!";
+                            //DELETE FROM
+
+                            //SELECT FROM DE LA SIGUIENTE PAGINA
+                            //Si son distintas hay que pillar el primer registro de la siguiente pagina +1
+                            if ($paginaActual != $totalPaginas) {
+                                //Comentarios por pagina a mostrar
+                                $registrosPagina = DWESBaseDatos::REGISTROS_POR_PAGINA;
+
+                                //Registro/comentario desde el que empezar a recorrer la tabla
+                                $registroInicial = ($paginaActual-1)*$registrosPagina;
+                                
+                                $consulta = DWESBaseDatos::obtenListadoBuddies($db, $registroInicial+1);
+                                echo ($consulta['nombre']);
+                            }
+                            
                         }else{
                             echo "error";
                             die();

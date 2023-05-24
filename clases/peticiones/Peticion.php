@@ -38,14 +38,14 @@
             ";
         }
 
-        public function pintaAmistadNula($id)
+        public function pintaAmistadNula($id, $paginaActual, $totalPaginas)
         {
             $prueba = "enviar";
             $grid = "";
             $eliminar = "";
             if ($this->esAdmin) {
                 $grid = "grid-col-3";
-                $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id)'>Eliminar</button>";
+                $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id, ".$paginaActual.", ".$totalPaginas.")'>Eliminar</button>";
             }
             echo "
                 <div class='buddy__footer-internal-layer' id='$id'>
