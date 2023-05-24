@@ -71,7 +71,7 @@
 
                 if ($formulario->validarGlobal()) {
                     //Insert del comentario
-                    $db->ejecuta('INSERT INTO respuestas (id_post, id_usuario, contenido) VALUES (?, ?, ?)', $idSerie, $_SESSION['id'], $mensaje->getValor());
+                    $db->ejecuta('INSERT INTO respuestas (id_serie, id_usuario, contenido) VALUES (?, ?, ?)', $idSerie, $_SESSION['id'], $mensaje->getValor());
                     
                     header('Location: feed.php?id='.$idSerie);
                     die();
@@ -169,7 +169,7 @@
                 </div>
                 <div class="card__post-comment">
                     <div class="info info--comment">
-                        <div class="date-post">Publicado el <?=$comentarios[$key]['fecha']?></div>
+                        <div class="date-post">Publicado el <?=$comentarios[$key]['fecha_formateada']?></div>
                         <div class="admin-area">
                             <a href="./feed.php?id=<?=$idSerie?>&action=editando&id_respuesta=<?=$comentarios[$key]['id_respuesta']?>" class="btn btn--secondary btn--sm btn--bold">Editar</a>
                             <a href="" class="btn btn--error btn--sm btn--bold">Eliminar</a>

@@ -200,12 +200,12 @@ class DWESBaseDatos {
   //Nombre, comentario, fecha e imagen del usuario + id de la serie en determinado rango
   public static function obtenRespuestasSerie ($db, $idSerie, $registroInicial)
   {
-    $db->ejecuta("SELECT u.nombre, id_serie, contenido, DATE_FORMAT(fecha, '%d %b %Y', 'es-ES') as fecha, img 
+    $db->ejecuta("SELECT u.nombre, r.id as 'id_respuesta', id_serie, contenido, fecha, DATE_FORMAT(fecha, '%d %b %Y', 'es-ES') as fecha_formateada, img 
                   FROM respuestas r 
                   INNER JOIN usuarios u 
                   ON u.id=r.id_usuario 
                   WHERE id_serie=? 
-                  ORDER BY fecha 
+                  ORDER BY fecha DESC
                   LIMIT ?, ?;", 
     $idSerie, $registroInicial, self::REGISTROS_POR_PAGINA);
     
@@ -221,13 +221,23 @@ class DWESBaseDatos {
 
   //Fotos de los primeros 5 usuarios que han comentado esta serie
   public static function obtenPrimerosBuddiesSerie ($db, $idSerie) {
-    $db->ejecuta('SELECT DISTINCT(id_serie), img 
-    FROM respuestas r 
-    INNER JOIN usuarios u 
-    ON u.id=r.id_usuario 
-    WHERE id_serie=? 
-    LIMIT ?;', 
+    // $db->ejecuta('SELECT id_serie, u.id, u.img 
+    // FROM respuestas r 
+    // INNER JOIN usuarios u 
+    // ON u.id=r.id_usuario 
+    // WHERE id_serie=?
+    // GROUP BY u.id
+    // LIMIT ?;',
+    // $idSerie, self::MAX_BUDDIES_FEED);
+    $db->ejecuta('SELECT u.nombre, COUNT(r.id) AS total_respuestas
+    FROM usuarios u
+    JOIN respuestas r ON u.id = r.id_usuario
+    WHERE r.id_serie = ?
+    GROUP BY u.nombre
+    ORDER BY total_respuestas DESC
+    LIMIT ?;',
     $idSerie, self::MAX_BUDDIES_FEED);
+    
     return $db->obtenDatos();
   }
 
