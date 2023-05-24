@@ -45,6 +45,10 @@
 .card__serie-info {
     width: 85%;
     padding: var(--space-xxl);
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 .body_serie, .footer_serie {
     margin-top: 2%;

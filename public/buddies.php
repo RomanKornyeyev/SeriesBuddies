@@ -23,7 +23,7 @@
     if (isset($_GET['id-serie'])) {
         $idSerie = $_GET['id-serie'];
         //obtenemos todos los users filtrados por serie
-        $consulta = DWESBaseDatos::obtenListadoBuddiesPorSerie($db, $idSerie);
+        $consulta = DWESBaseDatos::obtenListadoBuddiesPorSerie($db, $idSerie, $registroInicial);
     }else{
         //obtenemos todos los users
         $consulta = DWESBaseDatos::obtenListadoBuddies($db, $registroInicial);

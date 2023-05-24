@@ -21,7 +21,7 @@ class DWESBaseDatos {
   const ACEPTADA = "aceptada";
 
   const REGISTROS_POR_PAGINA = 20;
-  const MAX_BUDDIES_FEED = 5;
+  const MAX_BUDDIES_FEED = 3;
   const MAX_PAG_PAGINADOR = 3;
 
   /*
@@ -229,7 +229,7 @@ class DWESBaseDatos {
     // GROUP BY u.id
     // LIMIT ?;',
     // $idSerie, self::MAX_BUDDIES_FEED);
-    $db->ejecuta('SELECT u.nombre, COUNT(r.id) AS total_respuestas
+    $db->ejecuta('SELECT u.nombre, u.img, COUNT(r.id) AS total_respuestas
     FROM usuarios u
     JOIN respuestas r ON u.id = r.id_usuario
     WHERE r.id_serie = ?
@@ -278,6 +278,28 @@ class DWESBaseDatos {
     return $listadoBuddies;
   }
 
+  public static function obtenListadoBuddiesPorSerie ($db, $idSerie, $registroInicial) {
+    $db->ejecuta (
+      "WITH t as (select u.id, u.nombre, u.img, CONCAT('@',u.nombre,'#', u.id) AS alias, count(p.id) as total_amigos 
+      from usuarios u 
+      left join peticiones p 
+      on u.id=p.id_emisor 
+      and p.estado='aceptada'
+      group by u.id)
+      
+      SELECT t.id, t.nombre, t.img, t.alias, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas, t.total_amigos
+      FROM t
+      LEFT JOIN respuestas r ON t.id=r.id_usuario
+      WHERE r.id_serie = ?
+      GROUP BY t.id LIMIT ?,?;",
+      $idSerie, $registroInicial, self::REGISTROS_POR_PAGINA
+    );
+    $listadoBuddies = $db->obtenDatos();
+
+    return $listadoBuddies;
+  }
+
+  /*
   public static function obtenListadoBuddiesPorSerie ($db, $idSerie) {
     //Devuelve la informacion del usuario que ha comentado en esa serie
     $db->ejecuta ("SELECT DISTINCT(id_serie), u.id, nombre, img FROM respuestas r INNER JOIN usuarios u ON u.id=r.id_usuario WHERE id_serie=? LIMIT ?;", $idSerie, self::MAX_BUDDIES_FEED);
@@ -303,6 +325,8 @@ class DWESBaseDatos {
 
     return $listadoBuddies;
   }
+  */
+
 
   // ====== INSERTS ======
 

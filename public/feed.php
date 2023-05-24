@@ -41,7 +41,7 @@
     //Devuelve la primera y la ultima pagina disponible
     $limites = $db->obtenLimitesPaginacion($paginaActual, $totalPaginas);
 
-    //Fotos de los primeros 5 usuarios que han comentado esta serie
+    //Fotos de los primeros 5 usuarios que más han comentado esta serie
     $listadoBuddies = $db->obtenPrimerosBuddiesSerie($db, $idSerie);
 
 
@@ -129,15 +129,15 @@
         <div class="card__serie-info">
             <div class="info info--serie">
                 <p class="text text--serie"><?=$response['seriePlot']?></p>
-                <?php foreach ($response['serieGenres'] as $key => $value) { ?>
-                    <a href="./series.php?id=<?=$response['serieGenres'][$key]['id']?>&nombre=<?=$response['serieGenres'][$key]['name']?>" class="btn btn--outline_filter">#<?=$response['serieGenres'][$key]['name']?></a>
+                <?php foreach ($response['serieGenres'] as $genero) { ?>
+                    <a href="./series.php?id=<?=$genero['id']?>&nombre=<?=$genero['name']?>" class="btn btn--outline_filter">#<?=$genero['name']?></a>
                 <?php } ?>
-                <a href="./feed.php?id=<?=$idSerie?>&action=publicando" class="btn">Responder</a>
+                <a href="./feed.php?id=<?=$idSerie?>&action=publicando" class="btn btn--secondary">Responder</a>
             </div>
-            <a href="./buddies.php?id=<?=$idSerie?>" class="links__buddy">
+            <a href="./buddies.php?id-serie=<?=$idSerie?>" class="links__buddy">
                 <div class="icon">
-                    <?php foreach ($listadoBuddies as $key => $value) { ?>
-                        <div class="icon__buddy img-user-post"><img class="img-fit" src="<?=$listadoBuddies[$key]['img']?>" alt="serie-img"></div>
+                    <?php foreach ($listadoBuddies as $buddie) { ?>
+                        <div class="icon__buddy img-user-post"><img class="img-fit" src="<?=$buddie['img']?>" alt="serie-img"></div>
                     <?php } ?>
                 </div>
                 <p class="info info--buddy">Ver todos los buddies &gt;</p>
@@ -145,21 +145,21 @@
         </div>
     </div>
     <?php if ($_GET['action']=='publicando' || ($_GET['action'] == 'editando' && ($_SESSION['id'] == $infoRespuesta['id'] || $esAdmin))) { $formulario->pintarGlobal(); } ?>
-    <?php foreach ($comentarios as $key => $value) { ?>
+    <?php foreach ($comentarios as $comentario) { ?>
         <div class="card">
             <div class="card__post">
                 <div class="card__post-img">
                     <div class="img-user-post">
-                        <img class="img-fit" src="<?=$comentarios[$key]['img']?>" alt="serie-img">
+                        <img class="img-fit" src="<?=$comentario['img']?>" alt="serie-img">
                     </div>
-                    <h2 class="title title--user"><?=$comentarios[$key]['nombre']?></h2>
+                    <h2 class="title title--user"><?=$comentario['nombre']?></h2>
                     <div class="icon">
                         <div class="icon__chip"></div>
                         <div class="icon__chip"></div>
                         <div class="icon__chip"></div>
                     </div>
                     <div class="user--responsive">
-                        <h2 class="title title--user"><?=$comentarios[$key]['nombre']?></h2>
+                        <h2 class="title title--user"><?=$comentario['nombre']?></h2>
                         <div class="icon">
                             <div class="icon__chip"></div>
                             <div class="icon__chip"></div>
@@ -169,13 +169,13 @@
                 </div>
                 <div class="card__post-comment">
                     <div class="info info--comment">
-                        <div class="date-post">Publicado el <?=$comentarios[$key]['fecha_formateada']?></div>
+                        <div class="date-post">Publicado el <?=$comentario['fecha_formateada']?></div>
                         <div class="admin-area">
-                            <a href="./feed.php?id=<?=$idSerie?>&action=editando&id_respuesta=<?=$comentarios[$key]['id_respuesta']?>" class="btn btn--secondary btn--sm btn--bold">Editar</a>
+                            <a href="./feed.php?id=<?=$idSerie?>&action=editando&id_respuesta=<?=$comentario['id_respuesta']?>" class="btn btn--secondary btn--sm btn--bold">Editar</a>
                             <a href="" class="btn btn--error btn--sm btn--bold">Eliminar</a>
                         </div>
                     </div>
-                    <p class="text text--comment"><?=$comentarios[$key]['contenido']?></p>
+                    <p class="text text--comment"><?=$comentario['contenido']?></p>
                 </div>
             </div>
         </div>
