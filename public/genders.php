@@ -46,12 +46,6 @@
         <?php } ?>
         
     </div>
-
-    <div class="pagination">
-        <a href="#" class="btn btn--primary btn--sm">&lt;</a>
-        <a href="#" class="btn btn--primary btn--sm">1</a>
-        <a href="#" class="btn btn--primary btn--sm">&gt;</a>
-    </div>
 <?php
 
     // ********* FIN BUFFER + LLAMADA AL TEMPLATE **********
