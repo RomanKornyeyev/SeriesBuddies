@@ -79,8 +79,9 @@
 
                 if ($formulario->validarGlobal()) {
                     //Insert del comentario
-                    $db->ejecuta('INSERT INTO respuestas (id_serie, id_usuario, contenido) VALUES (?, ?, ?)', $idSerie, $_SESSION['id'], $mensaje->getValor());
+                    DWESBaseDatos::insertarRespuesta($db, $idSerie, $_SESSION['id'], $mensaje->getValor());
                     
+                    //redirección
                     header('Location: feed.php?id='.$idSerie);
                     die();
                 }
@@ -90,8 +91,8 @@
             } else if ($_GET['action'] == 'editando') {
                 $linkAccion = "&action=editando";
 
-                $infoRespuesta = $db->ejecuta('SELECT u.id, contenido FROM respuestas r INNER JOIN usuarios u ON r.id_usuario=u.id WHERE r.id=?;', $_GET['id_respuesta']);
-                $infoRespuesta = $db->obtenElDato();
+                $infoRespuesta = DWESBaseDatos::obtenInfoRespuesta($db, $_GET['id_respuesta']);
+                
                 if ($_SESSION['id'] == $infoRespuesta['id'] || $esAdmin) {
                     $labelCampo = 'Edita tu respuesta';
                     $valorCampo = $infoRespuesta['contenido'];
@@ -109,14 +110,14 @@
                     
                     if ($formulario->validarGlobal()) {
                         //Update del comentario
-                        $db->ejecuta('UPDATE respuestas SET contenido=? WHERE id=?', $mensaje->getValor(), $_GET['id_respuesta']);
+                        DWESBaseDatos::actualizarRespuesta($db, $_GET['id_respuesta'], $mensaje->getValor());
                         
-                        header('Location: feed.php?id='.$idSerie);
+                        //redirección
+                        header('Location: feed.php?id='.$idSerie.'&pagina='.$paginaActual);
                         die(); 
                     }
                 }
             }
-
         }
     }
 
@@ -131,6 +132,8 @@
     // ********* COMIENZO BUFFER **********
     ob_start();
 ?>
+
+    <?php // ***** SERIE ***** ?>
     <div class="card">
         <div class="card__serie-img">
             <img class="img-fit" src="<?=$response['backdrop']?>" alt="serie-img">
@@ -158,6 +161,7 @@
     <?php if ($_GET['action']=='publicando' || ($_GET['action'] == 'editando' && ($_SESSION['id'] == $infoRespuesta['id'] || $esAdmin))) { $formulario->pintarGlobal(); } ?>
     
     <?php
+        // ***** PAGINACION + BTN RESPONDER *****
         //Si el usuario no está publicando ni respondiendo, el boton es "RESPONDER", si el usuario está publicando/editando, el botón es "VOLVER"
         //lo que devuelve al user a la misma página, pero sin acción de editar/responder
 
@@ -206,6 +210,7 @@
         </div>
     </div>
 
+    <?php // ***** RESPUESTAS ***** ?>
     <?php foreach ($comentarios as $comentario) { ?>
         <div class="card">
             <div class="card__post">
@@ -232,8 +237,11 @@
                     <div class="info info--comment">
                         <div class="date-post">Publicado el <?=$comentario['fecha_formateada']?></div>
                         <div class="admin-area">
-                            <a href="./feed.php?id=<?=$idSerie?>&action=editando&id_respuesta=<?=$comentario['id_respuesta']?>" class="btn btn--secondary btn--sm btn--bold">Editar</a>
-                            <a href="" class="btn btn--error btn--sm btn--bold">Eliminar</a>
+                            <?php //botones de editar/eliminar, solo cuando id=id o es admin ?>
+                            <?php if($comentario['id_user'] == $_SESSION['id'] || $esAdmin) { ?>
+                                <a href="./feed.php?id=<?=$idSerie?>&action=editando&id_respuesta=<?=$comentario['id_respuesta']?>&pagina=<?=$paginaActual?>" class="btn btn--secondary btn--sm btn--bold">Editar</a>
+                                <a href="" class="btn btn--error btn--sm btn--bold">Eliminar</a>
+                            <?php } ?>
                         </div>
                     </div>
                     <p class="text text--comment"><?=$comentario['contenido']?></p>
@@ -244,6 +252,7 @@
     
     <?php if(!empty($comentarios)) { ?>
         <?php
+            // ***** PAGINACION + BTN RESPONDER *****
             //Si el usuario no está publicando ni respondiendo, el boton es "RESPONDER", si el usuario está publicando/editando, el botón es "VOLVER"
             //lo que devuelve al user a la misma página, pero sin acción de editar/responder
 
@@ -292,6 +301,7 @@
             </div>
         </div>
     <?php } ?>
+
 <?php
 
 // ********* FIN BUFFER + LLAMADA AL TEMPLATE **********

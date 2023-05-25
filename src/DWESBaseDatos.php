@@ -2,7 +2,6 @@
 
 /*
 Clase para facilitar las conexiones y consultas a bases de datos
-Por Jorge Dueñas Lerín
 */
 
 
@@ -20,7 +19,7 @@ class DWESBaseDatos {
   const PENDIENTE = "pendiente";
   const ACEPTADA = "aceptada";
 
-  const REGISTROS_POR_PAGINA = 2;
+  const REGISTROS_POR_PAGINA = 20;
   const MAX_BUDDIES_FEED = 3;
   const MAX_PAG_PAGINADOR = 3;
 
@@ -200,7 +199,7 @@ class DWESBaseDatos {
   //Nombre, comentario, fecha e imagen del usuario + id de la serie en determinado rango
   public static function obtenRespuestasSerie ($db, $idSerie, $registroInicial)
   {
-    $db->ejecuta("SELECT u.nombre, r.id as 'id_respuesta', id_serie, contenido, fecha, DATE_FORMAT(fecha, '%d %b %Y', 'es-ES') as fecha_formateada, img 
+    $db->ejecuta("SELECT u.nombre, u.id as 'id_user', r.id as 'id_respuesta', id_serie, contenido, fecha, DATE_FORMAT(fecha, '%d %b %Y', 'es-ES') as fecha_formateada, img 
                   FROM respuestas r 
                   INNER JOIN usuarios u 
                   ON u.id=r.id_usuario 
@@ -217,6 +216,21 @@ class DWESBaseDatos {
   {
     $db->ejecuta('SELECT COUNT(*) FROM respuestas where id_serie = ?;', $idSerie);
     return $db->obtenElDato()['COUNT(*)'];  
+  }
+
+  public static function obtenInfoRespuesta($db, $idRespuesta)
+  {
+    $db->ejecuta(
+      "SELECT u.id, contenido FROM respuestas r INNER JOIN usuarios u ON r.id_usuario=u.id WHERE r.id=?;",
+      $idRespuesta
+    );
+    $consulta = $db->obtenElDato();
+    // return $consulta;
+    if ($consulta != "") {
+      return $consulta;
+    }else{
+      return "";
+    }
   }
 
   //Fotos de los primeros 5 usuarios que han comentado esta serie
@@ -356,7 +370,33 @@ class DWESBaseDatos {
     }
   }
 
+  public static function insertarRespuesta($db, $idSerie, $idUsuario, $mensaje) : bool
+  {
+    $db->ejecuta(
+      "INSERT INTO respuestas (id_serie, id_usuario, contenido) VALUES (?, ?, ?)",
+      $idSerie, $idUsuario, $mensaje
+    );
+    if ($db->getExecuted()) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   // ====== UPDATES ======
+
+  public static function actualizarRespuesta($db, $idRespuesta, $mensaje) : bool
+  {
+    $db->ejecuta(
+      "UPDATE respuestas SET contenido=? WHERE id=?",
+      $mensaje, $idRespuesta
+    );
+    if ($db->getExecuted()) {
+      return true;
+    }else{
+      return false;
+    }
+  }
 
   public static function actualizarContra($db, $id, $pass) : bool
   {
