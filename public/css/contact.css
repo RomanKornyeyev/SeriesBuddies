@@ -1,0 +1,59 @@
+/* ===== BODY (CENTRAL CONTAINER) ===== */
+.container{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+.main{
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-l);
+    padding: var(--space-ultra-l) var(--space-xxl);
+    width: 100%;
+    max-width: 60rem;
+    min-height: 40rem;
+    border-radius: var(--br-default);
+    background-color: var(--primary-50);
+    /* border: 5px solid white; */
+}
+
+
+/* ===== TABLET (810px) ===== */
+@media screen and (max-width: 810px) {
+    .title--form{
+        position: absolute;
+        left:-.5rem;
+        top: -8.5rem;
+        bottom: auto;
+        font-size: 7rem;
+        writing-mode: horizontal-tb;
+        transform: rotate(360deg);
+    }
+    .container{
+        padding-top: var(--space-ultra-xxl);
+    }
+}
+
+/* ===== EXTRA (580px) ===== */
+@media screen and (max-width: 580px) {
+    /* ===== BODY (CENTRAL CONTAINER) ===== */
+    
+}
+
+/* ===== PHONE (480px) ===== */
+@media screen and (max-width: 480px) {
+    
+}
+
+
+/* ===== EXTRA (420px) ===== */
+@media screen and (max-width: 420px) {
+    /* ===== BODY (CENTRAL CONTAINER) ===== */
+    .main{
+        padding: var(--space-xxxl) var(--space-l);
+    }
+}

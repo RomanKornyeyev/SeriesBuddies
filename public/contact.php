@@ -84,7 +84,7 @@
     
     // ********* INFO PARA EL TEMPLATE **********
     $tituloHead = "Contacto - SeriesBuddies";
-    $estiloEspecifico = "./css/login.css";
+    $estiloEspecifico = "./css/contact.css";
     $scriptEspecifico = "";
     $content;
 
@@ -112,7 +112,7 @@
         <p class="extra-form-info">
             <i class="fa-sharp fa-solid fa-circle-check checkmark-form"></i>
             <br><br>
-            <strong>¡Mensaje enviado!</strong> Nos pondremos en contacto lo más pronto posible.
+            <strong>¡Mensaje enviado!</strong> Gracias por ponerte en contacto con nosotros, en caso de ser necesario, nos pondremos en contacto lo más pronto posible.
             <br><br>
             <a href="index.php" class="link-enphasis link-body">Ir al inicio</a>
         </p>
