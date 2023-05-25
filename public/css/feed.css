@@ -8,6 +8,7 @@
 }
 .card{
     width:100%;
+    position: relative;
 }
 .card, .card__post{
     border-radius: var(--br-default);

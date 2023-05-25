@@ -1,7 +1,3 @@
-//delay opcional (loader)
-const delay = ms => new Promise(res => setTimeout(res, ms));
-
-
 //función que pinta los resultados de cada género recibiendo un node list como parámetro
 async function contarResultados(arreglo) {
 

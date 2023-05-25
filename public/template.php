@@ -34,7 +34,7 @@
         <!-- body (central container) -->
         <div class="container limit-width">
             <!-- main -->
-            <main class="main">
+            <main class="main" id="main">
 
 
 

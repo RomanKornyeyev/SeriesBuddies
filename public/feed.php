@@ -126,7 +126,8 @@
     // ********* INFO PARA EL TEMPLATE **********
     $tituloHead = $response['serieTitle']." - SeriesBuddies";
     $estiloEspecifico = "./css/feed.css";
-    $scriptEspecifico = "";
+    $scriptEspecifico = "./js/feed.js";
+    $scriptLoadMode = "defer";
     $content;
 
     // ********* COMIENZO BUFFER **********
@@ -158,8 +159,11 @@
             </div> 
         </div>
     </div>
-    <?php if ($_GET['action']=='publicando' || ($_GET['action'] == 'editando' && ($_SESSION['id'] == $infoRespuesta['id'] || $esAdmin))) { $formulario->pintarGlobal(); } ?>
-    
+    <?php if ($_GET['action']=='publicando' || ($_GET['action'] == 'editando' && ($_SESSION['id'] == $infoRespuesta['id'] || $esAdmin))) { ?>
+        <div id="respuesta" class="width-100">
+            <?php $formulario->pintarGlobal(); ?>
+        </div>
+    <?php } ?>
     <?php
         // ***** PAGINACION + BTN RESPONDER *****
         //Si el usuario no está publicando ni respondiendo, el boton es "RESPONDER", si el usuario está publicando/editando, el botón es "VOLVER"
@@ -240,7 +244,7 @@
                             <?php //botones de editar/eliminar, solo cuando id=id o es admin ?>
                             <?php if($comentario['id_user'] == $_SESSION['id'] || $esAdmin) { ?>
                                 <a href="./feed.php?id=<?=$idSerie?>&action=editando&id_respuesta=<?=$comentario['id_respuesta']?>&pagina=<?=$paginaActual?>" class="btn btn--secondary btn--sm btn--bold">Editar</a>
-                                <a href="" class="btn btn--error btn--sm btn--bold">Eliminar</a>
+                                <button class="btn btn--error btn--sm btn--bold" onclick="eliminar(this, <?=$comentario['id_respuesta']?>, <?=$paginaActual?>, <?=$totalPaginas?>)">Eliminar</button>
                             <?php } ?>
                         </div>
                     </div>

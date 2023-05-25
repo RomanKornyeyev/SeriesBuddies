@@ -95,13 +95,18 @@
                                 "DELETE FROM usuarios WHERE id=?;",
                                 $_POST['id']
                             );
-                            
+                            die();
                         }else{
                             echo "error";
                             die();
                         }
                         break;
 
+                    // ***** BORRAR RESPUESTA *****
+                    case 'respuesta':
+                        $db->ejecuta('SELECT * FROM usuarios WHERE ');
+                        die();
+                    break;
 
                     
                     default:

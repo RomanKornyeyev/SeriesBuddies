@@ -42,24 +42,6 @@ window.addEventListener("resize", function(){
     }
 });
 
-
-//confirmación, devuelve un boolean
-//function confirmacion(mensaje = "Esta acción no se puede deshacer ¿Quieres continuar?"){
-    // document.body.innerHTML += `
-    //     <div class="confirmation-wrapper opacity-fade-in-short" id="confirmacion-wrapper">
-    //         <div class="confirmation-card scale-in-short" id="confirmacion">
-    //             <div class="confirmation-card__body">
-    //                 ${mensaje}
-    //             </div>
-    //             <div class="confirmation-card__footer">
-    //                 <button class='btn btn--success' id='si'>SÍ</button>
-    //                 <button class='btn btn--error' id='no'>NO</button>
-    //             </div>
-    //         </div>
-    //     </div>
-    // `; 
-//}
-
 var confirmacionWrapper = document.getElementById("confirmation-wrapper");
 var confirmacionCard = document.getElementById("confirmation-card");
 var confirmacionBody = document.getElementById("confirmation-body");
@@ -86,3 +68,5 @@ function mostrarConfirmacion(mensaje = "Esta accion no se puede deshacer ¿Quier
     });
 }
 
+//delay opcional (loader)
+const delay = ms => new Promise(res => setTimeout(res, ms));

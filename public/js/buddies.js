@@ -25,8 +25,6 @@ function disableSiblingClicks(element) {
     });
   }
 
-//delay opcional (loader)
-const delay = ms => new Promise(res => setTimeout(res, ms));
 
 function peticion(elemento, id, accion, paginaActual=1, totalPaginas=3){
 
