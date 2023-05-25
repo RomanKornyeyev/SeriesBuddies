@@ -478,8 +478,18 @@ class DWESBaseDatos {
     }
   }
 
-  
-
+  public static function eliminaRespuesta($db, $id) : bool
+  {
+    $db->ejecuta(
+      "DELETE FROM respuestas WHERE id=?",
+      $id
+    );
+    if ($db->getExecuted()) {
+      return true;
+    }else{
+      return false;
+    }
+  }
 
 
 }

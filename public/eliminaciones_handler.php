@@ -17,7 +17,7 @@
                         if ($esAdmin || $_SESSION['id'] == $_POST['id']) {
                             //SELECT FROM DE LA SIGUIENTE PAGINA
                             //Si son distintas hay que pillar el primer registro de la siguiente pagina +1
-                            if ($_POST['pagina_actual'] != $_POST['total_paginas']) {
+                            if ($_POST['pagina_actual'] < $_POST['total_paginas']) {
                                 //Comentarios por pagina a mostrar
                                 $registrosPagina = DWESBaseDatos::REGISTROS_POR_PAGINA;
 
@@ -102,9 +102,74 @@
                         }
                         break;
 
+
+
                     // ***** BORRAR RESPUESTA *****
                     case 'respuesta':
-                        $db->ejecuta('SELECT * FROM usuarios WHERE ');
+                        $db->ejecuta(
+                            'SELECT u.id FROM respuestas r INNER JOIN usuarios u ON r.id_usuario=u.id WHERE r.id=?',
+                            $_POST['id']
+                        );
+                        $consulta = $db->obtenElDato();
+                        if($_SESSION['id'] == $consulta['id'] || $esAdmin){
+                            if ($_POST['pagina_actual'] < $_POST['total_paginas']) {
+                                //registros a mostrar
+                                $registrosPagina = DWESBaseDatos::REGISTROS_POR_PAGINA;
+
+                                //registro inicial
+                                $registroInicial = $_POST['pagina_actual']*$registrosPagina;
+                                
+                                //obtenemos las respuestas de la siguiente página
+                                $consulta = DWESBaseDatos::obtenRespuestasSerie ($db, $_POST['id_serie'], $registroInicial);
+
+                                $botones = "";
+
+                                if($consulta[0]['id_user'] == $_SESSION['id'] || $esAdmin) {
+                                    $botones = "
+                                        <a href='./feed.php?id=".$_POST['id_serie']."&action=editando&id_respuesta=".$consulta[0]['id_respuesta']."&pagina=".$_POST['pagina_actual']."' class='btn btn--secondary btn--sm btn--bold'>Editar</a>
+                                        <button class='btn btn--error btn--sm btn--bold' onclick='eliminar(this, ".$consulta[0]['id_respuesta'].", ".$_POST['id_serie'].", ".$_POST['pagina_actual'].", ".$_POST['total_paginas'].")'>Eliminar</button>
+                                    ";
+                                    
+                                }
+
+                                echo "
+                                    <div class='card'>
+                                        <div class='card__post'>
+                                            <div class='card__post-img'>
+                                                <div class='img-user-post'>
+                                                    <img class='img-fit' src='".$consulta[0]['img']."' alt='serie-img'>
+                                                </div>
+                                                <h2 class='title title--user'>".$consulta[0]['nombre']."</h2>
+                                                <div class='icon'>
+                                                    <div class='icon__chip'></div>
+                                                    <div class='icon__chip'></div>
+                                                    <div class='icon__chip'></div>
+                                                </div>
+                                                <div class='user--responsive'>
+                                                    <h2 class='title title--user'>".$consulta[0]['nombre']."</h2>
+                                                    <div class='icon'>
+                                                        <div class='icon__chip'></div>
+                                                        <div class='icon__chip'></div>
+                                                        <div class='icon__chip'></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class='card__post-comment'>
+                                                <div class='info info--comment'>
+                                                    <div class='date-post'>Publicado el ".$consulta[0]['fecha_formateada']."</div>
+                                                    <div class='admin-area'>".
+                                                        $botones
+                                                    ."</div>
+                                                </div>
+                                                <p class='text text--comment'>".$consulta[0]['contenido']."</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ";
+                            }
+
+                            DWESBaseDatos::eliminaRespuesta($db, $_POST['id']);
+                        }
                         die();
                     break;
 

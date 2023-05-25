@@ -6,7 +6,9 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-function eliminar(elemento, id, paginaActual, totalPaginas){
+var urlActual = window.location.href;
+console.log(urlActual);
+function eliminar(elemento, id, idSerie, paginaActual, totalPaginas){
     //objeto a ser borrado (usuario o respuesta)
     let objeto = 'respuesta';
 
@@ -19,7 +21,7 @@ function eliminar(elemento, id, paginaActual, totalPaginas){
                 let respuesta = elemento.parentNode.parentNode.parentNode.parentNode.parentNode;
                 let respuestaShadow = elemento.parentNode.parentNode.parentNode.parentNode;
                 respuestaShadow.style.boxShadow = "none";
-                let main = document.getElementById("main");
+                let respuestasGlobal = document.getElementById("respuestas");
 
                 //lo ponemos a cargar
                 let div = document.createElement("div");
@@ -28,7 +30,7 @@ function eliminar(elemento, id, paginaActual, totalPaginas){
                 respuesta.insertAdjacentElement("beforeend", div);
 
                 //esperamos 1,5sec
-                await delay(1500);                
+                await delay(1500);           
 
                 //nuevo objeto XMLHttpRequest
                 var xhttp = new XMLHttpRequest();
@@ -41,7 +43,7 @@ function eliminar(elemento, id, paginaActual, totalPaginas){
                         if (this.status == 200) {
                             // respuesta del handler, la pintamos en el elemento
                             respuesta.remove();
-                            main.innerHTML += this.responseText;
+                            respuestasGlobal.innerHTML += this.responseText;
 
                         //¿Error en el handler? Pintamos un error
                         }else if (this.status == 500 || this.status == 400){
@@ -57,7 +59,7 @@ function eliminar(elemento, id, paginaActual, totalPaginas){
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 
                 //pasamos la petición POST
-                xhttp.send(`objeto=${objeto}&id=${id}&pagina_actual=${paginaActual}&total_paginas=${totalPaginas}`);
+                xhttp.send(`objeto=${objeto}&id=${id}&id_serie=${idSerie}&pagina_actual=${paginaActual}&total_paginas=${totalPaginas}`);
 
 
                 console.log("si");

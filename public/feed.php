@@ -43,6 +43,15 @@
     //Total de paginas que hay que mostrar
     $totalPaginas   = ceil($totalRegistros / $registrosPagina);
 
+    if (isset($_GET['pagina']) && $_GET['pagina'] > $totalPaginas) {
+        $paginaActual = 1;
+
+        $registroInicial = ($paginaActual-1)*$registrosPagina;
+        $comentarios = $db->obtenRespuestasSerie($db, $idSerie, $registroInicial);
+        $totalRegistros = $db->obtenTotalRespuestas($db, $idSerie);
+        $totalPaginas   = ceil($totalRegistros / $registrosPagina);
+    }
+
     //Devuelve la primera y la ultima pagina disponible
     $limites = $db->obtenLimitesPaginacion($paginaActual, $totalPaginas);
 
@@ -121,6 +130,10 @@
         }
     }
 
+    $linkIdRespuesta = "";
+    if (isset($_GET['id_respuesta'])) {
+        $linkIdRespuesta = "&id_respuesta=".$_GET['id_respuesta'];
+    }
 
 
     // ********* INFO PARA EL TEMPLATE **********
@@ -183,76 +196,78 @@
         <div class="pages">
             <?php//Te saca el boton de ir hacia atras si no estas en la primera pagina?>
             <?php if ($paginaActual != 1) { ?>
-                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual-1)?><?=$linkAccion?>" class="btn <?=$estiloBoton?> btn--sm">&lt;</a>
+                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual-1)?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--sm">&lt;</a>
             <?php }
 
             //Mostramos la primera pagina y los ...
             if ($limites['primera'] != 1) { ?>
-                <a href="./feed.php?id=<?=$idSerie?>&pagina=1<?=$linkAccion?>" class="btn btn--outline btn--sm">1</a>
+                <a href="./feed.php?id=<?=$idSerie?>&pagina=1<?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--outline btn--sm">1</a>
                 <span class="btn btn--outline btn--sm">...</span>
             <?php }
 
             //Te pinta el boton de la pagina en la que estas, las anteriores y las siguientes (intervalo de 5)
             for ($i=$limites['primera']; $i <= $limites['ultima']; $i++) { 
                 if ($paginaActual == $i) { ?>
-                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$paginaActual?><?=$linkAccion?>" class="btn btn--primary btn--sm"><?=$paginaActual?></a>
+                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$paginaActual?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--primary btn--sm"><?=$paginaActual?></a>
                 <?php } else { ?>
-                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$i?><?=$linkAccion?>" class="btn btn--outline btn--sm"><?=$i?></a>
+                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$i?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--outline btn--sm"><?=$i?></a>
             <?php }
             }
             
             //Saca la ultima página que hay en el registro
             if ($limites['ultima'] != $totalPaginas) { ?>
                 <span class="btn btn--outline btn--sm">...</span>
-                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$totalPaginas?><?=$linkAccion?>" class="btn btn--outline btn--sm"><?=$totalPaginas?></a>;
+                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$totalPaginas?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--outline btn--sm"><?=$totalPaginas?></a>
             <?php }
 
             //Te saca el boton de ir hacia adelante si no estas en la última pagina
             if ($paginaActual < $totalPaginas) { ?>
-                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual+1)?><?=$linkAccion?>" class="btn btn--primary btn--sm">&gt;</a>
+                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual+1)?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--primary btn--sm">&gt;</a>
             <?php } ?>
         </div>
     </div>
 
     <?php // ***** RESPUESTAS ***** ?>
-    <?php foreach ($comentarios as $comentario) { ?>
-        <div class="card">
-            <div class="card__post">
-                <div class="card__post-img">
-                    <div class="img-user-post">
-                        <img class="img-fit" src="<?=$comentario['img']?>" alt="serie-img">
-                    </div>
-                    <h2 class="title title--user"><?=$comentario['nombre']?></h2>
-                    <div class="icon">
-                        <div class="icon__chip"></div>
-                        <div class="icon__chip"></div>
-                        <div class="icon__chip"></div>
-                    </div>
-                    <div class="user--responsive">
+    <div id="respuestas" class="respuestas">
+        <?php foreach ($comentarios as $comentario) { ?>
+            <div class="card">
+                <div class="card__post">
+                    <div class="card__post-img">
+                        <div class="img-user-post">
+                            <img class="img-fit" src="<?=$comentario['img']?>" alt="serie-img">
+                        </div>
                         <h2 class="title title--user"><?=$comentario['nombre']?></h2>
                         <div class="icon">
                             <div class="icon__chip"></div>
                             <div class="icon__chip"></div>
                             <div class="icon__chip"></div>
                         </div>
-                    </div>
-                </div>
-                <div class="card__post-comment">
-                    <div class="info info--comment">
-                        <div class="date-post">Publicado el <?=$comentario['fecha_formateada']?></div>
-                        <div class="admin-area">
-                            <?php //botones de editar/eliminar, solo cuando id=id o es admin ?>
-                            <?php if($comentario['id_user'] == $_SESSION['id'] || $esAdmin) { ?>
-                                <a href="./feed.php?id=<?=$idSerie?>&action=editando&id_respuesta=<?=$comentario['id_respuesta']?>&pagina=<?=$paginaActual?>" class="btn btn--secondary btn--sm btn--bold">Editar</a>
-                                <button class="btn btn--error btn--sm btn--bold" onclick="eliminar(this, <?=$comentario['id_respuesta']?>, <?=$paginaActual?>, <?=$totalPaginas?>)">Eliminar</button>
-                            <?php } ?>
+                        <div class="user--responsive">
+                            <h2 class="title title--user"><?=$comentario['nombre']?></h2>
+                            <div class="icon">
+                                <div class="icon__chip"></div>
+                                <div class="icon__chip"></div>
+                                <div class="icon__chip"></div>
+                            </div>
                         </div>
                     </div>
-                    <p class="text text--comment"><?=$comentario['contenido']?></p>
+                    <div class="card__post-comment">
+                        <div class="info info--comment">
+                            <div class="date-post">Publicado el <?=$comentario['fecha_formateada']?></div>
+                            <div class="admin-area">
+                                <?php //botones de editar/eliminar, solo cuando id=id o es admin ?>
+                                <?php if($comentario['id_user'] == $_SESSION['id'] || $esAdmin) { ?>
+                                    <a href="./feed.php?id=<?=$idSerie?>&action=editando&id_respuesta=<?=$comentario['id_respuesta']?>&pagina=<?=$paginaActual?>" class="btn btn--secondary btn--sm btn--bold">Editar</a>
+                                    <button class="btn btn--error btn--sm btn--bold" onclick="eliminar(this, <?=$comentario['id_respuesta']?>, <?=$idSerie?>, <?=$paginaActual?>, <?=$totalPaginas?>)">Eliminar</button>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <p class="text text--comment"><?=$comentario['contenido']?></p>
+                    </div>
                 </div>
             </div>
-        </div>
-    <?php } ?>
+        <?php } ?>
+    </div>
     
     <?php if(!empty($comentarios)) { ?>
         <?php
@@ -274,33 +289,33 @@
             <div class="pages">
                 <?php//Te saca el boton de ir hacia atras si no estas en la primera pagina?>
                 <?php if ($paginaActual != 1) { ?>
-                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual-1)?><?=$linkAccion?>" class="btn <?=$estiloBoton?> btn--sm">&lt;</a>
+                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual-1)?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--sm">&lt;</a>
                 <?php }
 
                 //Mostramos la primera pagina y los ...
                 if ($limites['primera'] != 1) { ?>
-                    <a href="./feed.php?id=<?=$idSerie?>&pagina=1<?=$linkAccion?>" class="btn btn--outline btn--sm">1</a>
+                    <a href="./feed.php?id=<?=$idSerie?>&pagina=1<?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--outline btn--sm">1</a>
                     <span class="btn btn--outline btn--sm">...</span>
                 <?php }
 
                 //Te pinta el boton de la pagina en la que estas, las anteriores y las siguientes (intervalo de 5)
                 for ($i=$limites['primera']; $i <= $limites['ultima']; $i++) { 
                     if ($paginaActual == $i) { ?>
-                        <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$paginaActual?><?=$linkAccion?>" class="btn btn--primary btn--sm"><?=$paginaActual?></a>
+                        <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$paginaActual?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--primary btn--sm"><?=$paginaActual?></a>
                     <?php } else { ?>
-                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$i?><?=$linkAccion?>" class="btn btn--outline btn--sm"><?=$i?></a>
+                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$i?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--outline btn--sm"><?=$i?></a>
                 <?php }
                 }
                 
                 //Saca la ultima página que hay en el registro
                 if ($limites['ultima'] != $totalPaginas) { ?>
                     <span class="btn btn--outline btn--sm">...</span>
-                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$totalPaginas?><?=$linkAccion?>" class="btn btn--outline btn--sm"><?=$totalPaginas?></a>;
+                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$totalPaginas?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--outline btn--sm"><?=$totalPaginas?></a>
                 <?php }
 
                 //Te saca el boton de ir hacia adelante si no estas en la última pagina
                 if ($paginaActual < $totalPaginas) { ?>
-                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual+1)?><?=$linkAccion?>" class="btn btn--primary btn--sm">&gt;</a>
+                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual+1)?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--primary btn--sm">&gt;</a>
                 <?php } ?>
             </div>
         </div>
