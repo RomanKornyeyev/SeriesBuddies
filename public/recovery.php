@@ -1,11 +1,12 @@
 <?php
     
+    // ***** INIT *****
     require_once("../src/init.php");
     
     // ***** MAILER *****
     use clases\mailer\Mailer;
 
-    // ***** FORMULARIOS *****
+    // ***** FORM *****
     use clases\form\campo\Atipo;
     use clases\form\campo\Fecha;
     use clases\form\campo\Multiple;

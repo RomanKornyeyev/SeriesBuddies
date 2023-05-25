@@ -1,5 +1,9 @@
 <?php
+
+    // ***** INIT *****
     require_once("../src/init.php");
+
+    // ***** API TMDB *****
     use clases\api_tmdb\TMDB;
     
     $tmdb = new TMDB();

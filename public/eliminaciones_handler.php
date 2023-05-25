@@ -1,9 +1,9 @@
 <?php
 
-    // ********* INIT **********
+    // ***** INIT *****
     require_once("../src/init.php");
 
-    // ********* PETICIONES **********
+    // ***** PETICIONES *****
     use clases\peticiones\Peticion;
 
     $peticionFooter = new Peticion($esAdmin);

@@ -20,7 +20,7 @@ class DWESBaseDatos {
   const PENDIENTE = "pendiente";
   const ACEPTADA = "aceptada";
 
-  const REGISTROS_POR_PAGINA = 20;
+  const REGISTROS_POR_PAGINA = 2;
   const MAX_BUDDIES_FEED = 3;
   const MAX_PAG_PAGINADOR = 3;
 
@@ -229,7 +229,7 @@ class DWESBaseDatos {
     // GROUP BY u.id
     // LIMIT ?;',
     // $idSerie, self::MAX_BUDDIES_FEED);
-    $db->ejecuta('SELECT u.nombre, u.img, COUNT(r.id) AS total_respuestas
+    $db->ejecuta('SELECT u.nombre, u.img, u.id, COUNT(r.id) AS total_respuestas
     FROM usuarios u
     JOIN respuestas r ON u.id = r.id_usuario
     WHERE r.id_serie = ?

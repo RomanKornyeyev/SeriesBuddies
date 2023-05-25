@@ -282,8 +282,18 @@ img{width: 100%;}
 .link-body{color: var(--black);}
 .pagination{
     width: 100%;
-    padding: var(--space-l) 0;
+    padding: var(--space-s) 0;
     text-align: center;
+}
+.pagination--plus-response{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-l);
+}
+.pages, .res-btn{
+    min-width: 2.5rem;
 }
 /* ===== FOOTER ===== */
 .footer{
@@ -405,6 +415,7 @@ img{width: 100%;}
 .d-none{display: none !important;}
 .d-block{display: block;}
 .d-flex{display: flex;}
+.width-100{width:100%;}
 .height-100{height: 100%;}
 .flex-center-center{
     justify-content: center;

@@ -1,5 +1,6 @@
 <?php
 
+    // ***** INIT *****
     require_once("../src/init.php");
 
     // ***** MAILER *****

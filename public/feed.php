@@ -1,6 +1,11 @@
 <?php
+    // ***** INIT *****
     require_once("../src/init.php");
+
+    // ***** API TMDB *****
     use clases\api_tmdb\TMDB;
+
+    // ***** FORM *****
     use clases\form\campo\Atipo;
     use clases\form\campo\Fecha;
     use clases\form\campo\Multiple;
@@ -52,11 +57,14 @@
             header('Location: index.php');
             die();
         } else {
+            $linkAccion = "";
+
             $valorCampo = "";
             $labelCampo = "";
             
             //Si el usuario responde a una serie
             if ($_GET['action'] == 'publicando') {
+                $linkAccion = "&action=publicando";
                 
                 $labelCampo = 'Publica tu respuesta';
                 // ========================================= FORM DE LOGIN =========================================
@@ -80,6 +88,8 @@
 
                 //Si el usuario edita una respuesta suya en concreto
             } else if ($_GET['action'] == 'editando') {
+                $linkAccion = "&action=editando";
+
                 $infoRespuesta = $db->ejecuta('SELECT u.id, contenido FROM respuestas r INNER JOIN usuarios u ON r.id_usuario=u.id WHERE r.id=?;', $_GET['id_respuesta']);
                 $infoRespuesta = $db->obtenElDato();
                 if ($_SESSION['id'] == $infoRespuesta['id'] || $esAdmin) {
@@ -132,19 +142,70 @@
                 <?php foreach ($response['serieGenres'] as $genero) { ?>
                     <a href="./series.php?id=<?=$genero['id']?>&nombre=<?=$genero['name']?>" class="btn btn--outline_filter">#<?=$genero['name']?></a>
                 <?php } ?>
-                <a href="./feed.php?id=<?=$idSerie?>&action=publicando" class="btn btn--secondary">Responder</a>
             </div>
-            <a href="./buddies.php?id-serie=<?=$idSerie?>" class="links__buddy">
-                <div class="icon">
+            <div class="links__buddy">
+                <div class="icon icon--super-buddies">
                     <?php foreach ($listadoBuddies as $buddie) { ?>
-                        <div class="icon__buddy img-user-post"><img class="img-fit" src="<?=$buddie['img']?>" alt="serie-img"></div>
+                        <a href="./profile.php?id=<?=$buddie['id']?>" class="icon__buddy img-user-post"><img class="img-fit" src="<?=$buddie['img']?>" alt="serie-img"></a>
                     <?php } ?>
                 </div>
-                <p class="info info--buddy">Ver todos los buddies &gt;</p>
-            </a> 
+                <div class="width-100 info--super-buddies">
+                    <a class="info info--buddy" href="./buddies.php?id-serie=<?=$idSerie?>">Ver todos los buddies &gt;</a>
+                </div>
+            </div> 
         </div>
     </div>
     <?php if ($_GET['action']=='publicando' || ($_GET['action'] == 'editando' && ($_SESSION['id'] == $infoRespuesta['id'] || $esAdmin))) { $formulario->pintarGlobal(); } ?>
+    
+    <?php
+        //Si el usuario no está publicando ni respondiendo, el boton es "RESPONDER", si el usuario está publicando/editando, el botón es "VOLVER"
+        //lo que devuelve al user a la misma página, pero sin acción de editar/responder
+
+        //si el user no está respondiendo/editando, la paginación lleva a "x" página SIN ACCIÓN
+        //si el user está respondiendo/editando, la paginación lleva a la página CON ACCIÓN
+    ?>
+    <div class="pagination pagination--plus-response">
+        <div class="response-btn">
+            <?php if(isset($_GET['action'])){ ?>
+                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$paginaActual?>" class="btn btn--secondary"><i class="fa-solid fa-arrow-left"></i>&nbsp;Volver</a>
+            <?php }else{ ?>
+                <a href="./feed.php?id=<?=$idSerie?>&action=publicando" class="btn">Responder &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
+            <?php }?>
+        </div>
+        <div class="pages">
+            <?php//Te saca el boton de ir hacia atras si no estas en la primera pagina?>
+            <?php if ($paginaActual != 1) { ?>
+                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual-1)?><?=$linkAccion?>" class="btn <?=$estiloBoton?> btn--sm">&lt;</a>
+            <?php }
+
+            //Mostramos la primera pagina y los ...
+            if ($limites['primera'] != 1) { ?>
+                <a href="./feed.php?id=<?=$idSerie?>&pagina=1<?=$linkAccion?>" class="btn btn--outline btn--sm">1</a>
+                <span class="btn btn--outline btn--sm">...</span>
+            <?php }
+
+            //Te pinta el boton de la pagina en la que estas, las anteriores y las siguientes (intervalo de 5)
+            for ($i=$limites['primera']; $i <= $limites['ultima']; $i++) { 
+                if ($paginaActual == $i) { ?>
+                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$paginaActual?><?=$linkAccion?>" class="btn btn--primary btn--sm"><?=$paginaActual?></a>
+                <?php } else { ?>
+                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$i?><?=$linkAccion?>" class="btn btn--outline btn--sm"><?=$i?></a>
+            <?php }
+            }
+            
+            //Saca la ultima página que hay en el registro
+            if ($limites['ultima'] != $totalPaginas) { ?>
+                <span class="btn btn--outline btn--sm">...</span>
+                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$totalPaginas?><?=$linkAccion?>" class="btn btn--outline btn--sm"><?=$totalPaginas?></a>;
+            <?php }
+
+            //Te saca el boton de ir hacia adelante si no estas en la última pagina
+            if ($paginaActual < $totalPaginas) { ?>
+                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual+1)?><?=$linkAccion?>" class="btn btn--primary btn--sm">&gt;</a>
+            <?php } ?>
+        </div>
+    </div>
+
     <?php foreach ($comentarios as $comentario) { ?>
         <div class="card">
             <div class="card__post">
@@ -181,42 +242,56 @@
         </div>
     <?php } ?>
     
-    <div class="pagination">
-        <?php if ($totalPaginas > 1) {
-            //Te saca el boton de ir hacia atras si no estas en la primera pagina
-            if ($paginaActual != 1) { ?>
-                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual-1)?>" class="btn btn--primary btn--sm">&lt;</a>
-            <?php }
+    <?php if(!empty($comentarios)) { ?>
+        <?php
+            //Si el usuario no está publicando ni respondiendo, el boton es "RESPONDER", si el usuario está publicando/editando, el botón es "VOLVER"
+            //lo que devuelve al user a la misma página, pero sin acción de editar/responder
 
-            //Mostramos la primera pagina y los ...
-            if ($limites['primera'] != 1) { ?>
-                <a href="./feed.php?id=<?=$idSerie?>&pagina=1" class="btn btn--outline btn--sm">1</a>
-                <span class="btn btn--outline btn--sm">...</span>
-            <?php }
+            //si el user no está respondiendo/editando, la paginación lleva a "x" página SIN ACCIÓN
+            //si el user está respondiendo/editando, la paginación lleva a la página CON ACCIÓN
+        ?>
+        <div class="pagination pagination--plus-response">
+            <div class="response-btn">
+                <?php if(isset($_GET['action'])){ ?>
+                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$paginaActual?>" class="btn btn--secondary"><i class="fa-solid fa-arrow-left"></i>&nbsp;Volver</a>
+                <?php }else{ ?>
+                    <a href="./feed.php?id=<?=$idSerie?>&action=publicando" class="btn">Responder &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
+                <?php }?>
+            </div>
+            <div class="pages">
+                <?php//Te saca el boton de ir hacia atras si no estas en la primera pagina?>
+                <?php if ($paginaActual != 1) { ?>
+                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual-1)?><?=$linkAccion?>" class="btn <?=$estiloBoton?> btn--sm">&lt;</a>
+                <?php }
 
-            //Te pinta el boton de la pagina en la que estas, las anteriores y las siguientes (intervalo de 5)
-            for ($i=$limites['primera']; $i <= $limites['ultima']; $i++) { 
-                if ($paginaActual == $i) { ?>
-                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$paginaActual?>" class="btn btn--primary btn--sm"><?=$paginaActual?></a>
-                <?php } else { ?>
-                <a href="/feed.php?id=<?=$idSerie?>&pagina=<?=$i?>" class="btn btn--outline btn--sm"><?=$i?></a>
-            <?php }
-            }
-            
-            //Saca la ultima página que hay en el registro
-            if ($limites['ultima'] != $totalPaginas) { ?>
-                <span class="btn btn--outline btn--sm">...</span>
-                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$totalPaginas?>" class="btn btn--outline btn--sm"><?=$totalPaginas?></a>;
-            <?php }
+                //Mostramos la primera pagina y los ...
+                if ($limites['primera'] != 1) { ?>
+                    <a href="./feed.php?id=<?=$idSerie?>&pagina=1<?=$linkAccion?>" class="btn btn--outline btn--sm">1</a>
+                    <span class="btn btn--outline btn--sm">...</span>
+                <?php }
 
-            //Te saca el boton de ir hacia adelante si no estas en la última pagina
-            if ($paginaActual != $totalPaginas) { ?>
-                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual+1)?>" class="btn btn--primary btn--sm">&gt;</a>
-            <?php } ?>
-            
-        <?php } ?>
-    </div>
+                //Te pinta el boton de la pagina en la que estas, las anteriores y las siguientes (intervalo de 5)
+                for ($i=$limites['primera']; $i <= $limites['ultima']; $i++) { 
+                    if ($paginaActual == $i) { ?>
+                        <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$paginaActual?><?=$linkAccion?>" class="btn btn--primary btn--sm"><?=$paginaActual?></a>
+                    <?php } else { ?>
+                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$i?><?=$linkAccion?>" class="btn btn--outline btn--sm"><?=$i?></a>
+                <?php }
+                }
+                
+                //Saca la ultima página que hay en el registro
+                if ($limites['ultima'] != $totalPaginas) { ?>
+                    <span class="btn btn--outline btn--sm">...</span>
+                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$totalPaginas?><?=$linkAccion?>" class="btn btn--outline btn--sm"><?=$totalPaginas?></a>;
+                <?php }
 
+                //Te saca el boton de ir hacia adelante si no estas en la última pagina
+                if ($paginaActual < $totalPaginas) { ?>
+                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual+1)?><?=$linkAccion?>" class="btn btn--primary btn--sm">&gt;</a>
+                <?php } ?>
+            </div>
+        </div>
+    <?php } ?>
 <?php
 
 // ********* FIN BUFFER + LLAMADA AL TEMPLATE **********

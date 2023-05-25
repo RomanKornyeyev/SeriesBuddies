@@ -1,5 +1,6 @@
 <?php
 
+    // ***** INIT *****
     require("../src/init.php");
     
 

@@ -1,5 +1,6 @@
 <?php
 
+    // ***** INIT *****
     //acceso a BD, sesión, etc.
     require_once("../src/init.php");
 
