@@ -17,13 +17,16 @@
     $tmdb = new TMDB();
     
     $idSerie = $_GET['id'];
+    (isset($_GET['id_genero'])) ? $idGenero = $_GET['id_genero'] : $idGenero = "";
+    $nbGenero = $tmdb->getGeneroPrincipalOptimizado($idGenero)[$idGenero];
 
     //Guardamos la pagina actual de donde nos encontramos
-    if (isset($_GET['pagina'])) {
-        $paginaActual = $_GET['pagina'];
-    } else {
-        $paginaActual = 1;
-    }
+    (isset($_GET['pagina'])) ? $paginaActual = $_GET['pagina'] : $paginaActual = 1;
+
+    //obtenemos la URL actual
+    // $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://";
+    // $domain = $_SERVER['HTTP_HOST'];
+    // $currentURL = $protocol . $domain . $_SERVER['REQUEST_URI'];
 
     //Recogemos la informacion de la serie por su ID
     $response = $tmdb->getSerieID($idSerie);
@@ -63,7 +66,7 @@
     //Si la sesion esta iniciada le va a redirigir a answers y si no a index
     if (isset($_GET['action'])) {
         if (!$sesionIniciada) {
-            header('Location: index.php');
+            header('Location: login.php?error=Inicia sesión para poder publicar comentarios');
             die();
         } else {
             $accion = "";
@@ -140,6 +143,7 @@
     $paginaBase = "feed";
     $argumentos = array(
         "id" => $idSerie,
+        "id_genero" => $idGenero,
         "action" => $accion,
         "id_respuesta" => $idRespuesta
     );
@@ -161,7 +165,7 @@
     <nav class="nav-aux">
         <a href="./genders.php" class="primary-font primary-color">Géneros</a>
         <span class="primary-font color-white">&gt;</span>
-        <a href="./series.php" class="primary-font primary-color">Series</a>
+        <a href="./series.php?id=<?=$_GET['id_genero']?>" class="primary-font primary-color"><?=$nbGenero?></a>
         <span class="primary-font color-white">&gt;</span>
         <a href="" class="primary-font primary-color"><?=$response['serieTitle']?></a>
     </nav>
@@ -208,9 +212,9 @@
     <div class="pagination pagination--plus-response">
         <div class="response-btn">
             <?php if(isset($_GET['action'])){ ?>
-                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$paginaActual?>" class="btn btn--secondary"><i class="fa-solid fa-arrow-left"></i>&nbsp;Volver</a>
+                <a href="./feed.php?id=<?=$idSerie?>&id_genero=<?=$idGenero?>&pagina=<?=$paginaActual?>" class="btn btn--secondary"><i class="fa-solid fa-arrow-left"></i>&nbsp;Volver</a>
             <?php }else{ ?>
-                <a href="./feed.php?id=<?=$idSerie?>&action=publicando" class="btn">Responder &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
+                <a href="./feed.php?id=<?=$idSerie?>&id_genero=<?=$idGenero?>&action=publicando" class="btn">Responder &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
             <?php }?>
         </div>
         <?=$paginacion?>
@@ -231,14 +235,6 @@
                             <div class="icons__chip"></div>
                             <div class="icons__chip"></div>
                         </div>
-                        <!-- <div class="user--responsive">
-                            <h2 class="title title--user"></h2>
-                            <div class="icon">
-                                <div class="icon__chip"></div>
-                                <div class="icon__chip"></div>
-                                <div class="icon__chip"></div>
-                            </div>
-                        </div> -->
                     </div>
                     <div class="card__post-comment">
                         <div class="info info--comment">
@@ -262,9 +258,9 @@
         <div class="pagination pagination--plus-response">
             <div class="response-btn">
                 <?php if(isset($_GET['action'])){ ?>
-                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$paginaActual?>" class="btn btn--secondary"><i class="fa-solid fa-arrow-left"></i>&nbsp;Volver</a>
+                    <a href="./feed.php?id=<?=$idSerie?>&id_genero=<?=$idGenero?>&pagina=<?=$paginaActual?>" class="btn btn--secondary"><i class="fa-solid fa-arrow-left"></i>&nbsp;Volver</a>
                 <?php }else{ ?>
-                    <a href="./feed.php?id=<?=$idSerie?>&action=publicando" class="btn">Responder &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
+                    <a href="./feed.php?id=<?=$idSerie?>&id_genero=<?=$idGenero?>&action=publicando" class="btn">Responder &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
                 <?php }?>
             </div>
             <?=$paginacion?>
@@ -273,7 +269,7 @@
 
     
     <nav class="nav-aux nav-aux--bottom">
-        <a href="./series.php" class="primary-font primary-color"><i class="fa-solid fa-arrow-left"></i> Volver a Series</a>
+        <a href="./series.php?id=<?=$idGenero?>" class="primary-font primary-color"><i class="fa-solid fa-arrow-left"></i> Volver a <?=$nbGenero?></a>
     </nav>
 
 <?php

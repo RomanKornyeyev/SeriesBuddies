@@ -108,6 +108,7 @@
     <?php $formulario->pintarGlobal(); ?>
     <!-- user/pass incorrectas -->
     <?php if(isset($erroresForm['incorrecto'])) echo "<p class='error'>".$erroresForm['incorrecto']."</p>" ?>
+    <?php if(isset($_GET['error'])) echo "<p class='error'>".$_GET['error']."</p>" ?>
     <div class="extra-form-info">
         ¿Aun no eres buddy? <a href="register.php" class="link-enphasis link-body">Regístrate</a>
         <br>

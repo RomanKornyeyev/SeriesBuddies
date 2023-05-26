@@ -32,7 +32,7 @@
         ?>
             <!-- caja género -->
             <div class="box">
-                <a href="./series.php?id=<?=$response[$key]['id']?>&nombre=<?=$response[$key]['name']?>&pagina=1" class="box-body-wrapper">
+                <a href="./series.php?id=<?=$response[$key]['id']?>&pagina=1" class="box-body-wrapper">
                     <div class="box__body box__body--gender loader">
                         <img class="img-fit img-gender" src="./upload/generos/<?=$response[$key]['id']?>.png" alt="género" loading="lazy">
                         <div class="box-body__info">

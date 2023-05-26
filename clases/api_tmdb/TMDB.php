@@ -11,9 +11,27 @@ class TMDB
     const MAX_PAGINAS = 500;
     const BASE_URL_IMG='https://image.tmdb.org/t/p/';
     const WIDTH_BACKDROP = 'w1280';
-    const WIDTH_POSTER = 'w780';
+    const WIDTH_POSTER = 'w500';
     public $adult = false;
     public $lang = 'es-ES';
+    const LISTADO_GENEROS = [
+        10759 => 'Action & Adventure',
+        16 => 'Animación',
+        35 => 'Comedia',
+        80 => 'Crimen',
+        99 => 'Documental',
+        18 => 'Drama',
+        10751 => 'Familia',
+        10762 => 'Kids',
+        9648 =>'Misterio',
+        10763 => 'News',
+        10764 => 'Reality',
+        10765 => 'Sci-Fi & Fantasy',
+        10766 => 'Soap',
+        10767 => 'Talk',
+        10768 => 'War & Politics',
+        37 =>'Western'
+    ];
 
     //GETTERS Y SETTERS
     public function setAdultFilter ($adult) {$this->adult = $adult;}    
@@ -126,11 +144,11 @@ class TMDB
                 $serieData[$key]['seriePlot'] =  $series[$key]['overview'];
             }
 
-            $serieData[$key]['serieGenres']   =  $series[$key]['genre_ids'];
+            //$serieData[$key]['serieGenres']   =  $series[$key]['genre_ids'];
             $serieData[$key]['serieAirDate']  =  $series[$key]['first_air_date'];
         }
 
-        $serieData = $this->mapearGenerosID($serieData);
+        //$serieData = $this->mapearGenerosID($serieData);
         array_push($serieData, $totalPages);
         return $serieData;
     }
@@ -149,6 +167,34 @@ class TMDB
         }
 
         return $serieData;
+    }
+
+    public function getGeneroPrincipal ($idGenero) {
+        $url = $this->urlListadoGeneros();
+        $listado = $this->peticionHTTP($url)['genres'];
+        
+        $generoPrincipal = [];
+        foreach ($listado as $genero) {
+            foreach ($genero as $value) {
+                if ($value == $idGenero) {
+                    $generoPrincipal[$idGenero] = $genero['name'];
+                }
+            }
+        }
+    
+        return $generoPrincipal;
+    }
+
+    public function getGeneroPrincipalOptimizado ($idGenero) {
+        $generoPrincipal = [];
+        foreach (self::LISTADO_GENEROS as $key => $value) {
+            if ($key == $idGenero) {
+                $generoPrincipal[$idGenero] = $value;
+            }
+        }
+        
+    
+        return $generoPrincipal;
     }
 
 

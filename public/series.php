@@ -9,7 +9,7 @@
     $tmdb = new TMDB();
     
     $idGenero = $_GET['id'];
-    $nbGenero = $_GET['nombre'];
+    $nbGenero = $tmdb->getGeneroPrincipalOptimizado($idGenero)[$idGenero];
     if (isset($_GET['pagina'])) {
         $paginaActual = $_GET['pagina'];
     } else {
@@ -21,8 +21,14 @@
     array_pop($response);
 
     //Devuelve la primera y la ultima pagina disponible
-    $limites = $db->obtenLimitesPaginacion($paginaActual, $totalPaginas);
-   
+    //$limites = $db->obtenLimitesPaginacion($paginaActual, $totalPaginas);
+
+    //paginación
+    $paginaBase = "series";
+    $argumentos = array(
+        "id" => $idGenero
+    );
+    $paginacion = DWESBaseDatos::obtenPaginacion($paginaBase, $paginaActual, $totalPaginas, $argumentos);
 
 
     // ********* INFO PARA EL TEMPLATE **********
@@ -40,12 +46,12 @@
     <?php foreach ($response as $serie) { ?>
     <?php $listadoBuddies = $db->obtenPrimerosBuddiesSerie($db, $serie['id']); ?>
     <div class="card">
-        <a class="card__serie-img" href="./feed.php?id=<?=$serie['id']?>">
+        <a class="card__serie-img" href="./feed.php?id=<?=$serie['id']?>&id_genero=<?=$idGenero?>">
             <img class="img-fit" src="<?=$serie['posterImage']?>" alt="serie-img">
         </a>
         <div class="card__serie-info">
             <div class="header__serie">
-                <a class="title title--serie" href="./feed.php?id=<?=$serie['id']?>"><?=$serie['serieTitle']?></a>
+                <a class="title title--serie" href="./feed.php?id=<?=$serie['id']?>&id_genero=<?=$idGenero?>"><?=$serie['serieTitle']?></a>
                 <div class="extra-actions">
                     <a href="#" class="btn btn--secondary btn--bold">Modificar</a>
                     <a href="#" class="btn btn--error btn--bold">Eliminar</a>
@@ -63,7 +69,7 @@
                 <?php } ?>
                     <p class="info info--serie">Super buddies</p>
                 </a>
-                <a href="./feed.php?id=<?=$serie['id']?>">
+                <a href="./feed.php?id=<?=$serie['id']?>&id_genero=<?=$idGenero?>">
                     <?php $totalRespuestas = $db->obtenTotalRespuestas ($db, $serie['id']) ?>
                     <p class="info info--serie"><?=$totalRespuestas?> comentarios &gt;</p>
                 </a>
@@ -74,39 +80,7 @@
     <?php } ?>
 
     <div class="pagination">
-        <?php if ($totalPaginas > 1) {
-            //Te saca el boton de ir hacia atras si no estas en la primera pagina
-            if ($paginaActual != 1) { ?>
-                <a href="./series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=<?=($paginaActual-1)?>" class="btn btn--primary btn--sm">&lt;</a>
-            <?php }
-
-            //Mostramos la primera pagina y los ...
-            if ($limites['primera'] != 1) { ?>
-                <a href="./series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=1" class="btn btn--outline btn--sm">1</a>
-                <span class="btn btn--outline btn--sm">...</span>
-            <?php }
-
-            //Te pinta el boton de la pagina en la que estas, las anteriores y las siguientes (intervalo de 5)
-            for ($i=$limites['primera']; $i <= $limites['ultima']; $i++) { 
-                if ($paginaActual == $i) { ?>
-                    <a href="./series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=<?=$paginaActual?>" class="btn btn--primary btn--sm"><?=$paginaActual?></a>
-                <?php } else { ?>
-                <a href="./series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=<?=$i?>" class="btn btn--outline btn--sm"><?=$i?></a>
-            <?php }
-            }
-            
-            //Saca la ultima página que hay en el registro
-            if ($limites['ultima'] != $totalPaginas) { ?>
-                <span class="btn btn--outline btn--sm">...</span>
-                <a href="./series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=<?=$totalPaginas?>" class="btn btn--outline btn--sm"><?=$totalPaginas?></a>;
-            <?php }
-
-            //Te saca el boton de ir hacia adelante si no estas en la última pagina
-            if ($paginaActual != $totalPaginas) { ?>
-                <a href="./series.php?id=<?=$idGenero?>&nombre=<?=$nbGenero?>&pagina=<?=($paginaActual+1)?>" class="btn btn--primary btn--sm">&gt;</a>
-            <?php } ?>
-            
-        <?php } ?>
+        <?=$paginacion?>
     </div>
 <?php
 
