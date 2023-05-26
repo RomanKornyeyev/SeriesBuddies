@@ -19,7 +19,7 @@ class DWESBaseDatos {
   const PENDIENTE = "pendiente";
   const ACEPTADA = "aceptada";
 
-  const REGISTROS_POR_PAGINA = 20;
+  const REGISTROS_POR_PAGINA = 3;
   const MAX_BUDDIES_FEED = 3;
   const MAX_PAG_PAGINADOR = 3;
 
@@ -255,22 +255,6 @@ class DWESBaseDatos {
     return $db->obtenDatos();
   }
 
-  public static function obtenLimitesPaginacion ($paginaActual, $totalPaginas) {
-    $limites['primera'] = $paginaActual - ($paginaActual % self::MAX_PAG_PAGINADOR) + 1;
-
-    if ($limites['primera'] > $paginaActual) { 
-      $limites['primera'] = $limites['primera'] - self::MAX_PAG_PAGINADOR; 
-    }
-
-    if ($limites['primera'] + (self::MAX_PAG_PAGINADOR-1) > $totalPaginas ) {
-      $limites['ultima'] = $totalPaginas;
-    } else {
-      $limites['ultima'] = $limites['primera'] + (self::MAX_PAG_PAGINADOR-1);
-    }
-
-    return $limites;
-  }
-
   public static function obtenListadoBuddies ($db, $registroInicial) {
     //Devuelve la informacion del usuario que ha comentado en esa serie
     $db->ejecuta (
@@ -489,6 +473,61 @@ class DWESBaseDatos {
     }else{
       return false;
     }
+  }
+
+  // ====== EXTRA (PAGINACION, ETC.) ======
+
+  public static function obtenLimitesPaginacion ($paginaActual, $totalPaginas) {
+    $limites['primera'] = $paginaActual - ($paginaActual % self::MAX_PAG_PAGINADOR) + 1;
+
+    if ($limites['primera'] > $paginaActual) { 
+      $limites['primera'] = $limites['primera'] - self::MAX_PAG_PAGINADOR; 
+    }
+
+    if ($limites['primera'] + (self::MAX_PAG_PAGINADOR-1) > $totalPaginas ) {
+      $limites['ultima'] = $totalPaginas;
+    } else {
+      $limites['ultima'] = $limites['primera'] + (self::MAX_PAG_PAGINADOR-1);
+    }
+
+    return $limites;
+  }
+
+  public static function obtenPaginacion($paginaBase, $paginaActual, $totalPaginas, $argumentos = array()) : String
+  {
+    //variables a rellenar
+    $paginacion = "";
+    $args = "";
+    
+    //si el array tiene valores, rellenamos la variable args para meterla posteriormente al link
+    if(!empty($argumentos)){
+      foreach ($argumentos as $key => $value) {
+        if($value != ""){
+          $args .= "&".$key."=".$value;
+        }
+      }
+    }
+    
+    //Botones << y < para aquellas que no sean la primera pagina
+    if ($paginaActual != 1) {
+      $paginacion = "
+        <a href='./$paginaBase.php?pagina=1$args' class='btn btn--pagination-size'>&lt;&lt;</a>
+        <a href='./$paginaBase.php?pagina=".($paginaActual-1)."$args' class='btn btn--pagination-size'>&lt;</a>
+      ";
+    }
+
+    //Pagina actual
+    $paginacion = $paginacion . "&nbsp;<span class='primary-color'>".$paginaActual." de ".$totalPaginas ."</span>&nbsp;";
+
+    //Boton > y >>
+    if ($paginaActual != $totalPaginas) {
+      $paginacion = $paginacion . "
+        <a href='./$paginaBase.php?pagina=".($paginaActual+1)."$args' class='btn btn--pagination-size'>&gt;</a>
+        <a href='./$paginaBase.php?pagina=".$totalPaginas."$args' class='btn btn--pagination-size'>&gt;&gt;</a>
+      ";
+    }
+
+    return "<div class='pages'>".$paginacion."</div>";
   }
 
 

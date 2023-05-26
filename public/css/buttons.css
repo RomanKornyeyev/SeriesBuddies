@@ -137,6 +137,10 @@
 
 
 /* ===== TAMAÑOS ===== */
+.btn--pagination-size{
+    padding: .7rem 1rem;
+    font-size: 1.4rem;
+}
 .btn--sm{
     padding: .65rem 1.75rem;
     font-size: 1.4rem;

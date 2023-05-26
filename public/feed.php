@@ -66,14 +66,14 @@
             header('Location: index.php');
             die();
         } else {
-            $linkAccion = "";
+            $accion = "";
 
             $valorCampo = "";
             $labelCampo = "";
             
             //Si el usuario responde a una serie
             if ($_GET['action'] == 'publicando') {
-                $linkAccion = "&action=publicando";
+                $accion = "publicando";
                 
                 $labelCampo = 'Publica tu respuesta';
                 // ========================================= FORM DE LOGIN =========================================
@@ -98,7 +98,7 @@
 
                 //Si el usuario edita una respuesta suya en concreto
             } else if ($_GET['action'] == 'editando') {
-                $linkAccion = "&action=editando";
+                $accion = "editando";
 
                 $infoRespuesta = DWESBaseDatos::obtenInfoRespuesta($db, $_GET['id_respuesta']);
                 
@@ -114,7 +114,7 @@
                         $mensaje =  new Texto (Atipo::NULL_NO, $valorCampo,  "mensaje",    $labelCampo,  ["label","label--text"],    ["input-wrapper"],  ["input","shadow-lightgray"],  Texto::TYPE_TAREA, " ",  Texto::DEFAULT_PATTERN_500),
                     // === SUBMIT ===
                     // claseWrappSubmit                           idSubmit  nameSubm  txtSubmit  clseSubmit
-                    ), ["input-wrapper","input-wrapper--submit"], "enviar", "enviar", "Publicar", ["btn", "btn--primary", "shadow-lightgray"]);
+                    ), ["input-wrapper","input-wrapper--submit"], "enviar", "enviar", "Editar", ["btn", "btn--primary", "shadow-lightgray"]);
 
                     
                     if ($formulario->validarGlobal()) {
@@ -130,10 +130,20 @@
         }
     }
 
-    $linkIdRespuesta = "";
+    $idRespuesta = "";
     if (isset($_GET['id_respuesta'])) {
         $linkIdRespuesta = "&id_respuesta=".$_GET['id_respuesta'];
+        $idRespuesta = $_GET['id_respuesta'];
     }
+
+    //paginación
+    $paginaBase = "feed";
+    $argumentos = array(
+        "id" => $idSerie,
+        "action" => $accion,
+        "id_respuesta" => $idRespuesta
+    );
+    $paginacion = DWESBaseDatos::obtenPaginacion($paginaBase, $paginaActual, $totalPaginas, $argumentos);
 
 
     // ********* INFO PARA EL TEMPLATE **********
@@ -184,6 +194,7 @@
 
         //si el user no está respondiendo/editando, la paginación lleva a "x" página SIN ACCIÓN
         //si el user está respondiendo/editando, la paginación lleva a la página CON ACCIÓN
+        
     ?>
     <div class="pagination pagination--plus-response">
         <div class="response-btn">
@@ -193,38 +204,7 @@
                 <a href="./feed.php?id=<?=$idSerie?>&action=publicando" class="btn">Responder &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
             <?php }?>
         </div>
-        <div class="pages">
-            <?php//Te saca el boton de ir hacia atras si no estas en la primera pagina?>
-            <?php if ($paginaActual != 1) { ?>
-                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual-1)?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--sm">&lt;</a>
-            <?php }
-
-            //Mostramos la primera pagina y los ...
-            if ($limites['primera'] != 1) { ?>
-                <a href="./feed.php?id=<?=$idSerie?>&pagina=1<?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--outline btn--sm">1</a>
-                <span class="btn btn--outline btn--sm">...</span>
-            <?php }
-
-            //Te pinta el boton de la pagina en la que estas, las anteriores y las siguientes (intervalo de 5)
-            for ($i=$limites['primera']; $i <= $limites['ultima']; $i++) { 
-                if ($paginaActual == $i) { ?>
-                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$paginaActual?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--primary btn--sm"><?=$paginaActual?></a>
-                <?php } else { ?>
-                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$i?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--outline btn--sm"><?=$i?></a>
-            <?php }
-            }
-            
-            //Saca la ultima página que hay en el registro
-            if ($limites['ultima'] != $totalPaginas) { ?>
-                <span class="btn btn--outline btn--sm">...</span>
-                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$totalPaginas?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--outline btn--sm"><?=$totalPaginas?></a>
-            <?php }
-
-            //Te saca el boton de ir hacia adelante si no estas en la última pagina
-            if ($paginaActual < $totalPaginas) { ?>
-                <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual+1)?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--primary btn--sm">&gt;</a>
-            <?php } ?>
-        </div>
+        <?=$paginacion?>
     </div>
 
     <?php // ***** RESPUESTAS ***** ?>
@@ -270,14 +250,6 @@
     </div>
     
     <?php if(!empty($comentarios)) { ?>
-        <?php
-            // ***** PAGINACION + BTN RESPONDER *****
-            //Si el usuario no está publicando ni respondiendo, el boton es "RESPONDER", si el usuario está publicando/editando, el botón es "VOLVER"
-            //lo que devuelve al user a la misma página, pero sin acción de editar/responder
-
-            //si el user no está respondiendo/editando, la paginación lleva a "x" página SIN ACCIÓN
-            //si el user está respondiendo/editando, la paginación lleva a la página CON ACCIÓN
-        ?>
         <div class="pagination pagination--plus-response">
             <div class="response-btn">
                 <?php if(isset($_GET['action'])){ ?>
@@ -286,38 +258,7 @@
                     <a href="./feed.php?id=<?=$idSerie?>&action=publicando" class="btn">Responder &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
                 <?php }?>
             </div>
-            <div class="pages">
-                <?php//Te saca el boton de ir hacia atras si no estas en la primera pagina?>
-                <?php if ($paginaActual != 1) { ?>
-                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual-1)?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--sm">&lt;</a>
-                <?php }
-
-                //Mostramos la primera pagina y los ...
-                if ($limites['primera'] != 1) { ?>
-                    <a href="./feed.php?id=<?=$idSerie?>&pagina=1<?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--outline btn--sm">1</a>
-                    <span class="btn btn--outline btn--sm">...</span>
-                <?php }
-
-                //Te pinta el boton de la pagina en la que estas, las anteriores y las siguientes (intervalo de 5)
-                for ($i=$limites['primera']; $i <= $limites['ultima']; $i++) { 
-                    if ($paginaActual == $i) { ?>
-                        <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$paginaActual?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--primary btn--sm"><?=$paginaActual?></a>
-                    <?php } else { ?>
-                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$i?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--outline btn--sm"><?=$i?></a>
-                <?php }
-                }
-                
-                //Saca la ultima página que hay en el registro
-                if ($limites['ultima'] != $totalPaginas) { ?>
-                    <span class="btn btn--outline btn--sm">...</span>
-                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=$totalPaginas?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--outline btn--sm"><?=$totalPaginas?></a>
-                <?php }
-
-                //Te saca el boton de ir hacia adelante si no estas en la última pagina
-                if ($paginaActual < $totalPaginas) { ?>
-                    <a href="./feed.php?id=<?=$idSerie?>&pagina=<?=($paginaActual+1)?><?=$linkAccion?><?=$linkIdRespuesta?>" class="btn btn--primary btn--sm">&gt;</a>
-                <?php } ?>
-            </div>
+            <?=$paginacion?>
         </div>
     <?php } ?>
 

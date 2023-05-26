@@ -423,6 +423,7 @@ img{width: 100%;}
 }
 .underline{text-decoration: underline;}
 .primary-font{font-family: var(--primary-font);}
+.primary-color{color: var(--primary-500);}
 .pos-absolute{position: absolute;}
 .font-size-default{font-size: 1.6rem;}
 
