@@ -157,6 +157,15 @@
     ob_start();
 ?>
 
+    <?php // ***** AUX NAV ***** ?>
+    <nav class="nav-aux">
+        <a href="./genders.php" class="primary-font primary-color">Géneros</a>
+        <span class="primary-font color-white">&gt;</span>
+        <a href="./series.php" class="primary-font primary-color">Series</a>
+        <span class="primary-font color-white">&gt;</span>
+        <a href="" class="primary-font primary-color"><?=$response['serieTitle']?></a>
+    </nav>
+
     <?php // ***** SERIE ***** ?>
     <div class="card">
         <div class="card__serie-img">
@@ -217,19 +226,19 @@
                             <img class="img-fit" src="<?=$comentario['img']?>" alt="serie-img">
                         </div>
                         <h2 class="title title--user"><?=$comentario['nombre']?></h2>
-                        <div class="icon">
-                            <div class="icon__chip"></div>
-                            <div class="icon__chip"></div>
-                            <div class="icon__chip"></div>
+                        <div class="icons">
+                            <div class="icons__chip"></div>
+                            <div class="icons__chip"></div>
+                            <div class="icons__chip"></div>
                         </div>
-                        <div class="user--responsive">
-                            <h2 class="title title--user"><?=$comentario['nombre']?></h2>
+                        <!-- <div class="user--responsive">
+                            <h2 class="title title--user"></h2>
                             <div class="icon">
                                 <div class="icon__chip"></div>
                                 <div class="icon__chip"></div>
                                 <div class="icon__chip"></div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="card__post-comment">
                         <div class="info info--comment">
@@ -261,6 +270,11 @@
             <?=$paginacion?>
         </div>
     <?php } ?>
+
+    
+    <nav class="nav-aux nav-aux--bottom">
+        <a href="./series.php" class="primary-font primary-color"><i class="fa-solid fa-arrow-left"></i> Volver a Series</a>
+    </nav>
 
 <?php
 

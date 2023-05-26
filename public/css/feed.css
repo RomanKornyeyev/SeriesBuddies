@@ -27,7 +27,7 @@
     flex-direction: column;
 }
 .card__serie-img {
-    height: 20vh;
+    height: 25vh;
     overflow: hidden;
 }
 .title--serie {
@@ -49,6 +49,9 @@
 .info--serie, .info--buddy, .title--user, .info--comment{
     color: var(--background-800);
     font-weight: 900;
+}
+.title--user{
+    font-size: 2.8rem;
 }
 .info--comment{
     display: flex;
@@ -86,6 +89,11 @@
     display: flex;
     justify-content: center;
     width: 100%;
+}
+.icons{
+    display: flex;
+    justify-content: space-between;
+    width: 65%;
 }
 .icon--super-buddies{
     gap: var(--space-l);
@@ -136,11 +144,11 @@
 .card__post-img>.icon:last-of-type {
     width: 75%;
 }
-.icon__chip {
-    margin-right: var(--space-s);
+.icons__chip {
+    /* margin-right: var(--space-s); */
     background-color: var(--primary-500);
     border-radius: 50%;
-    width: 15%;
+    width: 27.5%;
     aspect-ratio: 1/1;
 }
 .card__post-comment {
@@ -162,7 +170,6 @@
         align-items: center;
         padding: var(--space-xl);
         background-color: var(--white);
-        width: 80%;
     }
     .card__post-img>.img-fit {
         border: 4px solid var(--primary-500);
@@ -170,9 +177,13 @@
         aspect-ratio: 1/1;
     }
 }
+/* ===== EXTRA (700px) ===== */
 @media screen and (max-width: 700px) {
     .card__serie-info{
-        gap: var(--space-l);
+        gap: var(--space-xxl);
+    }
+    .title--serie{
+        font-size: 5rem;
     }
     .card__post-img {
         border-radius: var(--br-default) 0 0 var(--br-default);
@@ -181,7 +192,9 @@
         align-items: center;
         padding: var(--space-xl);
         background-color: var(--white);
-        width: 155%;
+    }
+    .info--super-buddies{
+        text-align: center;
     }
     .info--serie, .links__buddy{
         width: 100%;
@@ -190,16 +203,16 @@
         margin-right: var(--space-m);
     }
 }
-/* ===== PHONE (480px) ===== */
+/* ===== PHONE (500px) ===== */
 @media screen and (max-width: 500px) {
     .container {
         display: block;
     }
+    .title--serie{
+        font-size: 4rem;
+    }
     .text--serie {
         text-align: left;
-    }
-    .icon {
-        justify-content: end;
     }
     .icon__buddy {
         width: 15%;
@@ -209,19 +222,23 @@
     }
     .card__post-img {
         width: 100%;
-        flex-direction: row;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        gap: var(--space-xl);
         border-radius: var(--br-default) var(--br-default) 0 0;
+        padding: var(--space-l);
     }
-    /* LEGACY */
-    /* .card__post-img>.img-fit {
-        width: 20%;
-    } */
-    /* END LEGACY */
+    .card__post-comment {
+        padding: var(--space-l);
+    }
     .img-user-post{
         width: 20%;
     }
-    .card__post-img>.title--user {
-        display: none;
+    .title--user{
+        font-size: 3rem;
+    }
+    .icons{
+        width: 25%;
     }
     .user--responsive {
         display: flex;

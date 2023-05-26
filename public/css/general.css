@@ -248,6 +248,17 @@ img{width: 100%;}
     color: var(--body-text);
     /* border: 1px solid red; */
 }
+.nav-aux{
+    width: 100%;
+    font-size: 2rem;
+    font-weight: 700;
+}
+.nav-aux--bottom{
+    font-size: 1.6rem;
+}
+.nav-aux a:hover{
+    text-decoration: underline;
+}
 .title{
     color: var(--primary-500);
 }
@@ -424,6 +435,7 @@ img{width: 100%;}
 .underline{text-decoration: underline;}
 .primary-font{font-family: var(--primary-font);}
 .primary-color{color: var(--primary-500);}
+.color-white{color: var(--almost-white);}
 .pos-absolute{position: absolute;}
 .font-size-default{font-size: 1.6rem;}
 
