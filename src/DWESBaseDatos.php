@@ -19,7 +19,7 @@ class DWESBaseDatos {
   const PENDIENTE = "pendiente";
   const ACEPTADA = "aceptada";
 
-  const REGISTROS_POR_PAGINA = 3;
+  const REGISTROS_POR_PAGINA = 5;
   const MAX_BUDDIES_FEED = 3;
   const MAX_PAG_PAGINADOR = 3;
 
@@ -529,6 +529,44 @@ class DWESBaseDatos {
 
     return "<div class='pages'>".$paginacion."</div>";
   }
+
+  //obtener la URL actual
+  public static function obtenUrlActual() {
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://";
+    $domain = $_SERVER['HTTP_HOST'];
+    $currentURL = $protocol . $domain . $_SERVER['REQUEST_URI'];
+
+    return $currentURL;
+  }
+
+  //quitar un parametro a la URL
+  // *********** QUITAR PUERTO PARA PRODUCCIÓN *******************
+  public static function eliminarParametroUrl($url, $parametro) : String
+  {
+    // Obtener las partes de la URL
+    $parsedUrl = parse_url($url);
+    print_r($parsedUrl);
+
+    // Verificar si existe la query en la URL
+    if (isset($parsedUrl['query'])) {
+      // Convertir la query en un array asociativo
+      parse_str($parsedUrl['query'], $queryArray);
+
+      // Remover el parámetro "action" del array
+      unset($queryArray["".$parametro]);
+
+      // Reconstruir la query sin el parámetro "action"
+      $newQuery = http_build_query($queryArray);
+
+      // Reconstruir la URL con la nueva query
+      $newUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . ":" . $parsedUrl['port'] . $parsedUrl['path'] . '?' . $newQuery;
+      
+      return $newUrl;
+    } else {
+      return $url; // No hay query en la URL
+    }
+  }
+  
 
 
 }

@@ -23,11 +23,6 @@
     //Guardamos la pagina actual de donde nos encontramos
     (isset($_GET['pagina'])) ? $paginaActual = $_GET['pagina'] : $paginaActual = 1;
 
-    //obtenemos la URL actual
-    // $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://";
-    // $domain = $_SERVER['HTTP_HOST'];
-    // $currentURL = $protocol . $domain . $_SERVER['REQUEST_URI'];
-
     //Recogemos la informacion de la serie por su ID
     $response = $tmdb->getSerieID($idSerie);
 
@@ -69,6 +64,15 @@
             header('Location: login.php?error=Inicia sesión para poder publicar comentarios');
             die();
         } else {
+            //obtenemos la URL actual
+            // $urlActual = DWESBaseDatos::obtenUrlActual();
+
+            // //quitamos el action a la URL (para posteo/edición de comentarios)
+            // $nuevaUrl = DWESBaseDatos::eliminarParametroUrl($urlActual, "action");
+
+            echo $nuevaUrl;
+
+
             $accion = "";
 
             $valorCampo = "";
@@ -94,7 +98,7 @@
                     DWESBaseDatos::insertarRespuesta($db, $idSerie, $_SESSION['id'], $mensaje->getValor());
                     
                     //redirección
-                    header('Location: feed.php?id='.$idSerie);
+                    header('Location: feed.php?id='.$idSerie.'&id_genero='.$idGenero.'&pagina='.$paginaActual);
                     die();
                 }
     
@@ -125,7 +129,7 @@
                         DWESBaseDatos::actualizarRespuesta($db, $_GET['id_respuesta'], $mensaje->getValor());
                         
                         //redirección
-                        header('Location: feed.php?id='.$idSerie.'&pagina='.$paginaActual);
+                        header('Location: feed.php?id='.$idSerie.'&id_genero='.$idGenero.'&pagina='.$paginaActual);
                         die(); 
                     }
                 }
@@ -167,7 +171,7 @@
         <span class="primary-font color-white">&gt;</span>
         <a href="./series.php?id=<?=$_GET['id_genero']?>" class="primary-font primary-color"><?=$nbGenero?></a>
         <span class="primary-font color-white">&gt;</span>
-        <a href="" class="primary-font primary-color"><?=$response['serieTitle']?></a>
+        <a href="./feed.php?id=<?=$idSerie?>&id_genero=<?=$idGenero?>" class="primary-font primary-color"><?=$response['serieTitle']?></a>
     </nav>
 
     <?php // ***** SERIE ***** ?>
@@ -242,8 +246,8 @@
                             <div class="admin-area">
                                 <?php //botones de editar/eliminar, solo cuando id=id o es admin ?>
                                 <?php if($comentario['id_user'] == $_SESSION['id'] || $esAdmin) { ?>
-                                    <a href="./feed.php?id=<?=$idSerie?>&action=editando&id_respuesta=<?=$comentario['id_respuesta']?>&pagina=<?=$paginaActual?>" class="btn btn--secondary btn--sm btn--bold">Editar</a>
-                                    <button class="btn btn--error btn--sm btn--bold" onclick="eliminar(this, <?=$comentario['id_respuesta']?>, <?=$idSerie?>, <?=$paginaActual?>, <?=$totalPaginas?>)">Eliminar</button>
+                                    <a href="./feed.php?id=<?=$idSerie?>&action=editando&id_respuesta=<?=$comentario['id_respuesta']?>&id_genero=<?=$idGenero?>&pagina=<?=$paginaActual?>" class="btn btn--secondary btn--sm btn--bold">Editar</a>
+                                    <button class="btn btn--error btn--sm btn--bold" onclick="eliminar(this, <?=$comentario['id_respuesta']?>, <?=$idSerie?>, <?=$idGenero?>, <?=$paginaActual?>, <?=$totalPaginas?>)">Eliminar</button>
                                 <?php } ?>
                             </div>
                         </div>

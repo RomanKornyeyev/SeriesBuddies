@@ -126,8 +126,8 @@
 
                                 if($consulta[0]['id_user'] == $_SESSION['id'] || $esAdmin) {
                                     $botones = "
-                                        <a href='./feed.php?id=".$_POST['id_serie']."&action=editando&id_respuesta=".$consulta[0]['id_respuesta']."&pagina=".$_POST['pagina_actual']."' class='btn btn--secondary btn--sm btn--bold'>Editar</a>
-                                        <button class='btn btn--error btn--sm btn--bold' onclick='eliminar(this, ".$consulta[0]['id_respuesta'].", ".$_POST['id_serie'].", ".$_POST['pagina_actual'].", ".$_POST['total_paginas'].")'>Eliminar</button>
+                                        <a href='./feed.php?id=".$_POST['id_serie']."&id_genero=".$_POST['id_genero']."&action=editando&id_respuesta=".$consulta[0]['id_respuesta']."&pagina=".$_POST['pagina_actual']."' class='btn btn--secondary btn--sm btn--bold'>Editar</a>
+                                        <button class='btn btn--error btn--sm btn--bold' onclick='eliminar(this, ".$consulta[0]['id_respuesta'].", ".$_POST['id_serie'].", ".$_POST['id_genero'].", ".$_POST['pagina_actual'].", ".$_POST['total_paginas'].")'>Eliminar</button>
                                     ";
                                     
                                 }
@@ -140,18 +140,10 @@
                                                     <img class='img-fit' src='".$consulta[0]['img']."' alt='serie-img'>
                                                 </div>
                                                 <h2 class='title title--user'>".$consulta[0]['nombre']."</h2>
-                                                <div class='icon'>
-                                                    <div class='icon__chip'></div>
-                                                    <div class='icon__chip'></div>
-                                                    <div class='icon__chip'></div>
-                                                </div>
-                                                <div class='user--responsive'>
-                                                    <h2 class='title title--user'>".$consulta[0]['nombre']."</h2>
-                                                    <div class='icon'>
-                                                        <div class='icon__chip'></div>
-                                                        <div class='icon__chip'></div>
-                                                        <div class='icon__chip'></div>
-                                                    </div>
+                                                <div class='icons'>
+                                                    <div class='icons__chip'></div>
+                                                    <div class='icons__chip'></div>
+                                                    <div class='icons__chip'></div>
                                                 </div>
                                             </div>
                                             <div class='card__post-comment'>

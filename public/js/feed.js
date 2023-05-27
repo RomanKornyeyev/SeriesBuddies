@@ -8,7 +8,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 var urlActual = window.location.href;
 console.log(urlActual);
-function eliminar(elemento, id, idSerie, paginaActual, totalPaginas){
+function eliminar(elemento, id, idSerie, idGenero, paginaActual, totalPaginas){
     //objeto a ser borrado (usuario o respuesta)
     let objeto = 'respuesta';
 
@@ -59,7 +59,7 @@ function eliminar(elemento, id, idSerie, paginaActual, totalPaginas){
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 
                 //pasamos la petición POST
-                xhttp.send(`objeto=${objeto}&id=${id}&id_serie=${idSerie}&pagina_actual=${paginaActual}&total_paginas=${totalPaginas}`);
+                xhttp.send(`objeto=${objeto}&id=${id}&id_serie=${idSerie}&id_genero=${idGenero}&pagina_actual=${paginaActual}&total_paginas=${totalPaginas}`);
 
 
                 console.log("si");
