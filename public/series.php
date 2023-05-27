@@ -62,10 +62,10 @@
         <div class="card__serie-info">
             <div class="header__serie">
                 <a class="title title--serie" href="./feed.php?id=<?=$serie['id']?>&id_genero=<?=$idGenero?>"><?=$serie['serieTitle']?></a>
-                <div class="extra-actions">
+                <!-- <div class="extra-actions">
                     <a href="#" class="btn btn--secondary btn--bold">Modificar</a>
                     <a href="#" class="btn btn--error btn--bold">Eliminar</a>
-                </div>
+                </div> -->
             </div>
             <div class="body__serie">
                 <p class="text text--serie"><?=$serie['seriePlot']?></p>
