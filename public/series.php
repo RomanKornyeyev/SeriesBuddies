@@ -41,8 +41,18 @@
     ob_start();
 ?>
 
+    <nav class="nav-aux">
+        <a href="./genders.php" class="primary-font primary-color">Géneros</a>
+        <span class="primary-font color-white">&gt;</span>
+        <a href="./series.php?id=<?=$idGenero?>" class="primary-font primary-color"><?=$nbGenero?></a>
+    </nav>
+
     <h1 class="title title--l text-align-center">Series de <?=$nbGenero?></h1>
 
+    <div class="pagination pagination--plus-response">
+        <a href="./genders.php" class="btn"><i class="fa-solid fa-arrow-left"></i> &nbsp; Géneros</a>
+        <?=$paginacion?>
+    </div>
     <?php foreach ($response as $serie) { ?>
     <?php $listadoBuddies = $db->obtenPrimerosBuddiesSerie($db, $serie['id']); ?>
     <div class="card">
@@ -79,7 +89,8 @@
 
     <?php } ?>
 
-    <div class="pagination">
+    <div class="pagination pagination--plus-response">
+        <a href="./genders.php" class="btn"><i class="fa-solid fa-arrow-left"></i> &nbsp; Géneros</a>
         <?=$paginacion?>
     </div>
 <?php
