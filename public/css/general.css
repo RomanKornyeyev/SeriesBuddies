@@ -265,6 +265,9 @@ img{width: 100%;}
 .title--l{
     font-size: 4.5rem;
 }
+.title--m {
+    font-size: 3rem;
+}
 .title--form{
     position: absolute;
     left:-8.5rem;

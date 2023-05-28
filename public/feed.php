@@ -17,14 +17,20 @@
     $tmdb = new TMDB();
     
     $idSerie = $_GET['id'];
+    //Recogemos la informacion de la serie por su ID
+    $response = $tmdb->getSerieID($idSerie);
+    
+    //Si no está el genero es que proviene de buscar una serie
     (isset($_GET['id_genero'])) ? $idGenero = $_GET['id_genero'] : $idGenero = "";
+    
+    //Si se ha buscado una serie, se coge el primer genero al que pertecene esa serie para buscar el nombre y mostrarlo en el nav aux
+    if ($idGenero == 0) {
+        $idGenero = $response['serieGenres'][0]['id'];
+    }
     $nbGenero = $tmdb->getGeneroPrincipalOptimizado($idGenero)[$idGenero];
 
     //Guardamos la pagina actual de donde nos encontramos
     (isset($_GET['pagina'])) ? $paginaActual = $_GET['pagina'] : $paginaActual = 1;
-
-    //Recogemos la informacion de la serie por su ID
-    $response = $tmdb->getSerieID($idSerie);
 
     //Comentarios por pagina a mostrar
     $registrosPagina = DWESBaseDatos::REGISTROS_POR_PAGINA;
@@ -51,7 +57,7 @@
     }
 
     //Devuelve la primera y la ultima pagina disponible
-    $limites = $db->obtenLimitesPaginacion($paginaActual, $totalPaginas);
+    //$limites = $db->obtenLimitesPaginacion($paginaActual, $totalPaginas);
 
     //Fotos de los primeros 5 usuarios que más han comentado esta serie
     $listadoBuddies = $db->obtenPrimerosBuddiesSerie($db, $idSerie);
@@ -166,10 +172,10 @@
 ?>
 
     <?php // ***** AUX NAV ***** ?>
-    <nav class="nav-aux">
+    <nav class="nav-aux" aria-label="Main">
         <a href="./genders.php" class="primary-font primary-color">Géneros</a>
         <span class="primary-font color-white">&gt;</span>
-        <a href="./series.php?id=<?=$_GET['id_genero']?>" class="primary-font primary-color"><?=$nbGenero?></a>
+        <a href="./series.php?id=<?=$idGenero?>" class="primary-font primary-color"><?=$nbGenero?></a>
         <span class="primary-font color-white">&gt;</span>
         <a href="./feed.php?id=<?=$idSerie?>&id_genero=<?=$idGenero?>" class="primary-font primary-color"><?=$response['serieTitle']?></a>
     </nav>
@@ -184,7 +190,7 @@
             <div class="info info--serie">
                 <p class="text text--serie"><?=$response['seriePlot']?></p>
                 <?php foreach ($response['serieGenres'] as $genero) { ?>
-                    <a href="./series.php?id=<?=$genero['id']?>&nombre=<?=$genero['name']?>" class="btn btn--outline_filter">#<?=$genero['name']?></a>
+                    <a href="./series.php?id=<?=$genero['id']?>" class="btn btn--outline_filter">#<?=$genero['name']?></a>
                 <?php } ?>
             </div>
             <div class="links__buddy">
@@ -221,7 +227,9 @@
                 <a href="./feed.php?id=<?=$idSerie?>&id_genero=<?=$idGenero?>&action=publicando" class="btn">Responder &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
             <?php }?>
         </div>
-        <?=$paginacion?>
+        <?php if(!empty($comentarios)) { ?>
+            <?=$paginacion?>
+        <?php } ?>
     </div>
 
     <?php // ***** RESPUESTAS ***** ?>
@@ -272,7 +280,7 @@
     <?php } ?>
 
     
-    <nav class="nav-aux nav-aux--bottom">
+    <nav class="nav-aux nav-aux--bottom" aria-label="Volver">
         <a href="./series.php?id=<?=$idGenero?>" class="primary-font primary-color"><i class="fa-solid fa-arrow-left"></i> Volver a <?=$nbGenero?></a>
     </nav>
 

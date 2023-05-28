@@ -197,11 +197,15 @@ class TMDB
     public function getSeriesNombre ($nombre, $currentPage=1) {
         $urlSerie =$this->urlSerieNombre($nombre, $currentPage);
         $resultados=$this->peticionHTTP($urlSerie);
-        $series=$resultados['results'];
 
+        $serieData = [];
+        $series=$resultados['results'];
+        
+        $totalResults = $resultados['total_results'];
+        
         //Guardamos el total de paginas, si sobrepasan las 500 permitidas almacenamos ese maximo
         $totalPages = ($resultados['total_pages'] <= self::MAX_PAGINAS)? $resultados['total_pages']: $totalPages = self::MAX_PAGINAS;
-
+        
         foreach ($series as $key => $serie) {
             foreach ($serie as $clave => $contenido) {
                 if ($clave=='name' && str_contains($contenido, $nombre) == 0) {
@@ -209,9 +213,11 @@ class TMDB
                 }
             }
         }
-
+        
         //$serieData = $this->mapearGenerosID($serieData);
+        array_push($serieData, $totalResults);
         array_push($serieData, $totalPages);
+        
         return $serieData;
     }
 

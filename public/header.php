@@ -9,12 +9,13 @@
     use clases\form\campo\File;
     use clases\form\claseMain\Formulario;
     
+
     // ========================================= FORM DE LOGIN =========================================
     //                             ACTION            METHOD           clases-css-form   ¿Vaciar al validar?   atr-extra(para forms con img)   CAMPOS
     $formulario = new Formulario("series.php", Formulario::METHOD_POST, ["form"],        Formulario::VACIAR_NO,          "",                   array(
         //                       ====================================== COMÚN =======================================================================  //  ======================== ESPECÍFICO ========================
         //                  ¿Puede estar vacío? valor  name    label         clases-css-label         clases-css-wrapper       clases-css-input            tipoCampo    placeholder    regex
-        $buscador = new Texto (Atipo::NULL_NO, null,"buscador", "buscador",   ["label","label--text"],    ["input-wrapper"],  ["input","shadow-lightgray"],  Texto::TYPE_TEXT, " ",  Texto::DEFAULT_PATTERN_500),
+        $buscador = new Texto (Atipo::NULL_NO, $serieBuscada,"buscador", "buscador",   ["label","label--text"],    ["input-wrapper"],  ["input","shadow-lightgray"],  Texto::TYPE_TEXT, " ",  Texto::DEFAULT_PATTERN_500),
     // === SUBMIT ===
     // claseWrappSubmit                           idSubmit  nameSubm  txtSubmit  clseSubmit
     ), ["input-wrapper","input-wrapper--submit"], "buscar", "buscar", "BUSCAR", ["btn", "btn--primary", "shadow-lightgray"]);

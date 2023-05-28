@@ -16,14 +16,25 @@
     
     (isset($_GET['id']))? $idGenero = $_GET['id']: $idGenero = 0;
 
+    $haySeries = true;
+
     if (isset($_GET['buscador']) && !isset($_GET['id'])) {
         //saca series por nombre
         $serieBuscada = $_GET['buscador'];
         $response=$tmdb->getSeriesNombre($serieBuscada, $paginaActual);
         
+
         $totalPaginas = end($response);
         array_pop($response);
-
+        $totalResultados = end($response);
+        if ($totalResultados == 0) {
+            $haySeries = false;
+            $mensajeError = '<h3 class="title title--m text-align-center">No hay resultados</h3>';
+        } else {
+            $haySeries = true;
+        }
+        array_pop($response);
+        
         $titulo = 'Resultados de  "'.$serieBuscada.'"';
 
         //paginación
@@ -51,8 +62,12 @@
         $paginacion = DWESBaseDatos::obtenPaginacion($paginaBase, $paginaActual, $totalPaginas, $argumentos);
     }
 
+    // echo '<pre class="color-white">';
+    // print_r($response);
+    // echo '</pre>';
+
     // ********* INFO PARA EL TEMPLATE **********
-    $tituloHead = "Series de ".$nbGenero." - SeriesBuddies";
+    $tituloHead = $titulo." - SeriesBuddies";
     $estiloEspecifico = "./css/series.css";
     $scriptEspecifico = "";
     $scriptLoadMode = "";
@@ -65,15 +80,23 @@
     <nav class="nav-aux">
         <a href="./genders.php" class="primary-font primary-color">Géneros</a>
         <span class="primary-font color-white">&gt;</span>
-        <a href="./series.php?id=<?=$idGenero?>" class="primary-font primary-color"><?=$nbGenero?></a>
+        <?php if(isset($_GET['id']) && !isset($_GET['buscador'])) { ?>
+            <a href="./series.php?id=<?=$idGenero?>" class="primary-font primary-color"><?=$nbGenero?></a>
+        <?php } else { ?>
+            <a href="./series.php?buscador=<?=$serieBuscada?>" class="primary-font primary-color"><?=$titulo?></a>
+        <?php } ?>
     </nav>
 
     <h1 class="title title--l text-align-center"><?=$titulo?></h1>
 
-    <div class="pagination pagination--plus-response">
-        <a href="./genders.php" class="btn"><i class="fa-solid fa-arrow-left"></i> &nbsp; Géneros</a>
-        <?=$paginacion?>
-    </div>
+    <?php if ($haySeries) { ?>
+        <div class="pagination pagination--plus-response">
+            <a href="./genders.php" class="btn"><i class="fa-solid fa-arrow-left"></i> &nbsp; Géneros</a>
+            <?=$paginacion?>
+        </div>
+    <?php } ?>
+
+    <?=$mensajeError?>
     <?php foreach ($response as $serie) { ?>
     <?php $listadoBuddies = $db->obtenPrimerosBuddiesSerie($db, $serie['id']); ?>
     <div class="card">
@@ -109,10 +132,12 @@
     </div>
 
     <?php } ?>
-
+    
     <div class="pagination pagination--plus-response">
         <a href="./genders.php" class="btn"><i class="fa-solid fa-arrow-left"></i> &nbsp; Géneros</a>
-        <?=$paginacion?>
+        <?php if ($haySeries) { ?>
+            <?=$paginacion?>
+        <?php } ?>
     </div>
 <?php
 
