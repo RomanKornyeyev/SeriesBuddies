@@ -8,33 +8,54 @@
     
     $tmdb = new TMDB();
     
-    $idGenero = $_GET['id'];
-    $nbGenero = $tmdb->getGeneroPrincipalOptimizado($idGenero)[$idGenero];
     if (isset($_GET['pagina'])) {
         $paginaActual = $_GET['pagina'];
     } else {
         $paginaActual = 1;
     }
     
-    $response = $tmdb->getSeriesGenero($idGenero, $paginaActual);
-    $totalPaginas = end($response);
-    array_pop($response);
+    (isset($_GET['id']))? $idGenero = $_GET['id']: $idGenero = 0;
 
-    //Devuelve la primera y la ultima pagina disponible
-    //$limites = $db->obtenLimitesPaginacion($paginaActual, $totalPaginas);
+    if (isset($_GET['buscador']) && !isset($_GET['id'])) {
+        //saca series por nombre
+        $serieBuscada = $_GET['buscador'];
+        $response=$tmdb->getSeriesNombre($serieBuscada, $paginaActual);
+        
+        $totalPaginas = end($response);
+        array_pop($response);
 
-    //paginación
-    $paginaBase = "series";
-    $argumentos = array(
-        "id" => $idGenero
-    );
-    $paginacion = DWESBaseDatos::obtenPaginacion($paginaBase, $paginaActual, $totalPaginas, $argumentos);
+        $titulo = 'Resultados de  "'.$serieBuscada.'"';
 
+        //paginación
+        $paginaBase = "series";
+        $argumentos = array(
+            "buscador" => $_GET['buscador']
+        );
+        $paginacion = DWESBaseDatos::obtenPaginacion($paginaBase, $paginaActual, $totalPaginas, $argumentos);
+
+
+    } else if (isset($_GET['id'])) {
+        $nbGenero = $tmdb->getGeneroPrincipalOptimizado($idGenero)[$idGenero];
+        $titulo = "Series de ".$nbGenero;
+
+
+        $response = $tmdb->getSeriesGenero($idGenero, $paginaActual);
+        $totalPaginas = end($response);
+        array_pop($response);
+
+        //paginación
+        $paginaBase = "series";
+        $argumentos = array(
+            "id" => $idGenero
+        );
+        $paginacion = DWESBaseDatos::obtenPaginacion($paginaBase, $paginaActual, $totalPaginas, $argumentos);
+    }
 
     // ********* INFO PARA EL TEMPLATE **********
     $tituloHead = "Series de ".$nbGenero." - SeriesBuddies";
     $estiloEspecifico = "./css/series.css";
     $scriptEspecifico = "";
+    $scriptLoadMode = "";
     $content;
 
     // ********* COMIENZO BUFFER **********
@@ -47,7 +68,7 @@
         <a href="./series.php?id=<?=$idGenero?>" class="primary-font primary-color"><?=$nbGenero?></a>
     </nav>
 
-    <h1 class="title title--l text-align-center">Series de <?=$nbGenero?></h1>
+    <h1 class="title title--l text-align-center"><?=$titulo?></h1>
 
     <div class="pagination pagination--plus-response">
         <a href="./genders.php" class="btn"><i class="fa-solid fa-arrow-left"></i> &nbsp; Géneros</a>

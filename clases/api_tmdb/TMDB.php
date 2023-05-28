@@ -31,7 +31,8 @@ class TMDB
         10766 => 'Soap',
         10767 => 'Talk',
         10768 => 'War & Politics',
-        37 =>'Western'
+        37 =>'Western',
+        0 =>'Búsqueda'
     ];
 
     //GETTERS Y SETTERS
