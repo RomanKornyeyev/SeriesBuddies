@@ -25,7 +25,7 @@
             <!-- user -->
             <div class='user-area-wrapper'>
                 <?php if($sesionIniciada){?>
-                    <a class='user-area' href='profile.php?usuario=<?=$usuarioId?>'>
+                    <a class='user-area' href='profile.php?id=<?=$usuarioId?>'>
                         <div class='img-perfil-nav'>
                             <img class='img-fit' src='<?=$usuarioImg?>' alt='img-user'>
                         </div>

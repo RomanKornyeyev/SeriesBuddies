@@ -12,6 +12,7 @@ class TMDB
     const BASE_URL_IMG='https://image.tmdb.org/t/p/';
     const WIDTH_BACKDROP = 'w1280';
     const WIDTH_POSTER = 'w500';
+    const WIDTH_POSTER_MIN = 'w300';
     public $adult = false;
     public $lang = 'es-ES';
     const LISTADO_GENEROS = [
@@ -126,26 +127,7 @@ class TMDB
         $totalPages = ($resultados['total_pages'] <= self::MAX_PAGINAS)? $resultados['total_pages']: $totalPages = self::MAX_PAGINAS;
 
         foreach ($series as $key => $serie) {
-            $imagePath                        =  $series[$key]['poster_path'];
-            $serieData[$key]['id']            =  $series[$key]['id'];
-            $serieData[$key]['serieTitle']    =  $series[$key]['name'];
-            
-            //Si no hay foto banner para la serie se pone el logo de seriesbuddies por defecto
-            if ($series[$key]['poster_path'] == '') {
-                $serieData[$key]['posterImage'] = 'upload/logos/logo-poster.png';
-            } else {
-                $serieData[$key]['posterImage']   =  self::BASE_URL_IMG.self::WIDTH_POSTER.$imagePath;
-            }
-            
-            //Si no hay descripcion para la serie se pone el texto por defecto
-            if ($series[$key]['overview'] == '') {
-                $serieData[$key]['seriePlot'] =  'Lo sentimos, pero en estos momentos no contamos con la trama de esta serie. Estamos trabajando para disponer de ella en la máxima brevedad posible.';
-            } else {
-                $serieData[$key]['seriePlot'] =  $series[$key]['overview'];
-            }
-
-            //$serieData[$key]['serieGenres']   =  $series[$key]['genre_ids'];
-            $serieData[$key]['serieAirDate']  =  $series[$key]['first_air_date'];
+            $serieData[]=$this->almacenarDatosSeries($series, $key);
         }
 
         //$serieData = $this->mapearGenerosID($serieData);
@@ -198,45 +180,77 @@ class TMDB
     }
 
 
-
-
-
-
-
-    //********** LEGACY CODE **********
     //Devuelve la url para buscar todas las imagenes sobre una serie determinada dado su ID
     public function urlSerieImg ($codigo) {
         return self::API_URL.'tv/'.$codigo.'/images';
+        
     }
 
     //Devuelve la url para la info de la serie por su nombre
-    public function urlSerieNombre($nbSerie) {
+    public function urlSerieNombre($nbSerie, $currentPage=1) {
         $nbSerie = str_replace(' ', '%20', $nbSerie);
-        return self::API_URL.'search/tv?query='.$nbSerie.'&include_adult='.$this->adult.'&language='.$this->lang;
+        return self::API_URL.'search/tv?query='.$nbSerie.'&include_adult='.$this->adult.'&language='.$this->lang.'&page='.$currentPage;
     }
     
     //Devuelve la info de las series cuyo nombre coincide
-    public function getSeriesNombre ($nombre) {
-        $urlSerie =$this->urlSerieNombre($nombre);
-        $series=$this->peticionHTTP($urlSerie)['results'];
+    public function getSeriesNombre ($nombre, $currentPage=1) {
+        $urlSerie =$this->urlSerieNombre($nombre, $currentPage);
+        $resultados=$this->peticionHTTP($urlSerie);
+        $series=$resultados['results'];
+
+        //Guardamos el total de paginas, si sobrepasan las 500 permitidas almacenamos ese maximo
+        $totalPages = ($resultados['total_pages'] <= self::MAX_PAGINAS)? $resultados['total_pages']: $totalPages = self::MAX_PAGINAS;
 
         foreach ($series as $key => $serie) {
             foreach ($serie as $clave => $contenido) {
-                if ($clave=='name' && strcasecmp($contenido, $nombre) == 0) {
-                    $backdropPath                     =  $series[$key]['backdrop_path'];
-                    $imagePath                        =  $series[$key]['poster_path'];
-
-                    $serieData[$key]['serieTitle']    =  $series[$key]['name'];
-                    $serieData[$key]['posterImage']   =  self::BASE_URL_IMG.self::WIDTH_POSTER.$imagePath;
-                    $serieData[$key]['backdrop']      =  self::BASE_URL_IMG.self::WIDTH_BACKDROP.$backdropPath;
-                    $serieData[$key]['seriePlot']     =  $series[$key]['overview'];
-                    $serieData[$key]['serieGenres']   =  $series[$key]['genre_ids'];
-                    $serieData[$key]['serieAirDate']  =  $series[$key]['first_air_date'];
+                if ($clave=='name' && str_contains($contenido, $nombre) == 0) {
+                    $serieData[]=$this->almacenarDatosSeries($series, $key);
                 }
             }
         }
 
-        $serieData = $this->mapearGenerosID($serieData);
+        //$serieData = $this->mapearGenerosID($serieData);
+        array_push($serieData, $totalPages);
+        return $serieData;
+    }
+
+    //Devuelve las imagenes tipo POSTER de un grupo de series (array con ids)
+    public function getSeriesPosters ($series) {
+        foreach ($series as $key => $value) {
+            $series[$key] = $value['id_serie'];
+            $url = $this->urlSerieImg($series[$key]);
+            $fotos = $this->peticionHTTP($url)['posters'][0]['file_path'];
+            if ($fotos == '') {
+                $series[$key] = 'upload/logos/logo-poster.png';
+            } else {
+                $series[$key] = self::BASE_URL_IMG.self::WIDTH_POSTER_MIN.$fotos;
+            }
+        }
+        return $series;
+    }
+
+    //Guardar datos de varias series en un array
+    public function almacenarDatosSeries ($series, $key) {
+        $imagePath                  =  $series[$key]['poster_path'];
+        $serieData['id']            =  $series[$key]['id'];
+        $serieData['serieTitle']    =  $series[$key]['name'];
+        
+        //Si no hay foto banner para la serie se pone el logo de seriesbuddies por defecto
+        if ($series[$key]['poster_path'] == '') {
+            $serieData['posterImage'] = 'upload/logos/logo-poster.png';
+        } else {
+            $serieData['posterImage']   =  self::BASE_URL_IMG.self::WIDTH_POSTER.$imagePath;
+        }
+        
+        //Si no hay descripcion para la serie se pone el texto por defecto
+        if ($series[$key]['overview'] == '') {
+            $serieData['seriePlot'] =  'Lo sentimos, pero en estos momentos no contamos con la trama de esta serie. Estamos trabajando para disponer de ella en la máxima brevedad posible.';
+        } else {
+            $serieData['seriePlot'] =  $series[$key]['overview'];
+        }
+        //$serieData['serieGenres']   =  $series[$key]['genre_ids'];
+        $serieData['serieAirDate']  =  $series[$key]['first_air_date'];
+
         return $serieData;
     }
 }

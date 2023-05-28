@@ -121,6 +121,40 @@ class DWESBaseDatos {
   // ***************** MANEJO DE DATOS *****************
   
   // ====== SELECTS ======
+  
+  //Obtiene los datos personales de un usuario en concretado dado su id
+  public static function obtenInfoBuddieTarjeta ($db, $idUsuario) {
+    $db->ejecuta("SELECT 
+                  u.id, u.nombre, u.img, 
+                  CONCAT('@',u.nombre, '#', u.id)'alias', 
+                  u.descripcion, 
+                  DATE_FORMAT(ult_contacto, '%d %b %Y', 'es-ES')'fecha' 
+                  FROM usuarios u 
+                  WHERE u.id=?;", 
+                  $idUsuario);
+
+    return $db->obtenDatos()[0];
+  }
+
+  //Obtiene los ids de las series de un usuario en concreto dado su id
+  public static function obtenInfoBuddieIdSeries ($db, $idUsuario) {
+    $db->ejecuta("SELECT DISTINCT(id_serie) FROM respuestas WHERE id_usuario=?;", $idUsuario);
+    return $db->obtenDatos();  
+  }
+
+  //Obtiene la imagen, nombre y su id de los amigos de un usuario en concreto
+  public static function obtenInfoBuddieBuddies ($db, $idUsuario) {
+    $db->ejecuta("SELECT 
+                  u.nombre, u.img, id_receptor 
+                  FROM peticiones p 
+                  INNER JOIN usuarios u 
+                  ON p.id_receptor=u.id 
+                  WHERE estado='aceptada' 
+                  AND id_emisor = ?;", 
+                  $idUsuario);
+
+    return $db->obtenDatos();
+  }
 
   public static function obtenTotalUsuarios($db)
   {
