@@ -478,6 +478,12 @@ img{width: 100%;}
     object-fit: cover;
     object-position: center;
 }
+.img-contain{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
 .shadow-lightgray{
     box-shadow: 1px 1px 4px 0px rgba(156,156,156,1);
 }

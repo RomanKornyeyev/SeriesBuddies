@@ -100,7 +100,7 @@
     <?php foreach ($response as $serie) { ?>
     <?php $listadoBuddies = $db->obtenPrimerosBuddiesSerie($db, $serie['id']); ?>
     <div class="card">
-        <a class="card__serie-img" href="./feed.php?id=<?=$serie['id']?>&id_genero=<?=$idGenero?>">
+        <a class="card__serie-img d-block" href="./feed.php?id=<?=$serie['id']?>&id_genero=<?=$idGenero?>">
             <img class="img-fit" src="<?=$serie['posterImage']?>" alt="serie-img">
         </a>
         <div class="card__serie-info">
@@ -115,14 +115,16 @@
                 <p class="text text--serie"><?=$serie['seriePlot']?></p>
             </div>
             <div class="footer__serie">
-                <a href="./buddies.php?id-serie=<?=$serie['id']?>">
-                <?php foreach ($listadoBuddies as $buddie) { ?>
-                    <div class="icon__buddy img-user-post">
-                        <img class="img-fit" src="<?=$buddie['img']?>" alt="serie-img">
-                    </div>
-                <?php } ?>
-                    <p class="info info--serie">Super buddies</p>
-                </a>
+                <div class="super-buddies-wrapper">
+                    <?php foreach ($listadoBuddies as $buddie) { ?>
+                        <a href="./profile.php?id=<?=$buddie['id']?>" class="icon__buddy d-block">
+                            <img class="img-fit" src="<?=$buddie['img']?>" alt="serie-img">
+                        </a>
+                    <?php } ?>
+                    <a href="./buddies.php?id-serie=<?=$serie['id']?>" class="d-block">
+                        <p class="info info--serie">Súper buddies</p>
+                    </a>
+                </div>
                 <a href="./feed.php?id=<?=$serie['id']?>&id_genero=<?=$idGenero?>">
                     <?php $totalRespuestas = $db->obtenTotalRespuestas ($db, $serie['id']) ?>
                     <p class="info info--serie"><?=$totalRespuestas?> comentarios &gt;</p>
