@@ -551,7 +551,7 @@ class DWESBaseDatos {
     }
 
     //Pagina actual
-    $paginacion = $paginacion . "&nbsp;<span class='primary-color'>".$paginaActual." de ".$totalPaginas ."</span>&nbsp;";
+    $paginacion = $paginacion . "<span class='primary-color'>&nbsp;".$paginaActual." de ".$totalPaginas ."&nbsp;</span>";
 
     //Boton > y >>
     if ($paginaActual != $totalPaginas) {

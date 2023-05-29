@@ -369,6 +369,12 @@ img{width: 100%;}
 .pages, .res-btn{
     min-width: 2.5rem;
 }
+.pages{
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    gap: var(--space-s);
+}
 /* ===== FOOTER ===== */
 .footer{
     min-height: 10rem;
@@ -679,8 +685,8 @@ img{width: 100%;}
     .footer__content{justify-content: center;}
 }
 
-/* ===== EXTRA (400px) ===== */
-@media screen and (max-width: 400px) {
+/* ===== EXTRA (405px) ===== */
+@media screen and (max-width: 405px) {
     /* === PAGINATION === */
     .pagination--plus-response{
         flex-flow: column;
