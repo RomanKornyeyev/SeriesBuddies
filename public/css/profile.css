@@ -76,6 +76,28 @@
     right:0;
 }
 
+/*---------------------------------- TARJETA DE PETICIONES ----------------------------------------*/
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.petition {
+    background-color: var(--primary-50);
+    display: flex;
+    flex-direction: row;
+}
+.card__user-body {
+    display: flex;
+    flex-direction: row;
+    height: 10vh;
+}
+.title--petition {
+    font-size: 2rem;
+}
+.info--petition {
+    font-size: 1.5rem;
+}
+
 /*-------------------------------------------------------------------------------*/
 .carousel {
     width: 100%;

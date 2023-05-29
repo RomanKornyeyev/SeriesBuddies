@@ -161,7 +161,7 @@
                     <div class='buddy__footer buddy__footer--primary $grid'>
                         <button class='btn btn--card' onclick='bajar(this)'>
                             <i class='fa-solid fa-user-group'></i>&nbsp;
-                            <span class='primary-font'>Sois amig@s</span>
+                            <span class='primary-font'>Amig@s</span>
                             &nbsp;<i class='fa-solid fa-arrow-up'></i>
                         </button>
                         <a class='btn btn--card' href='./profile.php?id=$id'>Perfil</a>

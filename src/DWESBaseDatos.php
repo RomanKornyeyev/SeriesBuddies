@@ -169,6 +169,11 @@ class DWESBaseDatos {
     return $db->obtenDatos();
   }
 
+  public static function obtenPeticionesPendientes ($db, $idUsuario) {
+    $db->ejecuta("SELECT u.nombre, u.img, p.id_emisor, p.id_receptor, p.estado FROM peticiones p INNER JOIN usuarios u ON p.id_emisor=u.id WHERE estado='pendiente' AND id_receptor=?", $idUsuario);
+    return $db->obtenDatos();
+  }
+
   public static function obtenTotalUsuarios($db)
   {
     $db->ejecuta(

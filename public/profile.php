@@ -3,6 +3,10 @@
     // ***** INIT *****
     require_once("../src/init.php");
 
+    // ***** PETICIONES *****
+    use clases\peticiones\Peticion;
+    $peticionFooter = new Peticion($esAdmin);
+
     // ***** API TMDB *****
     use clases\api_tmdb\TMDB;
     $tmdb = new TMDB();
@@ -23,14 +27,23 @@
 
     //Devuelve los chips (id, img, nombre) de ese buddie
     $infoBuddie['chips'] = DWESBaseDatos::obtenInfoBuddieChips($db, $idUsuario);
+
+    //Obtiene el nombre, el id_emisor, id_receptor y el estado de las peticiones pendientes de ese buddie
+    $peticiones = DWESBaseDatos::obtenPeticionesPendientes($db, $idUsuario);
+
     // echo '<pre class="color-white">';
     // print_r($infoBuddie);
     // echo '</pre>';
 
+    // echo '<pre class="color-white">';
+    // print_r($peticiones);
+    // echo '</pre>';
+
+
     // ********* INFO PARA EL TEMPLATE **********
     $tituloHead = $infoBuddie['tarjeta']['nombre']." - SeriesBuddies";
     $estiloEspecifico = "./css/profile.css";
-    $scriptEspecifico = "./js/galeria.js";
+    $scriptEspecifico = "./js/buddies.js";
     $scriptLoadMode = "defer";
     $content;
     
@@ -38,27 +51,51 @@
     ob_start();
 ?>
             <main class="main">
-                <div class="card">
-                    <div class="card__user-img">
-                        <div class="profile-img">
-                            <img class="img-fit" src="<?=$infoBuddie['tarjeta']['img']?>" alt="profile-img">
+                
+                    <div class="card">
+                        <div class="card__user-img">
+                            <div class="profile-img">
+                                <img class="img-fit" src="<?=$infoBuddie['tarjeta']['img']?>" alt="profile-img">
+                            </div>
+                        </div>
+                        <div class="card__user-bio">
+                            <div class="card__user-info">
+                                <div class="admin-area">
+                                    <h1 class="title title--user"><?=$infoBuddie['tarjeta']['nombre']?></h1>
+                                    <?php //botones de editar/eliminar, solo cuando id=id o es admin ?>
+                                    <?php if($idUsuario == $_SESSION['id'] || $esAdmin) { ?>
+                                        <a href="./edit.php?id=<?=$idUsuario?>&action=editando" class="btn btn--secondary btn--sm-responsive btn--bold">Editar</a>
+                                        <!-- <button class="btn btn--error btn--sm-responsive btn--bold" onclick="eliminar()">Eliminar</button> -->
+                                    <?php } ?>
+                                </div>
+                                <p class="info info--user"><?=$infoBuddie['tarjeta']['alias']?></p>
+                                <p class="info info--user">Se unió el <?=$infoBuddie['tarjeta']['fecha']?></p>
+                                <p class="text text--user"><?=$infoBuddie['tarjeta']['descripcion']?></p>
+                            </div>
+                            
+                            
+                            <div class="button-card">
+                                <a class="btn btn--card" href="#">Conectar</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="card__user-bio">
-                        <div class="card__user-info">
-                            <h1 class="title title--user"><?=$infoBuddie['tarjeta']['nombre']?></h1>
-                            <p class="info info--user"><?=$infoBuddie['tarjeta']['alias']?></p>
-                            <p class="info info--user">Se unió el <?=$infoBuddie['tarjeta']['fecha']?></p>
-                            <p class="text text--user"><?=$infoBuddie['tarjeta']['descripcion']?></p>
-                        </div>
-                        
-                        <div class="button-card">
-                            <a class="btn btn--card" href="#">Conectar</a>
-                        </div>
+
+                    <div class="petition">
+                        <?php foreach ($peticiones as $key => $peticion) { ?>
+                            <div class="card__user-img">
+                                <div class="profile-img">
+                                    <img class="img-fit" src="<?=$peticion['img']?>" alt="profile-img">
+                                </div>
+                            </div>
+                            <div class="card__user-body">
+                                <div class="card__user-info">
+                                    <h1 class="title title--user title--petition"><?=$peticion['nombre']?></h1>
+                                    <p class="info info--user info--petition">Petición de amistad <?=$peticion['estado']?></p>
+                                </div>
+                            </div>
+                        <?php } ?>
                     </div>
-                </div>
-
-
+                
                 <div class="carousel">
                     <h2 class="title title--carousel">MIS SERIES</h2>
 
@@ -76,7 +113,7 @@
                             <?php foreach ($infoBuddie['series'] as $key => $value) { ?>
                                 <div class="carrusel img">
                                     <div>
-                                        <a href="./feed.php?id=<?=$series[$key]['id_serie']?>">
+                                        <a href="./feed.php?id=<?=$series[$key]['id_serie']?>&id_genero=0">
                                             <picture>
                                                 <img src="<?=$infoBuddie['series'][$key]?>" alt="imagen">
                                             </picture>
