@@ -121,6 +121,7 @@
     border:3px solid var(--primary-500);
     box-shadow: 0 0 5px  var(--primary-50);
     border-radius:var(--br-default);
+    background-color: var(--almost-black);
 }
 .title--carousel {
     width: 30%;

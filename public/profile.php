@@ -20,7 +20,10 @@
 
     //Devuelve los amigos (id_receptor, nombre y la img) de ese buddie
     $infoBuddie['buddies'] = DWESBaseDatos::obtenInfoBuddieBuddies($db, $idUsuario);
-    // echo '<pre>';
+
+    //Devuelve los chips (id, img, nombre) de ese buddie
+    $infoBuddie['chips'] = DWESBaseDatos::obtenInfoBuddieChips($db, $idUsuario);
+    // echo '<pre class="color-white">';
     // print_r($infoBuddie);
     // echo '</pre>';
 
@@ -128,7 +131,44 @@
 
                     </div>
                 </div>
-                
+
+                <?php if (count($infoBuddie['chips']) != 0) { ?>
+                    <div class="carousel">
+                        <h2 class="title title--carousel">MIS CHIPS</h2>
+
+                        <!-- Galeria en sí: botones y fotos -->
+                        <div class="list" id="list">
+
+                            <!-- Boton -->
+                            <button class="carrusel-arrow carrusel-prev" id="button-prev" data-button="button-prev"
+                                onclick="app.processingButton(event)">
+                                <i class="fa-solid fa-angle-left"></i>
+                            </button>
+                            
+                            <!-- Todas las imagenes -->
+                            <div class="gallery" id="gallery">
+                                <?php foreach ($infoBuddie['chips'] as $key => $value) { ?>
+                                    <div class="carrusel img">
+                                        <div>
+                                            <a href="./profile.php?id=<?=$value['id_usuario']?>">
+                                                <picture>
+                                                    <img src="<?=$value['img']?>" alt="<?=$value['nombre']?>">
+                                                </picture>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <?php } ?>
+                            </div>
+
+                            <!-- Boton -->
+                            <button class="carrusel-arrow carrusel-next" id="button-next" data-button="button-next"
+                                onclick="app.processingButton(event)">
+                                <i class="fa-solid fa-angle-right"></i>
+                            </button>
+
+                        </div>
+                    </div>
+                <?php } ?>
             </main>
 
 <?php

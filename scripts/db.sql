@@ -3,7 +3,8 @@ DROP TABLE IF EXISTS respuestas CASCADE;
 DROP TABLE IF EXISTS peticiones CASCADE;
 DROP TABLE IF EXISTS tokens CASCADE;
 DROP TABLE IF EXISTS usuarios CASCADE;
-
+DROP TABLE IF EXISTS chips CASCADE;
+DROP TABLE IF EXISTS chips_usuario CASCADE;
 
 /************* USUARIOS, PETICIONES, ETC ***************/
 CREATE TABLE usuarios (
@@ -76,7 +77,78 @@ CREATE TABLE respuestas(
 );
 
 
+/************* CHIPS, CHIPS_USUARIO ***************/
+CREATE TABLE chips (
+    id      INT AUTO_INCREMENT PRIMARY KEY,
+    img     VARCHAR(255) NOT NULL DEFAULT 'upload/perfiles/default.png',
+    nombre  VARCHAR(50) NOT NULL DEFAULT 'chip'
+);
 
+CREATE TABLE chips_usuario (
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    id_chip     INT NOT NULL,
+    id_usuario  INT NOT NULL,
+    CONSTRAINT fk_id_user FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE,
+    CONSTRAINT fk_id_chip FOREIGN KEY (id_chip) REFERENCES chips(id) ON DELETE CASCADE
+);
+
+
+INSERT INTO chips (img, nombre) VALUES ('upload/chips/gold.png', 'CHIP - GOLD');     --15 SERIES VISTAS
+INSERT INTO chips (img, nombre) VALUES ('upload/chips/silver.png', 'CHIP - SILVER'); --10 SERIES VISTAS
+INSERT INTO chips (img, nombre) VALUES ('upload/chips/bronze.png', 'CHIP - BRONZE'); --5 SERIES VISTAS
+
+
+--Trigger que se ejecuta cuando se hacen inserts en respuestas
+system clear;
+drop trigger comprobar_medallas;
+
+DELIMITER //
+CREATE TRIGGER comprobar_medallas AFTER INSERT
+ON respuestas
+FOR EACH ROW
+BEGIN
+    --Variables que se necesitan para controlar errores y resultados en el cursor
+    DECLARE done INT DEFAULT 0;
+    DECLARE series INT;
+    DECLARE usuario INT;
+
+    -- Código del trigger
+    DECLARE p CURSOR FOR
+        WITH cte_cursor AS (SELECT id_serie, id_usuario FROM respuestas GROUP BY id_usuario, id_serie) SELECT count(id_serie) as total_series, id_usuario FROM cte_cursor GROUP BY id_usuario;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+    
+    --Se borra la tabla chips_usuario
+    DELETE FROM chips_usuario;
+
+    OPEN p;
+    bucle_chips:
+    LOOP
+        FETCH p INTO series, usuario;
+        IF done = 1 THEN
+        LEAVE bucle_chips;
+        END IF;
+        IF (series >= 5 AND series<10) THEN
+            INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (3, usuario);
+        END IF;
+
+        IF (series >=10 AND series<15) THEN
+            INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (3, usuario);
+            INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (2, usuario);
+        END IF;
+
+        IF (series >=15 AND series<20) THEN
+            INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (3, usuario);
+            INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (2, usuario);
+            INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (1, usuario);
+        END IF;
+        
+    END LOOP bucle_chips;
+    CLOSE p;
+
+
+END;
+//
+DELIMITER ;
 
 
 

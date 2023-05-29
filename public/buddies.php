@@ -91,7 +91,7 @@
                             <div class="barrita"></div>
                             <div class="achievements">
                                 <p><?=$value['total_series']?> Series</p>
-                                <p>xx Chips</p>
+                                <p><?php echo ($value['total_chips'] == 0)? 0:$value['total_chips'] ?> Chips</p>
                             </div>
                         </div>
                     </div>

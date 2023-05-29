@@ -156,6 +156,19 @@ class DWESBaseDatos {
     return $db->obtenDatos();
   }
 
+  public static function  obtenInfoBuddieChips ($db, $idUsuario) {
+    $db->ejecuta("SELECT c.id, c.nombre, c.img, cu.id_usuario 
+                  FROM chips_usuario cu 
+                  INNER JOIN usuarios u 
+                  ON cu.id_usuario=u.id 
+                  INNER JOIN chips c 
+                  ON c.id=cu.id_chip 
+                  WHERE cu.id_usuario=?;", 
+                  $idUsuario);
+    
+    return $db->obtenDatos();
+  }
+
   public static function obtenTotalUsuarios($db)
   {
     $db->ejecuta(
@@ -297,17 +310,18 @@ class DWESBaseDatos {
       left join peticiones p 
       on u.id=p.id_emisor 
       and p.estado='aceptada'
-      group by u.id)
+      group by u.id),
+      t2 as (select count(id_chip) as total_chips, u.id, u.nombre from usuarios u inner join chips_usuario cu on u.id=cu.id_usuario group by cu.id_usuario)
       
-      SELECT t.id, t.nombre, t.img, t.alias, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas, t.total_amigos
+      SELECT t.id, t.nombre, t.img, t.alias, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas, t.total_amigos, t2.total_chips
       FROM t
       LEFT JOIN respuestas r ON t.id=r.id_usuario
+      LEFT JOIN t2 ON t.id=t2.id
       GROUP BY t.id LIMIT ?,?;",
       $registroInicial, self::REGISTROS_POR_PAGINA
     );
-    $listadoBuddies = $db->obtenDatos();
 
-    return $listadoBuddies;
+    return $db->obtenDatos();
   }
 
   public static function obtenListadoBuddiesPorSerie ($db, $idSerie, $registroInicial) {
@@ -317,47 +331,20 @@ class DWESBaseDatos {
       left join peticiones p 
       on u.id=p.id_emisor 
       and p.estado='aceptada'
-      group by u.id)
+      group by u.id),
+      t2 as (select count(id_chip) as total_chips, u.id, u.nombre from usuarios u inner join chips_usuario cu on u.id=cu.id_usuario group by cu.id_usuario)
       
-      SELECT t.id, t.nombre, t.img, t.alias, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas, t.total_amigos
+      SELECT t.id, t.nombre, t.img, t.alias, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas, t.total_amigos, t2.total_chips
       FROM t
       LEFT JOIN respuestas r ON t.id=r.id_usuario
+      LEFT JOIN t2 ON t.id=t2.id
       WHERE r.id_serie = ?
       GROUP BY t.id LIMIT ?,?;",
       $idSerie, $registroInicial, self::REGISTROS_POR_PAGINA
     );
-    $listadoBuddies = $db->obtenDatos();
 
-    return $listadoBuddies;
+    return $db->obtenDatos();
   }
-
-  /*
-  public static function obtenListadoBuddiesPorSerie ($db, $idSerie) {
-    //Devuelve la informacion del usuario que ha comentado en esa serie
-    $db->ejecuta ("SELECT DISTINCT(id_serie), u.id, nombre, img FROM respuestas r INNER JOIN usuarios u ON u.id=r.id_usuario WHERE id_serie=? LIMIT ?;", $idSerie, self::MAX_BUDDIES_FEED);
-    $listadoBuddies = $db->obtenDatos();
-
-    //Devuelve el usuario y el total de comentarios/respuestas que ha hecho en la pagina en general
-    $db->ejecuta("SELECT id_usuario, COUNT(id_usuario) FROM respuestas GROUP BY id_usuario;");
-    $totalRespuestas = $db->obtenDatos();
-    
-    //Devuelve el total de series en las que ha comentado un usuario
-    $db->ejecuta("WITH t AS (SELECT id_serie, id_usuario FROM respuestas GROUP BY id_usuario, id_serie ORDER BY id_usuario, id_serie) SELECT COUNT(id_serie) FROM t GROUP BY id_usuario;");
-    $totalSeries = $db->obtenDatos();
-
-    foreach ($listadoBuddies as $key => $value) {
-        if ($listadoBuddies[$key]['id'] == $totalRespuestas[$key]['id_usuario']) {
-            $listadoBuddies[$key]['alias'] = "@".$listadoBuddies[$key]['nombre']."#".$listadoBuddies[$key]['id'];
-            $listadoBuddies[$key]['total_series'] = $totalSeries[$key]['COUNT(id_serie)'];
-            $listadoBuddies[$key]['total_respuestas'] = $totalRespuestas[$key]['COUNT(id_usuario)'];
-            $listadoBuddies[$key]['total_buddies'] = random_int(1, 20);
-            $listadoBuddies[$key]['total_chips'] = random_int(1, 20);
-        }
-    }
-
-    return $listadoBuddies;
-  }
-  */
 
 
   // ====== INSERTS ======
