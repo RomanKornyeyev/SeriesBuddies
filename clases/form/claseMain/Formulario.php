@@ -88,7 +88,7 @@ class Formulario
             echo "</div>\n";
         }
         echo "<div class='".implode(" ", $this->claseSubmitWrapper)."'>\n";
-        echo "<input type='submit' id='$this->idSubmit' name='$this->nameSubmit' value='$this->valorSubmit' class='".implode(" ", $this->claseSubmitInput)."'>\n";   
+        echo "<button type='submit' id='$this->idSubmit' name='$this->nameSubmit' class='".implode(" ", $this->claseSubmitInput)."'>$this->valorSubmit</button>\n";   
         echo "</div>\n";
         echo "</form>\n";
     }

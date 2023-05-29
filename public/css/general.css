@@ -7,6 +7,11 @@
     3:
     4:
     5: header, .confirmation-wrapper
+
+    ===== ORDERS: =====
+    1: .nav--login (index.css@810px)
+    2: .header-left-content (index.css@810px)
+
 */
 /* ===== IMPORTS ===== */
 @import url('buttons.css');
@@ -104,6 +109,8 @@ img{width: 100%;}
     --br-small: var(--space-xs);
     --br-default: var(--space-s);
     --br-m: var(--space-m);
+    --br-l: var(--space-l);
+    --br-xl: var(--space-xl);
 
     /* === WIDTHS === */
     --width-xs: 100rem;
@@ -149,12 +156,21 @@ img{width: 100%;}
     height: 100%;
     transition: height 400ms ease-out;
     background-color: var(--header-bg);
+    /* border: 1px solid red; */
+}
+.header-left-content{
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--space-xl);
 }
 .nav{
     display: flex;
     flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
     gap: var(--space-l);
-    width: 20rem;
+    /* width: 20rem; */
+    /* border: 1px solid white; */
 }
 .nav__link{
     position: relative;
@@ -181,10 +197,9 @@ img{width: 100%;}
     text-overflow: ellipsis;
 }
 .nav--header{
-    width: 25rem;
+    padding-top: .5rem;
 }
 .nav--login{
-    width: 25rem;
     justify-content: flex-end;
     align-items: center;
 }
@@ -192,7 +207,7 @@ img{width: 100%;}
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: 18rem;
+    /* width: 18rem; */
 }
 .user-area{
     display: flex;
@@ -233,11 +248,56 @@ img{width: 100%;}
 .logo--pc{
     height: 3.5rem;
     display: block;
+    /* border: 1px solid white; */
 }
 .logo--mbl{display: none;}
 .logo-footer{
     display: block;
     height: 3rem;
+}
+/* ===== SEARCH FORM ===== */
+.h-form{
+    display: flex;
+    flex-flow: row;
+    gap: var(--space-s);
+    height: 3.90rem;
+    width: 25rem;
+    margin-right: var(--space-sm);
+    /* border: 1px solid blue; */
+}
+.h-input{
+    position: relative;
+    width: 100%;
+    padding: var(--space-l) var(--space-l);
+    border-radius: var(--br-xl);
+    border: 0;
+    outline: 1px solid var(--black);
+    background-color: var(--primary-50);
+    font-size: 1.6rem;
+    font-family: var(--primary-font);
+    box-shadow: 0 0 0 0 var(--primary-500);
+
+    /* --- TRANSICIÓN BOX-SHADOW DE PRUEBA --- */
+    transition: box-shadow 125ms ease-out, outline 100ms ease-out;
+}
+.h-input:focus{
+    transition: box-shadow 125ms ease-out, outline 100ms ease-out;
+    outline: 2px solid var(--primary-500);
+
+    /* --- TRANSICIÓN BOX-SHADOW DE PRUEBA --- */
+    box-shadow: 0 0 2px 2px var(--primary-500);
+}
+.h-submit-wrapper{
+    height: 100%;
+}
+.h-submit-button{
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
 }
 
 /* ===== BODY (CENTRAL CONTAINER) ===== */
@@ -503,6 +563,28 @@ img{width: 100%;}
         padding:0;
     }
 }
+/* ===== EXTRA (950px) ===== */
+@media screen and (max-width: 950px) {
+    /* === SMALL CORRECTIONS === */
+    .h-form{
+        width: 20rem;
+    }
+}
+/* ===== EXTRA (915px) ===== */
+@media screen and (max-width: 915px) {
+    /* === SMALL CORRECTIONS === */
+    .h-form{
+        width: 15rem;
+    }
+}
+/* ===== EXTRA (840px) ===== */
+@media screen and (max-width: 840px) {
+    /* === SMALL CORRECTIONS === */
+    .h-form{
+        width: 13rem;
+        margin-right: 0;
+    }
+}
 /* ===== TABLET (810px) ===== */
 @media screen and (max-width: 810px) {
     /* ===== HEADER ===== */
@@ -531,16 +613,24 @@ img{width: 100%;}
         order: 1;
         flex-flow: column;
         justify-content: center;
-        margin-top: var(--space-s);
+        margin-top: var(--space-ultra-l);
+        gap: var(--space-xxl);
     }
-    .user-area-wrapper{
-        justify-content: center;
+    .header-left-content{
+        order: 2;
+        width: 100%;
+    }
+    .h-form{
+        margin:0;
+        width: max(100%, 25rem);
     }
     .nav--header{
-        order: 2;
         flex-direction: column;
         gap: 0;
         width: 100%;
+    }
+    .user-area-wrapper{
+        justify-content: center;
     }
     .nav__link--header{
         display: flex;

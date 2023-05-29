@@ -10,15 +10,15 @@
     use clases\form\claseMain\Formulario;
     
 
-    // ========================================= FORM DE LOGIN =========================================
+    // ========================================= FORM DE BUSCAR SERIE =========================================
     //                             ACTION            METHOD           clases-css-form   ¿Vaciar al validar?   atr-extra(para forms con img)   CAMPOS
-    $formulario = new Formulario("series.php", Formulario::METHOD_POST, ["form"],        Formulario::VACIAR_NO,          "",                   array(
+    $formulario = new Formulario("series.php", Formulario::METHOD_POST, ["h-form"],        Formulario::VACIAR_NO,          "",                   array(
         //                       ====================================== COMÚN =======================================================================  //  ======================== ESPECÍFICO ========================
-        //                  ¿Puede estar vacío? valor  name    label         clases-css-label         clases-css-wrapper       clases-css-input            tipoCampo    placeholder    regex
-        $buscador = new Texto (Atipo::NULL_NO, $serieBuscada,"buscador", "buscador",   ["label","label--text"],    ["input-wrapper"],  ["input","shadow-lightgray"],  Texto::TYPE_TEXT, " ",  Texto::DEFAULT_PATTERN_500),
+        //                  ¿Puede estar vacío? valor         name   label  clases-css-label  clases-css-wrapper  clases-css-input             tipoCampo       placeholder      regex
+        $buscador = new Texto (Atipo::NULL_NO, $serieBuscada,"buscador", "",   ["d-none"],    ["input-wrapper"],  ["h-input"],              Texto::TYPE_TEXT, "Los simpsons",  Texto::DEFAULT_PATTERN_500),
     // === SUBMIT ===
     // claseWrappSubmit                           idSubmit  nameSubm  txtSubmit  clseSubmit
-    ), ["input-wrapper","input-wrapper--submit"], "buscar", "buscar", "BUSCAR", ["btn", "btn--primary", "shadow-lightgray"]);
+    ), ["h-submit-wrapper"], "buscar", "buscar", "<i class='fa-solid fa-magnifying-glass'></i>", ["btn", "btn--primary", "h-submit-button"]);
 
     if ($formulario->validarGlobal()) {
         //redirección
@@ -42,22 +42,24 @@
     </div>
     <!-- header content (nav, etc.) -->
     <div id="header-content" class="header__content">
-        <nav class="nav nav--header">
-            <a href="./genders.php" class="nav__link nav__link--header">Géneros</a>
-            <a href="./buddies.php" class="nav__link nav__link--header">Buddies</a>
-        </nav>
-        <!-- *** PC LOGO *** -->
-        <a href="index.php">
-            <!-- <h1 class="logo logo--pc">SeriesBuddies</h1> -->
-            <img src="upload/logos/logo-principal.png" alt="Logo SeriesBuddies" class="logo logo--pc">
-        </a>
-
-        <?php $formulario->pintarGlobal(); ?>
+        <div class="header-left-content">
+            <!-- *** PC LOGO *** -->
+            <a href="index.php" class="logo--pc">
+                <!-- <h1 class="logo logo--pc">SeriesBuddies</h1> -->
+                <img src="upload/logos/logo-principal.png" alt="Logo SeriesBuddies" class="logo logo--pc">
+            </a>
+            <nav class="nav nav--header">
+                <a href="./genders.php" class="nav__link nav__link--header">Géneros</a>
+                <a href="./buddies.php" class="nav__link nav__link--header">Buddies</a>
+            </nav>
+        </div>
 
         <div class="nav nav--login">
+            <!-- search form -->
+            <?php $formulario->pintarGlobal(); ?>
             <!-- user -->
-            <div class='user-area-wrapper'>
-                <?php if($sesionIniciada){?>
+            <?php if($sesionIniciada){?>
+                <div class='user-area-wrapper'>
                     <a class='user-area' href='profile.php?id=<?=$usuarioId?>'>
                         <div class='img-perfil-nav'>
                             <img class='img-fit' src='<?=$usuarioImg?>' alt='img-user'>
@@ -66,8 +68,8 @@
                             <div class="nav__link--user"><?=$usuarioNombre?></div>
                         </div>
                     </a>
-                <?php } ?>
-            </div>
+                </div>
+            <?php } ?>
            
             <!-- login/logout -->
             <?php if($sesionIniciada){?>
