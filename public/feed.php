@@ -254,8 +254,8 @@
                             <div class="admin-area">
                                 <?php //botones de editar/eliminar, solo cuando id=id o es admin ?>
                                 <?php if($comentario['id_user'] == $_SESSION['id'] || $esAdmin) { ?>
-                                    <a href="./feed.php?id=<?=$idSerie?>&action=editando&id_respuesta=<?=$comentario['id_respuesta']?>&id_genero=<?=$idGenero?>&pagina=<?=$paginaActual?>" class="btn btn--secondary btn--sm btn--bold">Editar</a>
-                                    <button class="btn btn--error btn--sm btn--bold" onclick="eliminar(this, <?=$comentario['id_respuesta']?>, <?=$idSerie?>, <?=$idGenero?>, <?=$paginaActual?>, <?=$totalPaginas?>)">Eliminar</button>
+                                    <a href="./feed.php?id=<?=$idSerie?>&action=editando&id_respuesta=<?=$comentario['id_respuesta']?>&id_genero=<?=$idGenero?>&pagina=<?=$paginaActual?>" class="btn btn--secondary btn--sm-responsive btn--bold">Editar</a>
+                                    <button class="btn btn--error btn--sm-responsive btn--bold" onclick="eliminar(this, <?=$comentario['id_respuesta']?>, <?=$idSerie?>, <?=$idGenero?>, <?=$paginaActual?>, <?=$totalPaginas?>)">Eliminar</button>
                                 <?php } ?>
                             </div>
                         </div>

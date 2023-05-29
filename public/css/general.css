@@ -28,7 +28,7 @@
 html{font-size: 62.5%;font-family: 'Nunito', sans-serif;}
 body{font-size: 1.6rem}
 a{text-decoration: none; color: var(--white);}
-button{font-family: var(--primary-font);}
+button, input, textarea{font-family: var(--primary-font);}
 ul,ol{list-style: none;}
 input,textarea,button,select,a{
     border: none;
@@ -677,6 +677,14 @@ img{width: 100%;}
     }
     .font-size-ultra-big{font-size: 3rem;}
     .footer__content{justify-content: center;}
+}
+
+/* ===== EXTRA (400px) ===== */
+@media screen and (max-width: 400px) {
+    /* === PAGINATION === */
+    .pagination--plus-response{
+        flex-flow: column;
+    }
 }
 
 /* ===== EXTRA/EFFECTS (ALWAYS DOWN, EVEN AFTER MQ) ===== */
