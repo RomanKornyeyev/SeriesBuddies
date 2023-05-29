@@ -507,6 +507,10 @@ img{width: 100%;}
 .color-white{color: var(--almost-white);}
 .pos-absolute{position: absolute;}
 .font-size-default{font-size: 1.6rem;}
+.awesome-icon-portait{
+    font-size: 10rem;
+    color: var(--primary-500);
+}
 
 .rotate-infinite{animation: rotate 1s linear infinite;}
 @keyframes rotate {
