@@ -351,18 +351,14 @@ class DWESBaseDatos {
     return $db->obtenDatos();
   }
 
-  //Obtiene el total de la info de los buddies que coincidan su nombre con la serie pedida
-  public static function obtenTotalBuddiesSerie ($db, $id) {
-    $db->ejecuta('SELECT u.nombre, u.img, u.id, COUNT(r.id) AS total_respuestas
-    FROM usuarios u
-    JOIN respuestas r ON u.id = r.id_usuario
-    WHERE r.id_serie = ?
-    GROUP BY u.nombre
-    ORDER BY total_respuestas DESC
-    LIMIT ?;',
-    $idSerie, self::MAX_BUDDIES_FEED);
+  //Obtiene el total de buddies que coincidan con la serie pedida
+  public static function obtenTotalBuddiesSerie ($db, $idSerie) {
+    $db->ejecuta('SELECT COUNT(DISTINCT(id_usuario)) AS total_usuarios 
+                  FROM respuestas 
+                  WHERE id_serie = ?;',
+                  $idSerie);
     
-    return $db->obtenDatos();
+    return $db->obtenElDato()['total_usuarios'];
   }
 
   //Obtiene la info de los buddies que coincidan su nombre con la busqueda pedida
@@ -425,6 +421,19 @@ class DWESBaseDatos {
 
     return $db->obtenDatos();
   }
+
+    //Obtiene el total de buddies que coincidan con la serie pedida + busqueda
+    public static function obtenTotalBuddiesBusquedaSerie ($db, $busqueda, $idSerie) {
+      $db->ejecuta('SELECT COUNT(DISTINCT(u.nombre)) AS total_usuarios, r.id_serie 
+                    FROM respuestas r
+                    INNER JOIN usuarios u
+                    ON r.id_usuario=u.id
+                    WHERE id_serie = ?
+                    AND nombre LIKE ?',
+                    $idSerie, '%'.$busqueda.'%');
+      
+      return $db->obtenElDato()['total_usuarios'];
+    }
   
   // ====== INSERTS ======
 

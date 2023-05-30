@@ -60,8 +60,7 @@
         if (isset($_GET['buddies'])) {
             //obtenemos todos los users filtrados por serie + busqueda
             $consulta = DWESBaseDatos::obtenListadoBuddiesBusquedaPorSerie($db, $_GET['buddies'], $idSerie, $registroInicial);
-
-            $totalRegistros = (count($consulta) != 0)? count($consulta) : 0;
+            $totalRegistros = DWESBaseDatos::obtenTotalBuddiesBusquedaSerie ($db, $_GET['buddies'], $idSerie);
 
             //paginación
             $argumentos = array(
@@ -71,8 +70,7 @@
         }else{
             //obtenemos todos los users filtrados por serie
             $consulta = DWESBaseDatos::obtenListadoBuddiesPorSerie($db, $idSerie, $registroInicial);
-
-            $totalRegistros = (count($consulta) != 0)? count($consulta) : 0;
+            $totalRegistros = DWESBaseDatos::obtenTotalBuddiesSerie ($db, $idSerie);
             
             //paginación
             $argumentos = array(
