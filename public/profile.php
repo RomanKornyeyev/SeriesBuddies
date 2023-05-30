@@ -80,24 +80,24 @@
                         </div>
                     </div>
 
-                    <div class="petition">
-                        <?php foreach ($peticiones as $key => $peticion) { ?>
+                    <!-- <div class="petition">
+                        <?php //foreach ($peticiones as $key => $peticion) { ?>
                             <div class="card__user-img">
                                 <div class="profile-img">
-                                    <img class="img-fit" src="<?=$peticion['img']?>" alt="profile-img">
+                                    <img class="img-fit" src="<?php // echo $peticion['img']?>" alt="profile-img">
                                 </div>
                             </div>
                             <div class="card__user-body">
                                 <div class="card__user-info">
-                                    <h1 class="title title--user title--petition"><?=$peticion['nombre']?></h1>
-                                    <p class="info info--user info--petition">Petición de amistad <?=$peticion['estado']?></p>
+                                    <h1 class="title title--user title--petition"><?php // echo$peticion['nombre']?></h1>
+                                    <p class="info info--user info--petition">Petición de amistad <?php // echo$peticion['estado']?></p>
                                 </div>
                             </div>
-                        <?php } ?>
-                    </div>
+                        <?php //} ?>
+                    </div> -->
                 
                 <div class="carousel">
-                    <h2 class="title title--carousel">MIS SERIES</h2>
+                    <h2 class="title title--carousel"><span class="title--first-lane">MIS</span> SERIES</h2>
 
                     <!-- Galeria en sí: botones y fotos -->
                     <div class="list" id="list">
@@ -111,11 +111,11 @@
                         <!-- Todas las imagenes -->
                         <div class="gallery" id="gallery">
                             <?php foreach ($infoBuddie['series'] as $key => $value) { ?>
-                                <div class="carrusel img">
+                                <div class="carrusel">
                                     <div>
                                         <a href="./feed.php?id=<?=$series[$key]['id_serie']?>&id_genero=0">
                                             <picture>
-                                                <img src="<?=$infoBuddie['series'][$key]?>" alt="imagen">
+                                                <img src="<?=$infoBuddie['series'][$key]?>" alt="imagen" class="img-fit">
                                             </picture>
                                         </a>
                                     </div>
@@ -134,7 +134,7 @@
 
 
                 <div class="carousel">
-                    <h2 class="title title--carousel">MIS BUDDIES</h2>
+                    <h2 class="title title--carousel"><span class="title--first-lane">MIS</span> BUDDIES</h2>
 
                     <!-- Galeria en sí: botones y fotos -->
                     <div class="list" id="list">
@@ -148,16 +148,16 @@
                         <!-- Todas las imagenes -->
                         <div class="gallery" id="gallery">
                             <?php foreach ($infoBuddie['buddies'] as $key => $value) { ?>
-                                <div class="carrusel img">
+                                <div class="carrusel">
                                     <div>
                                         <a href="./profile.php?id=<?=$value['id_receptor']?>">
                                             <picture>
-                                                <img src="<?=$value['img']?>" alt="imagen">
+                                                <img src="<?=$value['img']?>" alt="imagen" class="img-fit">
                                             </picture>
                                         </a>
                                     </div>
                                 </div>
-                                <?php } ?>
+                            <?php } ?>
                         </div>
 
                         <!-- Boton -->
@@ -171,7 +171,7 @@
 
                 <?php if (count($infoBuddie['chips']) != 0) { ?>
                     <div class="carousel">
-                        <h2 class="title title--carousel">MIS CHIPS</h2>
+                        <h2 class="title title--carousel"><span class="title--first-lane">MIS</span> CHIPS</h2>
 
                         <!-- Galeria en sí: botones y fotos -->
                         <div class="list" id="list">
@@ -189,7 +189,7 @@
                                         <div>
                                             <a href="./profile.php?id=<?=$value['id_usuario']?>">
                                                 <picture>
-                                                    <img src="<?=$value['img']?>" alt="<?=$value['nombre']?>">
+                                                    <img src="<?=$value['img']?>" alt="<?=$value['nombre']?>" class="img-fit">
                                                 </picture>
                                             </a>
                                         </div>

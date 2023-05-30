@@ -99,6 +99,7 @@ INSERT INTO chips (img, nombre) VALUES ('upload/chips/bronze.png', 'CHIP - BRONZ
 
 
 --Trigger que se ejecuta cuando se hacen inserts en respuestas
+/************* ===== ATENCIÓN: QUITAR COMENTARIOS INTERNOS ANTES DE METER EL TRIGGER ===== ***************/
 system clear;
 drop trigger comprobar_medallas;
 

@@ -5,7 +5,7 @@
     1: [.row__post(quitado), .row__user(quitado), row--bottom (index.css)]
     2: 
     3:
-    4:
+    4: carrusel-arrow (profile.css)
     5: header, .confirmation-wrapper
 
     ===== ORDERS: =====
@@ -99,6 +99,7 @@ img{width: 100%;}
     --space-m: 1rem;
     --space-ml: 1.25rem;
     --space-l: 1.5rem;
+    --space-l-plus: 1.8rem;
     --space-xl: 2rem;
     --space-xxl: 2.5rem;
     --space-xxxl: 3.5rem;
