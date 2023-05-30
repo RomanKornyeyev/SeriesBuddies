@@ -105,6 +105,14 @@ class TMDB
         return $serieData;
     }
 
+    //Devuelve el nombre de una serie dado el ID
+    public function getNbSeriePorId ($id) {
+        $urlSerie = $this->urlSerieID($id);
+        $serie = $this->peticionHTTP($urlSerie);
+
+        return $serie['name'];
+    }
+
     //Devuelve el nombre de los generos recibiendo el listado de los generos (id+nb) y el listado a buscar (solo id)
     public function getNbGeneros ($listado, $generos) {
         foreach ($listado as $listadoGeneros) {

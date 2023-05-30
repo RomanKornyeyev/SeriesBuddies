@@ -19,7 +19,7 @@ class DWESBaseDatos {
   const PENDIENTE = "pendiente";
   const ACEPTADA = "aceptada";
 
-  const REGISTROS_POR_PAGINA = 6;
+  const REGISTROS_POR_PAGINA = 2;
   const MAX_BUDDIES_FEED = 3;
   const MAX_PAG_PAGINADOR = 3;
 
@@ -368,11 +368,24 @@ class DWESBaseDatos {
       LEFT JOIN t2 ON t.id=t2.id
       WHERE t.nombre LIKE ?
       GROUP BY t.id LIMIT ?,?;",
-      ('%'.$busqueda.'%'), $registroInicial, self::REGISTROS_POR_PAGINA
+      '%'.$busqueda.'%', $registroInicial, self::REGISTROS_POR_PAGINA
     );
 
     return $db->obtenDatos();
   }
+
+  //Obtiene la info de los buddies que coincidan su nombre con la busqueda pedida
+  public static function obtenTotalBuddiesBusqueda ($db, $busqueda) {
+    $db->ejecuta (
+      "SELECT count(id) AS total_usuarios
+      FROM usuarios
+      WHERE nombre LIKE ?;",
+      '%'.$busqueda.'%'
+    );
+
+    return $db->obtenElDato()['total_usuarios'];
+  }
+
 
 
   //Obtiene la info de los buddies que coincidan su nombre con la busqueda pedida
@@ -393,7 +406,7 @@ class DWESBaseDatos {
       WHERE t.nombre LIKE ?
       AND r.id_serie = ?
       GROUP BY t.id LIMIT ?,?;",
-      ('%'.$busqueda.'%'), $idSerie, $registroInicial, self::REGISTROS_POR_PAGINA
+      '%'.$busqueda.'%', $idSerie, $registroInicial, self::REGISTROS_POR_PAGINA
     );
 
     return $db->obtenDatos();
