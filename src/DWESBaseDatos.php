@@ -351,6 +351,20 @@ class DWESBaseDatos {
     return $db->obtenDatos();
   }
 
+  //Obtiene el total de la info de los buddies que coincidan su nombre con la serie pedida
+  public static function obtenTotalBuddiesSerie ($db, $id) {
+    $db->ejecuta('SELECT u.nombre, u.img, u.id, COUNT(r.id) AS total_respuestas
+    FROM usuarios u
+    JOIN respuestas r ON u.id = r.id_usuario
+    WHERE r.id_serie = ?
+    GROUP BY u.nombre
+    ORDER BY total_respuestas DESC
+    LIMIT ?;',
+    $idSerie, self::MAX_BUDDIES_FEED);
+    
+    return $db->obtenDatos();
+  }
+
   //Obtiene la info de los buddies que coincidan su nombre con la busqueda pedida
   public static function obtenListadoBuddiesBusqueda ($db, $busqueda, $registroInicial) {
     $db->ejecuta (
@@ -374,7 +388,7 @@ class DWESBaseDatos {
     return $db->obtenDatos();
   }
 
-  //Obtiene la info de los buddies que coincidan su nombre con la busqueda pedida
+  //Obtiene el total de la info de los buddies que coincidan su nombre con la busqueda pedida
   public static function obtenTotalBuddiesBusqueda ($db, $busqueda) {
     $db->ejecuta (
       "SELECT count(id) AS total_usuarios

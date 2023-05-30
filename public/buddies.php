@@ -86,9 +86,6 @@
     }else if (!isset($_GET['id-serie']) && isset($_GET['buddies'])){        
         //Devuelvo todos los usuarios que coincidan con esa busqueda
         $consulta = DWESBaseDatos::obtenListadoBuddiesBusqueda($db, $_GET['buddies'], $registroInicial);
-
-        //$totalRegistros = (count($consulta) != 0)? count($consulta) : 0;
-
         $totalRegistros = DWESBaseDatos::obtenTotalBuddiesBusqueda ($db, $_GET['buddies']);        
 
         //paginación
@@ -98,10 +95,8 @@
     
     //si no hay NINGÚN FILTRO
     }else{
-        //Devuelvo todos los usuarios
+        //Devuelvo todos los usuarios + total registros
         $consulta = DWESBaseDatos::obtenListadoBuddies ($db, $registroInicial);
-
-        //total registros
         $totalRegistros = DWESBaseDatos::obtenTotalUsuarios($db)['total_usuarios'];
 
         //paginación
