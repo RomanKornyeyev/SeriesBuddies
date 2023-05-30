@@ -26,7 +26,15 @@ function disableSiblingClicks(element) {
   }
 
 
-function peticion(elemento, id, accion, paginaActual=1, totalPaginas=3){
+function peticion(elemento, id, accion, paginaActual=1, totalPaginas=1, tipo){
+    console.log(`
+        elemento: ${elemento}
+        id: ${id}
+        accion: ${accion}
+        paginaActual: ${paginaActual}
+        totalPaginas: ${totalPaginas}
+        tipo: ${tipo}
+    `);
 
     let globalElementOverwrite = elemento.parentNode.parentNode.parentNode;
 
@@ -74,7 +82,7 @@ function peticion(elemento, id, accion, paginaActual=1, totalPaginas=3){
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
     //pasamos la petición POST
-    xhttp.send(`accion=${accion}&id=${id}&pagina_actual=${paginaActual}&total_paginas=${totalPaginas}`);
+    xhttp.send(`accion=${accion}&id=${id}&pagina_actual=${paginaActual}&total_paginas=${totalPaginas}&tipo=${tipo}`);
 
 }
 

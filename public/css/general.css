@@ -356,6 +356,9 @@ img{width: 100%;}
 .link-enphasis:hover{text-decoration: underline;}
 .link-body{color: var(--black);}
 .pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     padding: var(--space-s) 0;
     text-align: center;

@@ -16,6 +16,7 @@ CREATE TABLE usuarios (
     descripcion TEXT,
     privilegio  ENUM('admin', 'usuario') NOT NULL,
     verificado  ENUM('si', 'no') NOT NULL,
+    fecha_alta  DATETIME DEFAULT NOW(),
     ult_tkn_solicitado DATETIME DEFAULT (NOW() - INTERVAL 1 DAY),
     ult_contacto DATETIME DEFAULT (NOW() - INTERVAL 1 DAY)
 );

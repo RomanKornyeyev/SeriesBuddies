@@ -37,9 +37,9 @@
     //Total de paginas que hay que mostrar
     $totalPaginas = ceil($totalRegistros / $registrosPagina);
 
-    // if (!$totalPaginas >= $paginaActual) {
-    //     $paginaActual = 1;
-    // }
+    if ($paginaActual > $totalPaginas) {
+        $paginaActual = 1;
+    }
     
     //paginación
     $paginaBase = "buddies";
@@ -71,7 +71,7 @@
     <?php //por cada user pintamos una tarjeta ?>
     <?php foreach ($consulta as $value){?>
         
-            <?php //if($value['id'] != $_SESSION['id']){ ?>
+            <?php if($value['id'] != $_SESSION['id']){ ?>
             <!-- CARD (GLOBAL) -->
             <div class="card card--buddy">
 
@@ -112,30 +112,30 @@
 
                             //si ninguno ha mandado petición de amistad
                             if ($peticion == "" || $peticion == null) {
-                                echo $peticionFooter->pintaAmistadNula($value['id'], $paginaActual, $totalPaginas);
+                                echo $peticionFooter->pintaAmistadNula($value['id'], $paginaActual, $totalPaginas, Peticion::FOOTER_BUDDIES);
                                  
                             //si el user actual (SESIÓN) ha ENVIADO peti al user seleccioando
                             }else if($peticion['estado'] == DWESBaseDatos::PENDIENTE && $peticion['id_emisor'] == $_SESSION['id']) {
-                                echo $peticionFooter->pintaAmistadEnviada($value['id'], $paginaActual, $totalPaginas);
+                                echo $peticionFooter->pintaAmistadEnviada($value['id'], $paginaActual, $totalPaginas, Peticion::FOOTER_BUDDIES);
 
                             //si el user actual (SESIÓN) ha RECIBIDO peti del user seleccioando    
                             }else if($peticion['estado'] == DWESBaseDatos::PENDIENTE && $peticion['id_receptor'] == $_SESSION['id']) {
-                                echo $peticionFooter->pintaAmistadRecibida($value['id'], $paginaActual, $totalPaginas);
+                                echo $peticionFooter->pintaAmistadRecibida($value['id'], $paginaActual, $totalPaginas, Peticion::FOOTER_BUDDIES);
 
                             //si son AMOGUS  
                             }else if($peticion['estado'] == DWESBaseDatos::ACEPTADA) {
-                                echo $peticionFooter->pintaAmistadMutua($value['id'], $paginaActual, $totalPaginas);
+                                echo $peticionFooter->pintaAmistadMutua($value['id'], $paginaActual, $totalPaginas, Peticion::FOOTER_BUDDIES);
                             }
                         }
                     ?>
                 </div>
             </div>
-        <?php //} ?>
+        <?php } ?>
     <?php } ?>
 
     </div>
 
-    <div class="pagination">
+    <div class="pagination flex-center-center">
         <?php if ($totalPaginas > 1) {echo $paginacion;} ?>
     </div>
 

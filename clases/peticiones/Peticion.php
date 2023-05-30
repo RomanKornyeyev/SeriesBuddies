@@ -6,6 +6,10 @@
 
         private $esAdmin;
 
+        public const FOOTER_BUDDIES = 1;
+        public const FOOTER_PROFILE = 2;
+        public const NOTIFICACION_PROFILE = 3;
+
         public const ESTADO_PENDIENTE = "pendiente";
         public const ESTADO_ACEPTADO = "aceptada";
 
@@ -38,15 +42,24 @@
             ";
         }
 
-        public function pintaAmistadNula($id, $paginaActual, $totalPaginas) : String
+        public function pintaAmistadNula($id, $paginaActual, $totalPaginas, $tipo) : String
         {
-            $prueba = "enviar";
             $grid = "";
+            $perfil = "";
             $eliminar = "";
-            if ($this->esAdmin) {
-                $grid = "grid-col-3";
-                $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id, $paginaActual, $totalPaginas)'>Eliminar</button>";
+            
+            if($tipo == self::FOOTER_BUDDIES){
+                $grid = "grid-col-2";
+                $perfil = "<a class='btn btn--card' href='./profile.php?id=$id'>Perfil</a>";
+                if ($this->esAdmin) {
+                    $grid = "grid-col-3";
+                    $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id, $paginaActual, $totalPaginas)'>Eliminar</button>";
+                }
+            }else if ($tipo == self::FOOTER_PROFILE){
+                $grid = "grid-col-1";
+                $perfil = "";
             }
+
             return "
                 <div class='buddy__footer-internal-layer' id='$id'>
                     <div class='buddy__footer buddy__footer--primary grid-col-1'>
@@ -57,26 +70,55 @@
                         </button>
                     </div>
                     <div class='buddy__footer buddy__footer--primary $grid'>
-                        <button class='btn btn--card' onclick='peticion(this, $id, `".self::ACCION_ENVIAR."`, $paginaActual, $totalPaginas)'>Conectar</button>
-                        <a class='btn btn--card' href='./profile.php?id=$id'>Perfil</a>
+                        <button class='btn btn--card' onclick='peticion(this, $id, `".self::ACCION_ENVIAR."`, $paginaActual, $totalPaginas, $tipo)'>Conectar</button>
+                        $perfil
                         $eliminar
                     </div>
                 </div>
             ";
         }
 
-        public function pintaAmistadEnviada($id, $paginaActual, $totalPaginas) : String 
+        // public function pintaAmistadNulaFooterProfile($id) : String
+        // {
+        //     return "
+        //         <div class='buddy__footer-internal-layer' id='10'>
+        //             <div class='buddy__footer buddy__footer--primary grid-col-1'>
+        //                 <button class='btn btn--card' onclick='subir(this)'>
+        //                     <i class='fa-solid fa-id-card'></i>&nbsp;
+        //                     <span class='primary-font'>Volver</span>
+        //                     &nbsp;<i class='fa-solid fa-arrow-down'></i>
+        //                 </button>
+        //             </div>
+        //             <div class='buddy__footer buddy__footer--primary '>
+        //                 <button class='btn btn--card' onclick='peticion(this, 10, `enviar`, 1, 2)'>Conectar</button>
+        //                 <a class='btn btn--card' href='./profile.php?id=10'>Perfil</a>
+        //             </div>
+        //         </div>
+        //     ";
+        // }
+
+        public function pintaAmistadEnviada($id, $paginaActual, $totalPaginas, $tipo) : String 
         {
-            $grid = "";
+            $grid = "xd";
+            $perfil = "";
             $eliminar = "";
-            if ($this->esAdmin) {
-                $grid = "grid-col-3";
-                $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id, $paginaActual, $totalPaginas)'>Eliminar</button>";
+
+            if($tipo == self::FOOTER_BUDDIES){
+                $grid = "grid-col-2";
+                $perfil = "<a class='btn btn--card' href='./profile.php?id=$id'>Perfil</a>";
+                if ($this->esAdmin) {
+                    $grid = "grid-col-3";
+                    $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id, $paginaActual, $totalPaginas)'>Eliminar</button>";
+                }
+            }else if (intval($tipo) == self::FOOTER_PROFILE){
+                $grid = "grid-col-1";
+                $perfil = "";
             }
+
             return "
                 <div class='buddy__footer-internal-layer' id='$id'>
                     <div class='buddy__footer buddy__footer--primary grid-col-2'>
-                        <button class='btn btn--card btn--error-card' onclick='peticion(this, $id, `".self::ACCION_CANCELAR."`, $paginaActual, $totalPaginas)'>
+                        <button class='btn btn--card btn--error-card' onclick='peticion(this, $id, `".self::ACCION_CANCELAR."`, $paginaActual, $totalPaginas, $tipo)'>
                             <span class='primary-font'>Cancelar&nbsp;</span>
                             <i class='fa-solid fa-xmark'></i>
                         </button>
@@ -92,29 +134,39 @@
                             <span class='primary-font'>Enviada</span>
                             &nbsp;<i class='fa-solid fa-arrow-up'></i>
                         </button>
-                        <a class='btn btn--card' href='./profile.php?id=$id'>Perfil</a>
+                        $perfil
                         $eliminar
                     </div>
                 </div>
             ";
         }
 
-        public function pintaAmistadRecibida($id, $paginaActual, $totalPaginas) : String
+        public function pintaAmistadRecibida($id, $paginaActual, $totalPaginas, $tipo) : String
         {
             $grid = "";
+            $perfil = "";
             $eliminar = "";
-            if ($this->esAdmin) {
-                $grid = "grid-col-3";
-                $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id, $paginaActual, $totalPaginas)'>Eliminar</button>";
+
+            if($tipo == self::FOOTER_BUDDIES){
+                $grid = "grid-col-2";
+                $perfil = "<a class='btn btn--card' href='./profile.php?id=$id'>Perfil</a>";
+                if ($this->esAdmin) {
+                    $grid = "grid-col-3";
+                    $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id, $paginaActual, $totalPaginas)'>Eliminar</button>";
+                }
+            }else if ($tipo == self::FOOTER_PROFILE){
+                $grid = "grid-col-1";
+                $perfil = "";
             }
+
             return "
                 <div class='buddy__footer-internal-layer' id='$id'>
                     <div class='buddy__footer buddy__footer--primary grid-col-3'>
-                        <button class='btn btn--card btn--success-card' onclick='peticion(this, $id, `".self::ACCION_ACEPTAR."`, $paginaActual, $totalPaginas)'>
+                        <button class='btn btn--card btn--success-card' onclick='peticion(this, $id, `".self::ACCION_ACEPTAR."`, $paginaActual, $totalPaginas, $tipo)'>
                             <span class='primary-font'>Aceptar&nbsp;</span>
                             <i class='fa-solid fa-check'></i>
                         </button>
-                        <button class='btn btn--card btn--error-card' onclick='peticion(this, $id, `".self::ACCION_RECHAZAR."`, $paginaActual, $totalPaginas)'>
+                        <button class='btn btn--card btn--error-card' onclick='peticion(this, $id, `".self::ACCION_RECHAZAR."`, $paginaActual, $totalPaginas, $tipo)'>
                             <span class='primary-font'>Rechazar&nbsp;</span>
                             <i class='fa-solid fa-xmark'></i>
                         </button>
@@ -130,25 +182,39 @@
                             <span class='primary-font'>Recibida</span>
                             &nbsp;<i class='fa-solid fa-arrow-up'></i>
                         </button>
-                        <a class='btn btn--card' href='./profile.php?id=$id'>Perfil</a>
+                        $perfil
                         $eliminar
                     </div>
                 </div>
             ";
         }
 
-        public function pintaAmistadMutua($id, $paginaActual, $totalPaginas) : String
+        public function pintaAmistadMutua($id, $paginaActual, $totalPaginas, $tipo) : String
         {
             $grid = "";
+            $perfil = "";
             $eliminar = "";
-            if ($this->esAdmin) {
-                $grid = "grid-col-3";
-                $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id, $paginaActual, $totalPaginas)'>Eliminar</button>";
+
+            if($tipo == self::FOOTER_BUDDIES){
+                $grid = "grid-col-2";
+                $perfil = "<a class='btn btn--card' href='./profile.php?id=$id'>Perfil</a>";
+                if ($this->esAdmin) {
+                    $grid = "grid-col-3";
+                    $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id, $paginaActual, $totalPaginas)'>Eliminar</button>";
+                }
+            }else if ($tipo == self::FOOTER_PROFILE){
+                $grid = "grid-col-1";
+                $perfil = "";
+                // if ($this->esAdmin) {
+                //     $grid = "grid-col-2";
+                //     $eliminar = "<button class='btn btn--card btn--error-card'>Eliminar</button>";
+                // }
             }
+
             return "
                 <div class='buddy__footer-internal-layer' id='$id'>
                     <div class='buddy__footer buddy__footer--primary grid-col-2'>
-                        <button class='btn btn--card btn--error-card' onclick='peticion(this, $id, `".self::ACCION_ELIMINAR."`, $paginaActual, $totalPaginas)'>
+                        <button class='btn btn--card btn--error-card' onclick='peticion(this, $id, `".self::ACCION_ELIMINAR."`, $paginaActual, $totalPaginas, $tipo)'>
                             <span class='primary-font'>Eliminar&nbsp;</span>
                             <i class='fa-solid fa-xmark'></i>
                         </button>
@@ -164,7 +230,7 @@
                             <span class='primary-font'>Amig@s</span>
                             &nbsp;<i class='fa-solid fa-arrow-up'></i>
                         </button>
-                        <a class='btn btn--card' href='./profile.php?id=$id'>Perfil</a>
+                        $perfil
                         $eliminar
                     </div>
                 </div>

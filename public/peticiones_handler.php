@@ -17,7 +17,7 @@
                         "INSERT INTO peticiones (id_emisor, id_receptor, estado) VALUES (?, ?, ?);",
                         $_SESSION["id"], $_POST["id"], Peticion::ESTADO_PENDIENTE
                     );
-                    echo $peticionFooter->pintaAmistadEnviada($_POST["id"], $_POST["pagina_actual"], $_POST["total_paginas"]);
+                    echo $peticionFooter->pintaAmistadEnviada($_POST["id"], $_POST["pagina_actual"], $_POST["total_paginas"], $_POST['tipo']);
                     break;
 
                 //cancelar petición
@@ -26,7 +26,7 @@
                         "DELETE FROM peticiones WHERE id_receptor=? AND id_emisor=? AND estado=?;",
                         $_POST['id'], $_SESSION['id'], Peticion::ESTADO_PENDIENTE
                     );
-                    echo $peticionFooter->pintaAmistadNula($_POST["id"], $_POST["pagina_actual"], $_POST["total_paginas"]);
+                    echo $peticionFooter->pintaAmistadNula($_POST["id"], $_POST["pagina_actual"], $_POST["total_paginas"], $_POST['tipo']);
                     break;
 
                 //aceptar petición
@@ -39,7 +39,7 @@
                         "INSERT INTO peticiones (id_receptor, id_emisor, estado) VALUES (?,?,?);",
                         $_POST['id'], $_SESSION['id'], Peticion::ESTADO_ACEPTADO
                     );
-                    echo $peticionFooter->pintaAmistadMutua($_POST["id"], $_POST["pagina_actual"], $_POST["total_paginas"]);
+                    echo $peticionFooter->pintaAmistadMutua($_POST["id"], $_POST["pagina_actual"], $_POST["total_paginas"], $_POST['tipo']);
                     break;
 
                 //rechazar petición
@@ -48,7 +48,7 @@
                         "DELETE FROM peticiones WHERE id_receptor=? AND id_emisor=?;",
                         $_SESSION['id'], $_POST['id']
                     );
-                    echo $peticionFooter->pintaAmistadNula($_POST["id"], $_POST["pagina_actual"], $_POST["total_paginas"]);
+                    echo $peticionFooter->pintaAmistadNula($_POST["id"], $_POST["pagina_actual"], $_POST["total_paginas"], $_POST['tipo']);
                     break;
 
                 //eliminar amigo
@@ -61,7 +61,7 @@
                         "DELETE FROM peticiones WHERE id_receptor=? AND id_emisor=?;",
                         $_POST['id'], $_SESSION['id']
                     );
-                    echo $peticionFooter->pintaAmistadNula($_POST["id"], $_POST["pagina_actual"], $_POST["total_paginas"]);
+                    echo $peticionFooter->pintaAmistadNula($_POST["id"], $_POST["pagina_actual"], $_POST["total_paginas"], $_POST['tipo']);
                     break;
 
                 default:

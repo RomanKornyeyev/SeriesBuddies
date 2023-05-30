@@ -97,42 +97,43 @@
     <?php } ?>
 
     <?=$mensajeError?>
-    <?php foreach ($response as $serie) { ?>
-    <?php $listadoBuddies = $db->obtenPrimerosBuddiesSerie($db, $serie['id']); ?>
-    <div class="card">
-        <a class="card__serie-img d-block" href="./feed.php?id=<?=$serie['id']?>&id_genero=<?=$idGenero?>">
-            <img class="img-fit" src="<?=$serie['posterImage']?>" alt="serie-img">
-        </a>
-        <div class="card__serie-info">
-            <div class="header__serie">
-                <a class="title title--serie" href="./feed.php?id=<?=$serie['id']?>&id_genero=<?=$idGenero?>"><?=$serie['serieTitle']?></a>
-                <!-- <div class="extra-actions">
-                    <a href="#" class="btn btn--secondary btn--bold">Modificar</a>
-                    <a href="#" class="btn btn--error btn--bold">Eliminar</a>
-                </div> -->
-            </div>
-            <div class="body__serie">
-                <p class="text text--serie"><?=$serie['seriePlot']?></p>
-            </div>
-            <div class="footer__serie">
-                <div class="super-buddies-wrapper">
-                    <?php foreach ($listadoBuddies as $buddie) { ?>
-                        <a href="./profile.php?id=<?=$buddie['id']?>" class="icon__buddy d-block">
-                            <img class="img-fit" src="<?=$buddie['img']?>" alt="serie-img">
-                        </a>
-                    <?php } ?>
-                    <a href="./buddies.php?id-serie=<?=$serie['id']?>" class="d-block">
-                        <p class="info info--serie">Súper buddies</p>
-                    </a>
-                </div>
-                <a href="./feed.php?id=<?=$serie['id']?>&id_genero=<?=$idGenero?>">
-                    <?php $totalRespuestas = $db->obtenTotalRespuestas ($db, $serie['id']) ?>
-                    <p class="info info--serie"><?=$totalRespuestas?> comentarios &gt;</p>
+    <?php if(isset($response)){ ?>
+        <?php foreach ($response as $serie) { ?>
+            <?php $listadoBuddies = $db->obtenPrimerosBuddiesSerie($db, $serie['id']); ?>
+            <div class="card">
+                <a class="card__serie-img d-block" href="./feed.php?id=<?=$serie['id']?>&id_genero=<?=$idGenero?>">
+                    <img class="img-fit" src="<?=$serie['posterImage']?>" alt="serie-img">
                 </a>
+                <div class="card__serie-info">
+                    <div class="header__serie">
+                        <a class="title title--serie" href="./feed.php?id=<?=$serie['id']?>&id_genero=<?=$idGenero?>"><?=$serie['serieTitle']?></a>
+                        <!-- <div class="extra-actions">
+                            <a href="#" class="btn btn--secondary btn--bold">Modificar</a>
+                            <a href="#" class="btn btn--error btn--bold">Eliminar</a>
+                        </div> -->
+                    </div>
+                    <div class="body__serie">
+                        <p class="text text--serie"><?=$serie['seriePlot']?></p>
+                    </div>
+                    <div class="footer__serie">
+                        <div class="super-buddies-wrapper">
+                            <?php foreach ($listadoBuddies as $buddie) { ?>
+                                <a href="./profile.php?id=<?=$buddie['id']?>" class="icon__buddy d-block">
+                                    <img class="img-fit" src="<?=$buddie['img']?>" alt="serie-img">
+                                </a>
+                            <?php } ?>
+                            <a href="./buddies.php?id-serie=<?=$serie['id']?>" class="d-block">
+                                <p class="info info--serie">Súper buddies</p>
+                            </a>
+                        </div>
+                        <a href="./feed.php?id=<?=$serie['id']?>&id_genero=<?=$idGenero?>">
+                            <?php $totalRespuestas = $db->obtenTotalRespuestas ($db, $serie['id']) ?>
+                            <p class="info info--serie"><?=$totalRespuestas?> comentarios &gt;</p>
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-
+        <?php } ?>
     <?php } ?>
     
     <div class="pagination pagination--plus-response">

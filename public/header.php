@@ -8,6 +8,12 @@
     use clases\form\campo\Texto;
     use clases\form\campo\File;
     use clases\form\claseMain\Formulario;
+
+    if(isset($serieBuscada)){
+        $valorSerieBuscada = $serieBuscada;
+    }else{
+        $valorSerieBuscada = "";
+    }
     
 
     // ========================================= FORM DE BUSCAR SERIE =========================================
@@ -15,7 +21,7 @@
     $formulario = new Formulario("series.php", Formulario::METHOD_POST, ["h-form"],        Formulario::VACIAR_NO,          "",                   array(
         //                       ====================================== COMÚN =======================================================================  //  ======================== ESPECÍFICO ========================
         //                  ¿Puede estar vacío? valor         name   label  clases-css-label  clases-css-wrapper  clases-css-input             tipoCampo       placeholder      regex
-        $buscador = new Texto (Atipo::NULL_NO, $serieBuscada,"buscador", "",   ["d-none"],    ["input-wrapper"],  ["h-input"],              Texto::TYPE_TEXT, "Los simpsons",  Texto::DEFAULT_PATTERN_500),
+        $buscador = new Texto (Atipo::NULL_NO, $valorSerieBuscada,"buscador", "",   ["d-none"],    ["input-wrapper"],  ["h-input"],              Texto::TYPE_TEXT, "Los simpsons",  Texto::DEFAULT_PATTERN_500),
     // === SUBMIT ===
     // claseWrappSubmit                           idSubmit  nameSubm  txtSubmit  clseSubmit
     ), ["h-submit-wrapper"], "buscar", "buscar", "<i class='fa-solid fa-magnifying-glass'></i>", ["btn", "btn--primary", "h-submit-button"]);
