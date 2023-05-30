@@ -2,10 +2,34 @@
 
     // ***** INIT *****
     require_once("../src/init.php");
+    
+    // ***** FORMULARIOS *****
+    use clases\form\campo\Atipo;
+    use clases\form\campo\Texto;
+    use clases\form\claseMain\Formulario;
 
     // ***** PETICIONES *****
     use clases\peticiones\Peticion;
     $peticionFooter = new Peticion($esAdmin);
+
+    
+    // ========================================= FORM DE BUSCAR SERIE =========================================
+    //                             ACTION            METHOD           clases-css-form   ¿Vaciar al validar?   atr-extra(para forms con img)   CAMPOS
+    $formBuddies = new Formulario("buddies.php", Formulario::METHOD_GET, ["h-form"],        Formulario::VACIAR_NO,          "",                   array(
+        //                       ====================================== COMÚN =======================================================================  //  ======================== ESPECÍFICO ========================
+        //                  ¿Puede estar vacío? valor         name   label  clases-css-label  clases-css-wrapper  clases-css-input             tipoCampo       placeholder      regex
+        $buddies = new Texto (Atipo::NULL_NO, null,"buddies", "",   ["d-none"],    ["input-wrapper"],  ["h-input"],              Texto::TYPE_TEXT, "Busca a un buddy...",  Texto::DEFAULT_PATTERN_25),
+    // === SUBMIT ===
+    // claseWrappSubmit      idSubmit  nameSubm  txtSubmit  clseSubmit
+    ), ["h-submit-wrapper"], "buscar-buddies", "buscar-buddies", "<i class='fa-solid fa-magnifying-glass'></i>", ["btn", "btn--primary", "h-submit-button"]);
+
+    if ($formBuddies->validarGlobal()) {
+        // $opcionExtra = (isset($_GET['id-serie']))? 'id-serie='.$_GET['id-serie'].'&' : "";
+
+        // //redirección
+        // header('Location: ./buddies.php?'.$opcionExtra.'busqueda='.$buddies->getValor());
+        // die();
+    }
 
     if (isset($_GET['pagina'])) {
         $paginaActual = $_GET['pagina'];
@@ -75,10 +99,11 @@
     // ********* COMIENZO BUFFER **********
     ob_start();
 ?>
-
     <h1 class="title title--l text-align-center">BUDDIES</h1>
+    <!-- search form -->
+    <?php $formBuddies->pintarGlobal(); ?>
+    
     <div class="main__content">
-
 
     <?php // ***** GENERACIÓN DE USERS ***** ?>
     <?php //por cada user pintamos una tarjeta ?>

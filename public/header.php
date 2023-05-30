@@ -2,11 +2,7 @@
     
     // ***** FORMULARIOS *****
     use clases\form\campo\Atipo;
-    use clases\form\campo\Fecha;
-    use clases\form\campo\Multiple;
-    use clases\form\campo\Numero;
     use clases\form\campo\Texto;
-    use clases\form\campo\File;
     use clases\form\claseMain\Formulario;
 
     if(isset($serieBuscada)){
