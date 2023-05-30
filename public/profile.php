@@ -79,32 +79,32 @@
                                 <?php
                                     //si el user no tiene sesión iniciada
                                     if (!$sesionIniciada) {
-                                        if(isset($_SESSION['id']) && $_SESSION['id'] == $infoBuddie['tarjeta']['id']){
-                                            echo $peticionFooter->pintaSesionNoIniciada($infoBuddie['tarjeta']['id'], true);
-                                        }else{
-                                            echo $peticionFooter->pintaSesionNoIniciada($infoBuddie['tarjeta']['id']);
-                                        }
+                                        echo $peticionFooter->pintaSesionNoIniciada($infoBuddie['tarjeta']['id']);
 
                                     //si el user SI TIENE la sesión iniciada
                                     }else{
-                                        //obtenemos info sobre el estado de petición de amistad
-                                        $peticion = DWESBaseDatos::obtenPeticion($db, $_SESSION['id'], $infoBuddie['tarjeta']['id']);
+                                        if($_SESSION['id'] == $infoBuddie['tarjeta']['id']){
+                                            echo $peticionFooter->pintaSesionNoIniciada($infoBuddie['tarjeta']['id']);
+                                        }else{
+                                            //obtenemos info sobre el estado de petición de amistad
+                                            $peticion = DWESBaseDatos::obtenPeticion($db, $_SESSION['id'], $infoBuddie['tarjeta']['id']);
 
-                                        //si ninguno ha mandado petición de amistad
-                                        if ($peticion == "" || $peticion == null) {
-                                            echo $peticionFooter->pintaAmistadNula($infoBuddie['tarjeta']['id'], 1, 1, Peticion::FOOTER_PROFILE);
-                                            
-                                        //si el user actual (SESIÓN) ha ENVIADO peti al user seleccioando
-                                        }else if($peticion['estado'] == DWESBaseDatos::PENDIENTE && $peticion['id_emisor'] == $_SESSION['id']) {
-                                            echo $peticionFooter->pintaAmistadEnviada($infoBuddie['tarjeta']['id'], 1, 1, Peticion::FOOTER_PROFILE);
+                                            //si ninguno ha mandado petición de amistad
+                                            if ($peticion == "" || $peticion == null) {
+                                                echo $peticionFooter->pintaAmistadNula($infoBuddie['tarjeta']['id'], 1, 1, Peticion::FOOTER_PROFILE);
+                                                
+                                            //si el user actual (SESIÓN) ha ENVIADO peti al user seleccioando
+                                            }else if($peticion['estado'] == DWESBaseDatos::PENDIENTE && $peticion['id_emisor'] == $_SESSION['id']) {
+                                                echo $peticionFooter->pintaAmistadEnviada($infoBuddie['tarjeta']['id'], 1, 1, Peticion::FOOTER_PROFILE);
 
-                                        //si el user actual (SESIÓN) ha RECIBIDO peti del user seleccioando    
-                                        }else if($peticion['estado'] == DWESBaseDatos::PENDIENTE && $peticion['id_receptor'] == $_SESSION['id']) {
-                                            echo $peticionFooter->pintaAmistadRecibida($infoBuddie['tarjeta']['id'], 1, 1, Peticion::FOOTER_PROFILE);
+                                            //si el user actual (SESIÓN) ha RECIBIDO peti del user seleccioando    
+                                            }else if($peticion['estado'] == DWESBaseDatos::PENDIENTE && $peticion['id_receptor'] == $_SESSION['id']) {
+                                                echo $peticionFooter->pintaAmistadRecibida($infoBuddie['tarjeta']['id'], 1, 1, Peticion::FOOTER_PROFILE);
 
-                                        //si son AMOGUS  
-                                        }else if($peticion['estado'] == DWESBaseDatos::ACEPTADA) {
-                                            echo $peticionFooter->pintaAmistadMutua($infoBuddie['tarjeta']['id'], 1, 1, Peticion::FOOTER_PROFILE);
+                                            //si son AMOGUS  
+                                            }else if($peticion['estado'] == DWESBaseDatos::ACEPTADA) {
+                                                echo $peticionFooter->pintaAmistadMutua($infoBuddie['tarjeta']['id'], 1, 1, Peticion::FOOTER_PROFILE);
+                                            }
                                         }
                                     }
                                 ?>
