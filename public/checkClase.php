@@ -188,13 +188,33 @@ echo '</pre>';
 // }
 
 //$series=$tmdb->getSeriesNombre('simpson');
-$urlSerie =$tmdb->urlSerieNombre('simpson');
-$series=$tmdb->peticionHTTP($urlSerie)['results'];
-echo '<pre>';
-print_r($series);
-echo '</pre>';
+// $urlSerie =$tmdb->urlSerieNombre('simpson');
+// $series=$tmdb->peticionHTTP($urlSerie)['results'];
+// echo '<pre>';
+// print_r($series);
+// echo '</pre>';
 
 // $response=$tmdb->getSerieID(112888);
 // echo '<pre>';
 // print_r($response);
 // echo '</pre>';
+
+
+/* ---------------------------------------------- RESULTADOS DE BUDDIES POR BUSCADOR ---------------------------------------------- */
+
+$busqueda = $_GET['busqueda'];
+if (isset($_GET['pagina'])) {
+    $paginaActual = $_GET['pagina'];
+} else {
+    $paginaActual = 1;
+}
+
+//Comentarios por pagina a mostrar
+$registrosPagina = DWESBaseDatos::REGISTROS_POR_PAGINA;
+//Registro/comentario desde el que empezar a recorrer la tabla
+$registroInicial = ($paginaActual-1)*$registrosPagina;
+
+$buddiesEncontrados = DWESBaseDatos::obtenListadoBuddiesBusqueda($db, $busqueda, $registroInicial);
+echo '<pre>';
+print_r($buddiesEncontrados);
+echo '</pre>';

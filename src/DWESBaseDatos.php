@@ -351,7 +351,54 @@ class DWESBaseDatos {
     return $db->obtenDatos();
   }
 
+  //Obtiene la info de los buddies que coincidan su nombre con la busqueda pedida
+  public static function obtenListadoBuddiesBusqueda ($db, $busqueda, $registroInicial) {
+    $db->ejecuta (
+      "WITH t as (select u.id, u.nombre, u.img, CONCAT('@',u.nombre,'#', u.id) AS alias, count(p.id) as total_amigos 
+      from usuarios u 
+      left join peticiones p 
+      on u.id=p.id_emisor 
+      and p.estado='aceptada'
+      group by u.id),
+      t2 as (select count(id_chip) as total_chips, u.id, u.nombre from usuarios u inner join chips_usuario cu on u.id=cu.id_usuario group by cu.id_usuario)
+      
+      SELECT t.id, t.nombre, t.img, t.alias, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas, t.total_amigos, t2.total_chips
+      FROM t
+      LEFT JOIN respuestas r ON t.id=r.id_usuario
+      LEFT JOIN t2 ON t.id=t2.id
+      WHERE t.nombre LIKE ?
+      GROUP BY t.id LIMIT ?,?;",
+      ('%'.$busqueda.'%'), $registroInicial, self::REGISTROS_POR_PAGINA
+    );
 
+    return $db->obtenDatos();
+  }
+
+
+  //Obtiene la info de los buddies que coincidan su nombre con la busqueda pedida
+  public static function obtenListadoBuddiesBusquedaPorSerie ($db, $busqueda, $idSerie, $registroInicial) {
+    $db->ejecuta (
+      "WITH t as (select u.id, u.nombre, u.img, CONCAT('@',u.nombre,'#', u.id) AS alias, count(p.id) as total_amigos 
+      from usuarios u 
+      left join peticiones p 
+      on u.id=p.id_emisor 
+      and p.estado='aceptada'
+      group by u.id),
+      t2 as (select count(id_chip) as total_chips, u.id, u.nombre from usuarios u inner join chips_usuario cu on u.id=cu.id_usuario group by cu.id_usuario)
+      
+      SELECT t.id, t.nombre, t.img, t.alias, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas, t.total_amigos, t2.total_chips
+      FROM t
+      LEFT JOIN respuestas r ON t.id=r.id_usuario
+      LEFT JOIN t2 ON t.id=t2.id
+      WHERE t.nombre LIKE ?
+      AND r.id_serie = ?
+      GROUP BY t.id LIMIT ?,?;",
+      ('%'.$busqueda.'%'), $idSerie, $registroInicial, self::REGISTROS_POR_PAGINA
+    );
+
+    return $db->obtenDatos();
+  }
+  
   // ====== INSERTS ======
 
   public static function insertarUsuario($db, $nombre, $contra, $correo, $privilegio, $verificado) : bool

@@ -29,28 +29,41 @@
         $consulta = DWESBaseDatos::obtenListadoBuddies($db, $registroInicial);
     }
 
-    
-    
-    //total registros
-    $totalRegistros = DWESBaseDatos::obtenTotalUsuarios($db)['total_usuarios'];
+    if (isset($_GET['busqueda'])) {
+        $busqueda = $_GET['busqueda'];
+        
+        //Devuelvo todos los usuarios que coincidan con esa busqueda
+        $consulta = DWESBaseDatos::obtenListadoBuddiesBusqueda($db, $busqueda, $registroInicial);
+
+        //Total de paginas que hay que mostrar
+        $totalPaginas = ceil($totalRegistros / $registrosPagina);
+
+        //paginación
+        $argumentos = array(
+            "busqueda" => $idSerie
+        );
+        
+
+    } else {
+        //total registros
+        $totalRegistros = DWESBaseDatos::obtenTotalUsuarios($db)['total_usuarios'];
+        
+        //paginación
+        $argumentos = array(
+            "id-serie" => $idSerie
+        );
+    }
     
     //Total de paginas que hay que mostrar
     $totalPaginas = ceil($totalRegistros / $registrosPagina);
-
+    
     if ($paginaActual > $totalPaginas) {
         $paginaActual = 1;
     }
-    
-    //paginación
-    $paginaBase = "buddies";
-    $argumentos = array(
-        "id-serie" => $idSerie
-    );
-    $paginacion = DWESBaseDatos::obtenPaginacion($paginaBase, $paginaActual, $totalPaginas, $argumentos);
 
-    //Devuelve la primera y la ultima pagina disponible
-    $limites = DWESBaseDatos::obtenLimitesPaginacion($paginaActual, $totalPaginas);
-    
+    $paginaBase = "buddies";
+
+    $paginacion = DWESBaseDatos::obtenPaginacion($paginaBase, $paginaActual, $totalPaginas, $argumentos);
 
     // ********* INFO PARA EL TEMPLATE **********
     $tituloHead = "Buddies - SeriesBuddies";
