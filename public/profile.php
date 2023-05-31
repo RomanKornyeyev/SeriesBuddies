@@ -118,12 +118,10 @@
 
 
                 <div class="petition-card">
-
                     <div class="petition-card__info">
+                        <a href="./profile.php?"></a>
                         <div class="petition-card-img-wrapper">
-                            <!-- <div class="petition-card-img"> -->
-                                <img class="img-fit" src="./upload/perfiles/default.png" alt="">
-                            <!-- </div> -->
+                            <img class="img-fit" src="./upload/perfiles/default.png" alt="">
                         </div>
                         <h3 class="petition-card-name">Román</h3>
                     </div>
@@ -150,7 +148,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
 
