@@ -28,8 +28,23 @@
     //Devuelve los chips (id, img, nombre) de ese buddie
     $infoBuddie['chips'] = DWESBaseDatos::obtenInfoBuddieChips($db, $idUsuario);
 
-    //Obtiene el nombre, el id_emisor, id_receptor y el estado de las peticiones pendientes de ese buddie
-    $peticiones = DWESBaseDatos::obtenPeticionesPendientes($db, $idUsuario);
+    $esPropietario = false;
+    //si tiene la sesión iniciada e id=id (u know), se cargan las peticiones de amistad
+    if ($sesionIniciada && $_SESSION['id'] == $idUsuario) {
+        $esPropietario = true;
+
+        //Obtiene el nombre, el id_emisor, id_receptor y el estado de las peticiones pendientes de ese buddie
+        $peticiones = DWESBaseDatos::obtenPeticionesPendientes($db, $idUsuario);
+    }
+
+    echo $esPropietario;
+    $gridPeticionesGlobal = '';
+    if($esPropietario){
+        $gridPeticionesGlobal = 'grid-col-2';
+    }
+    echo $gridPeticionesGlobal;
+    
+    
 
     // echo '<pre class="color-white">';
     // print_r($infoBuddie);
@@ -50,7 +65,7 @@
     // ********* COMIENZO BUFFER **********
     ob_start();
 ?>
-    <div class="primary-profile-info">               
+    <div class="primary-profile-info <?=$gridPeticionesGlobal?>">               
         <div class="card">
             <div class="card__user-img">
                 <div class="profile-img">
@@ -115,172 +130,16 @@
         <div class="card card--petitions">
             <h3 class="petitions-title">Peticiones de amistad</h3>
             <div class="petitions__content">
-
-
-                <div class="petition-card">
-                    <div class="petition-card__info">
-                        <a href="./profile.php?"></a>
-                        <div class="petition-card-img-wrapper">
-                            <img class="img-fit" src="./upload/perfiles/default.png" alt="">
-                        </div>
-                        <h3 class="petition-card-name">Román</h3>
-                    </div>
-
-
-                    <div class="buddy__footer-external-layer">
-                        <div class='buddy__footer-internal-layer' id='6'>
-                            <div class='buddy__footer buddy__footer--primary grid-col-3'>
-                                <button class='btn btn--card' onclick='subir(this)'>
-                                    <i class='fa-solid fa-id-card'></i>&nbsp;
-                                    <span class='primary-font'>Volver</span>
-                                    &nbsp;<i class='fa-solid fa-arrow-down'></i>
-                                </button>
-                            </div>
-                            <div class='buddy__footer buddy__footer--primary grid-col-2'>
-                                <button class='btn btn--card btn--success-card' onclick='peticion(this, 6, `aceptar`, 1, 1, 2)'>
-                                    <span class='primary-font'>Aceptar&nbsp;</span>
-                                    <i class='fa-solid fa-check'></i>
-                                </button>
-                                <button class='btn btn--card btn--error-card' onclick='peticion(this, 6, `rechazar`, 1, 1, 2)'>
-                                    <span class='primary-font'>Rechazar&nbsp;</span>
-                                    <i class='fa-solid fa-xmark'></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="petition-card">
-
-                    <div class="petition-card__info">
-                        <div class="petition-card-img-wrapper">
-                            <!-- <div class="petition-card-img"> -->
-                                <img class="img-fit" src="./upload/perfiles/default.png" alt="">
-                            <!-- </div> -->
-                        </div>
-                        <h3 class="petition-card-name">Román</h3>
-                    </div>
-
-
-                    <div class="buddy__footer-external-layer">
-                        <div class='buddy__footer-internal-layer' id='6'>
-                            <div class='buddy__footer buddy__footer--primary grid-col-3'>
-                                <button class='btn btn--card' onclick='subir(this)'>
-                                    <i class='fa-solid fa-id-card'></i>&nbsp;
-                                    <span class='primary-font'>Volver</span>
-                                    &nbsp;<i class='fa-solid fa-arrow-down'></i>
-                                </button>
-                            </div>
-                            <div class='buddy__footer buddy__footer--primary grid-col-2'>
-                                <button class='btn btn--card btn--success-card' onclick='peticion(this, 6, `aceptar`, 1, 1, 2)'>
-                                    <span class='primary-font'>Aceptar&nbsp;</span>
-                                    <i class='fa-solid fa-check'></i>
-                                </button>
-                                <button class='btn btn--card btn--error-card' onclick='peticion(this, 6, `rechazar`, 1, 1, 2)'>
-                                    <span class='primary-font'>Rechazar&nbsp;</span>
-                                    <i class='fa-solid fa-xmark'></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="petition-card">
-
-                    <div class="petition-card__info">
-                        <div class="petition-card-img-wrapper">
-                            <!-- <div class="petition-card-img"> -->
-                                <img class="img-fit" src="./upload/perfiles/default.png" alt="">
-                            <!-- </div> -->
-                        </div>
-                        <h3 class="petition-card-name">Román</h3>
-                    </div>
-
-
-                    <div class="buddy__footer-external-layer">
-                        <div class='buddy__footer-internal-layer' id='6'>
-                            <div class='buddy__footer buddy__footer--primary grid-col-3'>
-                                <button class='btn btn--card' onclick='subir(this)'>
-                                    <i class='fa-solid fa-id-card'></i>&nbsp;
-                                    <span class='primary-font'>Volver</span>
-                                    &nbsp;<i class='fa-solid fa-arrow-down'></i>
-                                </button>
-                            </div>
-                            <div class='buddy__footer buddy__footer--primary grid-col-2'>
-                                <button class='btn btn--card btn--success-card' onclick='peticion(this, 6, `aceptar`, 1, 1, 2)'>
-                                    <span class='primary-font'>Aceptar&nbsp;</span>
-                                    <i class='fa-solid fa-check'></i>
-                                </button>
-                                <button class='btn btn--card btn--error-card' onclick='peticion(this, 6, `rechazar`, 1, 1, 2)'>
-                                    <span class='primary-font'>Rechazar&nbsp;</span>
-                                    <i class='fa-solid fa-xmark'></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="petition-card">
-
-                    <div class="petition-card__info">
-                        <div class="petition-card-img-wrapper">
-                            <!-- <div class="petition-card-img"> -->
-                                <img class="img-fit" src="./upload/perfiles/default.png" alt="">
-                            <!-- </div> -->
-                        </div>
-                        <h3 class="petition-card-name">Román</h3>
-                    </div>
-
-
-                    <div class="buddy__footer-external-layer">
-                        <div class='buddy__footer-internal-layer' id='6'>
-                            <div class='buddy__footer buddy__footer--primary grid-col-3'>
-                                <button class='btn btn--card' onclick='subir(this)'>
-                                    <i class='fa-solid fa-id-card'></i>&nbsp;
-                                    <span class='primary-font'>Volver</span>
-                                    &nbsp;<i class='fa-solid fa-arrow-down'></i>
-                                </button>
-                            </div>
-                            <div class='buddy__footer buddy__footer--primary grid-col-2'>
-                                <button class='btn btn--card btn--success-card' onclick='peticion(this, 6, `aceptar`, 1, 1, 2)'>
-                                    <span class='primary-font'>Aceptar&nbsp;</span>
-                                    <i class='fa-solid fa-check'></i>
-                                </button>
-                                <button class='btn btn--card btn--error-card' onclick='peticion(this, 6, `rechazar`, 1, 1, 2)'>
-                                    <span class='primary-font'>Rechazar&nbsp;</span>
-                                    <i class='fa-solid fa-xmark'></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                <?php foreach ($peticiones as $key => $peticion) {
+                    echo $peticionFooter->pintaAmistadRecibidaNotificacion($peticion['id_emisor'], $peticion['nombre'], $peticion['img']);
+                } ?>
                 
-
-
-
             </div>
         </div>
-    </div> 
+    </div>
 
-    <!-- <div class="petition">
-        <?php //foreach ($peticiones as $key => $peticion) { ?>
-            <div class="card__user-img">
-                <div class="profile-img">
-                    <img class="img-fit" src="<?php // echo $peticion['img']?>" alt="profile-img">
-                </div>
-            </div>
-            <div class="card__user-body">
-                <div class="card__user-info">
-                    <h1 class="title title--user title--petition"><?php // echo$peticion['nombre']?></h1>
-                    <p class="info info--user info--petition">Petición de amistad <?php // echo$peticion['estado']?></p>
-                </div>
-            </div>
-        <?php //} ?>
-    </div> -->
-    
+
+    <!-- ***** CARRUSELES ***** -->
     <div class="carousel">
         <h2 class="title title--carousel"><span class="title--first-lane">MIS</span> SERIES</h2>
 

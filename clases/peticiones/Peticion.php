@@ -78,25 +78,6 @@
             ";
         }
 
-        // public function pintaAmistadNulaFooterProfile($id) : String
-        // {
-        //     return "
-        //         <div class='buddy__footer-internal-layer' id='10'>
-        //             <div class='buddy__footer buddy__footer--primary grid-col-1'>
-        //                 <button class='btn btn--card' onclick='subir(this)'>
-        //                     <i class='fa-solid fa-id-card'></i>&nbsp;
-        //                     <span class='primary-font'>Volver</span>
-        //                     &nbsp;<i class='fa-solid fa-arrow-down'></i>
-        //                 </button>
-        //             </div>
-        //             <div class='buddy__footer buddy__footer--primary '>
-        //                 <button class='btn btn--card' onclick='peticion(this, 10, `enviar`, 1, 2)'>Conectar</button>
-        //                 <a class='btn btn--card' href='./profile.php?id=10'>Perfil</a>
-        //             </div>
-        //         </div>
-        //     ";
-        // }
-
         public function pintaAmistadEnviada($id, $paginaActual, $totalPaginas, $tipo) : String 
         {
             $grid = "xd";
@@ -191,23 +172,21 @@
 
         public function pintaAmistadRecibidaNotificacion($id, $nb, $img) : String
         {
-            
-
             return "
                 <div class='petition-card'>
                     <div class='petition-card__info'>
                         <div class='petition-card-img-wrapper'>
-                            <!-- <div class='petition-card-img'> -->
-                                <img class='img-fit' src='./upload/perfiles/default.png' alt=''>
-                            <!-- </div> -->
+                            <a href='./profile.php?id=$id'>
+                                <img class='img-fit' src='$img' alt='img-perfil'>
+                            </a>
                         </div>
-                        <h3 class='petition-card-name'>Román</h3>
+                        <h3 class='petition-card-name'><a href='./profile.php?id=$id'>$nb</a></h3>
                     </div>
                 
                 
                     <div class='buddy__footer-external-layer'>
                         <div class='buddy__footer-internal-layer' id='$id'>
-                            <div class='buddy__footer buddy__footer--primary grid-col-3'>
+                            <div class='buddy__footer buddy__footer--primary grid-col-1'>
                                 <button class='btn btn--card' onclick='subir(this)'>
                                     <i class='fa-solid fa-id-card'></i>&nbsp;
                                     <span class='primary-font'>Volver</span>
@@ -215,44 +194,16 @@
                                 </button>
                             </div>
                             <div class='buddy__footer buddy__footer--primary grid-col-2'>
-                                <button class='btn btn--card btn--success-card' onclick='peticion(this, 6, `aceptar`, 1, 1, 2)'>
+                                <button class='btn btn--card btn--success-card' onclick='peticionNotificacion(this, $id, `aceptar`, `".self::NOTIFICACION_PROFILE."`)'>
                                     <span class='primary-font'>Aceptar&nbsp;</span>
                                     <i class='fa-solid fa-check'></i>
                                 </button>
-                                <button class='btn btn--card btn--error-card' onclick='peticion(this, 6, `rechazar`, 1, 1, 2)'>
+                                <button class='btn btn--card btn--error-card' onclick='peticionNotificacion(this, $id, `rechazar`, `".self::NOTIFICACION_PROFILE."`)'>
                                     <span class='primary-font'>Rechazar&nbsp;</span>
                                     <i class='fa-solid fa-xmark'></i>
                                 </button>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-
-                <div class='buddy__footer-internal-layer' id='$id'>
-                    <div class='buddy__footer buddy__footer--primary grid-col-3'>
-                        <button class='btn btn--card btn--success-card' onclick='peticion(this, $id, `".self::ACCION_ACEPTAR."`, $paginaActual, $totalPaginas, $tipo)'>
-                            <span class='primary-font'>Aceptar&nbsp;</span>
-                            <i class='fa-solid fa-check'></i>
-                        </button>
-                        <button class='btn btn--card btn--error-card' onclick='peticion(this, $id, `".self::ACCION_RECHAZAR."`, $paginaActual, $totalPaginas, $tipo)'>
-                            <span class='primary-font'>Rechazar&nbsp;</span>
-                            <i class='fa-solid fa-xmark'></i>
-                        </button>
-                        <button class='btn btn--card' onclick='subir(this)'>
-                            <i class='fa-solid fa-id-card'></i>&nbsp;
-                            <span class='primary-font'>Volver</span>
-                            &nbsp;<i class='fa-solid fa-arrow-down'></i>
-                        </button>
-                    </div>
-                    <div class='buddy__footer buddy__footer--primary $grid'>
-                        <button class='btn btn--card' onclick='bajar(this)'>
-                            <i class='fa-solid fa-user-group'></i>&nbsp;
-                            <span class='primary-font'>Recibida</span>
-                            &nbsp;<i class='fa-solid fa-arrow-up'></i>
-                        </button>
-                        $perfil
-                        $eliminar
                     </div>
                 </div>
             ";

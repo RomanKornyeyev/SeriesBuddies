@@ -83,8 +83,10 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    width: 70%;
     height: 100%;
+}
+.petition-card-name>*{
+    color: black;
 }
 .card__user-img {
     display: flex;

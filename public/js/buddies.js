@@ -86,6 +86,67 @@ function peticion(elemento, id, accion, paginaActual=1, totalPaginas=1, tipo){
 
 }
 
+function peticionNotificacion(elemento, id, accion, tipo=3){
+    console.log(`
+        elemento: ${elemento}
+        id: ${id}
+        accion: ${accion}
+        tipo: ${tipo}
+    `);
+
+    let footer = elemento.parentNode.parentNode.parentNode;
+    console.log(footer);
+    let cardGlobal = elemento.parentNode.parentNode.parentNode.parentNode;
+    console.log(cardGlobal)
+
+    elemento.className = "";
+    elemento.onclick = null;
+    elemento.innerHTML = "<i class='fa-solid fa-spinner rotate-infinite font-size-default'></i>";
+    disableSiblingClicks(elemento);
+    
+    if (accion === "aceptar"){
+        elemento.classList.add("btn-no-clickable-success");
+    }else{
+        elemento.classList.add("btn-no-clickable-error");
+    }
+
+    //nuevo objeto XMLHttpRequest
+    var xhttp = new XMLHttpRequest();
+
+    //cuando hay un cambio de estado
+    xhttp.onreadystatechange = async function() {
+        //si todo está oki, 4 (respuesta está completa) y 200 (solicitud HTTP correcta)
+        if (this.readyState == 4) {
+            await delay(1000);
+            if (this.status == 200) {
+                // respuesta del handler, la pintamos en el elemento
+                if (accion === "aceptar"){
+                    elemento.parentNode.innerHTML = "<div class='btn-no-clickable-success pos-absolute opacity-fade'><i class='fa-solid fa-check'></i></div>";
+                } else {
+                    elemento.parentNode.innerHTML = "<div class='btn-no-clickable-error pos-absolute opacity-fade'><i class='fa-solid fa-xmark'></i></div>";
+                }
+                
+                cardGlobal.classList.add("opacity-fade");
+                await delay(1000);
+                cardGlobal.remove();
+            //¿Error en el handler? Pintamos un error
+            }else if (this.status == 500 || this.status == 400){
+                elemento.parentNode.innerHTML = "<div class='btn-no-clickable-error pos-absolute'>ERROR&nbsp;<i class='fa-solid fa-xmark'></i></div>";
+            }
+        }
+    };
+
+    //se abre una conexión POST al controlador
+    xhttp.open("POST", "peticiones_handler.php", true);
+
+    //establecemos el tipo de contenido de la solicitud
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    //pasamos la petición POST
+    xhttp.send(`accion=${accion}&id=${id}&tipo=${tipo}`);
+
+}
+
 
 function eliminar(elemento, id, paginaActual, totalPaginas){
     let objeto = 'usuario';
