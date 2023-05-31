@@ -40,6 +40,12 @@ CREATE TABLE peticiones (
     CONSTRAINT fk_receptor FOREIGN KEY (id_receptor) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
+INSERT INTO peticiones (id_emisor, id_receptor, estado) VALUES (1, 4, 'pendiente');
+INSERT INTO peticiones (id_emisor, id_receptor, estado) VALUES (2, 4, 'pendiente');
+INSERT INTO peticiones (id_emisor, id_receptor, estado) VALUES (3, 4, 'pendiente');
+INSERT INTO peticiones (id_emisor, id_receptor, estado) VALUES (5, 4, 'pendiente');
+INSERT INTO peticiones (id_emisor, id_receptor, estado) VALUES (6, 4, 'pendiente');
+
 CREATE TABLE tokens (
     id int auto_increment PRIMARY KEY,
     id_usuario int,

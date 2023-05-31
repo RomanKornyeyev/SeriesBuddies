@@ -21,6 +21,10 @@
     justify-items: center;
     gap: var(--space-xl);
 }
+.info-no-propietario{
+    width: 65%;
+    grid-template-columns: 1fr;
+}
 .card {
     display: flex;
     width:100%;
@@ -294,6 +298,9 @@
     }
     .primary-profile-info{
         grid-template-columns: 1fr;
+    }
+    .info-no-propietario{
+        width: 100%;
     }
 }
 

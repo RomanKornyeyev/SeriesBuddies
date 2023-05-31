@@ -30,19 +30,19 @@
 
     $esPropietario = false;
     //si tiene la sesión iniciada e id=id (u know), se cargan las peticiones de amistad
-    if ($sesionIniciada && $_SESSION['id'] == $idUsuario) {
+    if ($sesionIniciada && ($_SESSION['id'] == $_GET['id'])) {
         $esPropietario = true;
 
         //Obtiene el nombre, el id_emisor, id_receptor y el estado de las peticiones pendientes de ese buddie
         $peticiones = DWESBaseDatos::obtenPeticionesPendientes($db, $idUsuario);
     }
 
-    echo $esPropietario;
-    $gridPeticionesGlobal = '';
+    $infoPropietario = 'info-no-propietario';
+    $notisPropietario = 'd-none';
     if($esPropietario){
-        $gridPeticionesGlobal = 'grid-col-2';
+        $infoPropietario = 'info-si-propietario';
+        $notisPropietario = '';
     }
-    echo $gridPeticionesGlobal;
     
     
 
@@ -65,7 +65,7 @@
     // ********* COMIENZO BUFFER **********
     ob_start();
 ?>
-    <div class="primary-profile-info <?=$gridPeticionesGlobal?>">               
+    <div class="primary-profile-info <?=$infoPropietario?>">               
         <div class="card">
             <div class="card__user-img">
                 <div class="profile-img">
@@ -126,16 +126,18 @@
             </div>
         </div>
 
-        <!-- peticiones -->
-        <div class="card card--petitions">
-            <h3 class="petitions-title">Peticiones de amistad</h3>
-            <div class="petitions__content">
-                <?php foreach ($peticiones as $key => $peticion) {
-                    echo $peticionFooter->pintaAmistadRecibidaNotificacion($peticion['id_emisor'], $peticion['nombre'], $peticion['img']);
-                } ?>
-                
+        <?php if($esPropietario) { ?>
+            <!-- peticiones -->
+            <div class="card card--petitions">
+                <h3 class="petitions-title">Peticiones de amistad</h3>
+                <div class="petitions__content">
+                    <?php foreach ($peticiones as $key => $peticion) {
+                        echo $peticionFooter->pintaAmistadRecibidaNotificacion($peticion['id_emisor'], $peticion['nombre'], $peticion['img']);
+                    } ?>
+                    
+                </div>
             </div>
-        </div>
+        <?php } ?>
     </div>
 
 
