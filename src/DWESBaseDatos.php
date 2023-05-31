@@ -270,6 +270,11 @@ class DWESBaseDatos {
     return $db->obtenElDato()['COUNT(*)'];  
   }
 
+  public static function obtenBuddiesChipsRespuestas ($db, $idUsuario) {
+    $db->ejecuta("SELECT c.img FROM chips c INNER JOIN chips_usuario cu ON cu.id_chip=c.id WHERE id_usuario=?;", $idUsuario);
+    return $db->obtenDatos();
+  }
+
   public static function obtenInfoRespuesta($db, $idRespuesta)
   {
     $db->ejecuta(
@@ -287,14 +292,6 @@ class DWESBaseDatos {
 
   //Fotos de los primeros 5 usuarios que han comentado esta serie
   public static function obtenPrimerosBuddiesSerie ($db, $idSerie) {
-    // $db->ejecuta('SELECT id_serie, u.id, u.img 
-    // FROM respuestas r 
-    // INNER JOIN usuarios u 
-    // ON u.id=r.id_usuario 
-    // WHERE id_serie=?
-    // GROUP BY u.id
-    // LIMIT ?;',
-    // $idSerie, self::MAX_BUDDIES_FEED);
     $db->ejecuta('SELECT u.nombre, u.img, u.id, COUNT(r.id) AS total_respuestas
     FROM usuarios u
     JOIN respuestas r ON u.id = r.id_usuario
@@ -395,8 +392,6 @@ class DWESBaseDatos {
 
     return $db->obtenElDato()['total_usuarios'];
   }
-
-
 
   //Obtiene la info de los buddies que coincidan su nombre con la busqueda pedida
   public static function obtenListadoBuddiesBusquedaPorSerie ($db, $busqueda, $idSerie, $registroInicial) {

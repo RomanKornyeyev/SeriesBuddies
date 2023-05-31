@@ -41,14 +41,19 @@
     max-height: 30rem;
     gap: var(--space-l);
     padding: var(--space-l);
-    background-color: var(--secondary-50);
     overflow: hidden;
     overflow-y: scroll;
+
+    background: rgb(0,153,255);
+    background: linear-gradient(25deg, rgba(0,153,255,1) 0%, rgba(8,94,151,1) 25%, rgba(12,76,120,1) 46%, rgba(9,101,135,1) 72%, rgba(0,176,213,1) 100%); 
+
+    background: rgb(0,234,255);
+    background: linear-gradient(25deg, rgba(0,234,255,1) 0%, rgba(0,104,130,1) 25%, rgba(0,74,131,1) 46%, rgba(0,111,152,1) 72%, rgba(0,176,213,1) 100%); 
 }
 .petitions-title{
     font-size: 2.4rem;
     width: 100%;
-    color: var(--secondary-800);
+    color: #FFF;
     text-align: center;
 }
 .petitions__content{
@@ -60,27 +65,49 @@
     overflow-y: scroll;
 }
 .petition-card{
-    width:100%;
+    /* width:100%;
     min-height: 12.5rem;
     height: 12.5rem;
     max-height: 30rem;
     border-radius: var(--br-default);
     background-color: var(--primary-50);
-    overflow: hidden;
+    overflow: hidden; */
     /* box-shadow: 2px 5px 3px 0 var(--primary-500); */
+
+    /*----------- CAMBIOS ANABEL -----------*/
+    width: 100%;
+    min-height: 12.5rem;
+    height: 12.5rem;
+    max-height: 30rem;
+    border-radius: var(--br-default);
+    background-color: rgb(187, 242, 255);
+    overflow: hidden;
+    box-shadow: 0px 2px 2px 0 #035f6f;
 }
 .petition-card__info{
-    display: flex;
+    /* display: flex;
     width: 100%;
     height: calc(100% - 4.25rem);
     padding: var(--space-m);
-    gap: var(--space-m);
+    gap: var(--space-m); */
+
+    /*----------- CAMBIOS ANABEL -----------*/
+    display: flex;
+    width: 100%;
+    height: calc(100% - 4.25rem);
+    gap: var(--space-xl);
 }
 .petition-card-img-wrapper{
-    height: 100%;
+    /* height: 100%;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     border: 3px solid var(--primary-500);
+    overflow: hidden; */
+
+    /*----------- CAMBIOS ANABEL -----------*/
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    border: 3px solid #ecfbff;
     overflow: hidden;
 }
 .petition-card-name{
@@ -90,8 +117,15 @@
     height: 100%;
 }
 .petition-card-name>*{
-    color: black;
+    color: var(--almost-black);
 }
+
+.btn--success-card {
+    background-color: #0490b0;
+    border-color: #008aaa;
+    color: #002e39;
+}
+
 .card__user-img {
     display: flex;
     align-items: center;

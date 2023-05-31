@@ -41,6 +41,11 @@
     //Nombre, comentario, fecha e imagen del usuario + id de la serie en determinado rango
     $comentarios = $db->obtenRespuestasSerie($db, $idSerie, $registroInicial);
 
+    //Obtenemos las medallas de ese usuario y lo guardamos en el mismo array comentarios
+    foreach ($comentarios as $key => $comentario) {
+        $comentarios[$key]['chips'] = $db->obtenBuddiesChipsRespuestas ($db, $comentario['id_user']);
+    }
+
     //Total de los comentarios que hay de esa serie
     $totalRegistros = $db->obtenTotalRespuestas($db, $idSerie);
 
@@ -243,9 +248,13 @@
                         </div>
                         <h2 class="title title--user"><?=$comentario['nombre']?></h2>
                         <div class="icons">
-                            <div class="icons__chip"></div>
-                            <div class="icons__chip"></div>
-                            <div class="icons__chip"></div>
+                            <?php foreach ($comentario['chips'] as $value) { ?>
+                                <div class="img-fit">
+                                    <img class="img-fit" src="<?=$value['img']?>" alt="chip-img">
+                                </div>
+                            <?php } ?>
+                            <!-- <div class="icons__chip"></div>
+                            <div class="icons__chip"></div> -->
                         </div>
                     </div>
                     <div class="card__post-comment">
