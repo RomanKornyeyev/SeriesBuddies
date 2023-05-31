@@ -201,7 +201,7 @@ echo '</pre>';
 
 
 /* ---------------------------------------------- RESULTADOS DE BUDDIES POR BUSCADOR ---------------------------------------------- */
-
+/*
 $busqueda = $_GET['busqueda'];
 if (isset($_GET['pagina'])) {
     $paginaActual = $_GET['pagina'];
@@ -218,3 +218,22 @@ $buddiesEncontrados = DWESBaseDatos::obtenListadoBuddiesBusqueda($db, $busqueda,
 echo '<pre>';
 print_r($buddiesEncontrados);
 echo '</pre>';
+*/
+
+$serieID = '112888';
+//$url = $tmdb->urlSerieID ($serieID);
+//print_r($url);
+//$info = $tmdb->peticionHTTP($url);
+$info = $tmdb->getSerieID($serieID);
+echo '<pre>';
+print_r($info);
+echo '</pre>';
+
+// $serieID = 112888;
+// $url = $tmdb->urlSerieID ($serieID);
+// 
+// echo '<pre>';
+//print_r($info['videos']['results'][0]['key']);
+// echo '</pre>';
+
+

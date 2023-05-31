@@ -5,7 +5,7 @@ namespace clases\api_tmdb;
 class TMDB
 {
     //VARIABLES Y CONSTANTES
-    //const API_KEY = '4ed281c2a8c566b11358f1307c78ee21'; 
+    const API_KEY = '4ed281c2a8c566b11358f1307c78ee21'; 
     const API_URL = 'https://api.themoviedb.org/3/';
     const TOKEN = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZWQyODFjMmE4YzU2NmIxMTM1OGYxMzA3Yzc4ZWUyMSIsInN1YiI6IjY0NGQzNzliMmQzNzIxMjg4NjAxMDIwYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.dF1hwzUEcQB-Ad-r7vwD3bgCj4W3vctULyT1bHGxQoE';
     const MAX_PAGINAS = 500;
@@ -63,10 +63,16 @@ class TMDB
         curl_close($curl);
         return (array) json_decode(($response), true);
     }
-    
+
+    //Devuelve la url para buscar la info de la serie por su ID.
+    public function urlSerieVideoID ($serieID) {
+        return self::API_URL.'tv/'.$serieID.'?append_to_response=videos&language='.$this->lang;
+    }
+
     //Devuelve la url para buscar la info de la serie por su ID.
     public function urlSerieID ($serieID) {
         return self::API_URL.'tv/'.$serieID.'?language='.$this->lang;
+        //return self::API_URL.'tv/'.$serieID.'?append_to_response=videos&language='.$this->lang;
     }
 
     //Devuelve la url para buscar las series que pertencen a un genero (por su ID) en determinada pagina (por defecto es la primera)
@@ -101,6 +107,7 @@ class TMDB
         }
         $serieData['serieAirDate']  =  $serie['first_air_date'];
         $serieData['serieGenres']   =  $serie['genres'];
+        $serieData['video']         =  'https://www.youtube.com/watch?v='.$serie['videos']['results'][0]['key'];
 
         return $serieData;
     }
