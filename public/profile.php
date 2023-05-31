@@ -11,6 +11,14 @@
     use clases\api_tmdb\TMDB;
     $tmdb = new TMDB();
 
+    // ***** FORM *****
+    use clases\form\campo\Atipo;
+    use clases\form\campo\Texto;
+    use clases\form\campo\File;
+    use clases\form\claseMain\Formulario;
+
+    
+    
     $idUsuario = $_GET['id'];
 
     //Saco la informacion del buddie de la tabla usuarios.
@@ -24,10 +32,10 @@
 
     //Devuelve los amigos (id_receptor, nombre y la img) de ese buddie
     $infoBuddie['buddies'] = DWESBaseDatos::obtenInfoBuddieBuddies($db, $idUsuario);
-
+    
     //Devuelve los chips (id, img, nombre) de ese buddie
     $infoBuddie['chips'] = DWESBaseDatos::obtenInfoBuddieChips($db, $idUsuario);
-
+    
     $esPropietario = false;
     //si tiene la sesión iniciada e id=id (u know), se cargan las peticiones de amistad
     if ($sesionIniciada && ($_SESSION['id'] == $_GET['id'])) {
@@ -37,24 +45,70 @@
         $peticiones = DWESBaseDatos::obtenPeticionesPendientes($db, $idUsuario);
     }
 
+    $misSus = "SUS";
     $infoPropietario = 'info-no-propietario';
     $notisPropietario = 'd-none';
     if($esPropietario){
         $infoPropietario = 'info-si-propietario';
         $notisPropietario = '';
+        $misSus = "MIS";
     }
     
+
+
+    //Pintar formulario para editar la info de la tarjeta
+    //Si la sesion esta iniciada le va a redirigir a profile
+    if (isset($_GET['action'])) {
+        if (!$sesionIniciada) {
+            header('Location: login.php?error=Inicia sesión para poder actualizar tu perfil');
+            die();
+        } else {
+            if ($_SESSION['id'] != $idUsuario) {
+                header('Location: index.php');
+                die();
+
+            //Si el idUsuario = al de la sesion, se inicializa el form
+            } else {
+                // ================================= INICIALIZACIÓN DEL FORM =================================
+                //                              ACTION            METHOD           clases-css-form   ¿Vaciar al validar?   atr-extra(para forms con img)   CAMPOS
+                $formulario = new Formulario   ("",         Formulario::METHOD_POST, ["form"],        Formulario::VACIAR_NO,  Formulario::ATR_IMG,           array(
+                    //                         ====================================== COMÚN ==============================================================================  //  ======================== ESPECÍFICO ========================
+                    //                     ¿Puede estar vacío?  valor    name       label       clases-css-label         clases-css-wrapper  clases-css-input                  tipoCampo     placeholder     regex
+                    $img = new File            (Atipo::NULL_SI, null, "img",       "",        ["label", "label--img"],["input-wrapper", "input-wrapper--img"], ["d-none"],  ["input-wrapper-aux-center"], ["profile-img-form"], ["img-fit"],File::IMG_DEFAULT, File::ACCEPT_BOTH, File::SIZE_LOW, File::RUTA_PERFIL),
+                    $nombre = new Texto        (Atipo::NULL_NO, $infoBuddie['tarjeta']['nombre'], "nombre",     "Nombre",       ["label","label--text"],    ["input-wrapper"], ["input","shadow-lightgray"],  Texto::TYPE_TEXT, " ",   Texto::DEFAULT_PATTERN_25),
+                    $descripcion = new Texto   (Atipo::NULL_SI, $infoBuddie['tarjeta']['descripcion'], "descripción","Descripción",  ["label","label--text"],    ["input-wrapper"], ["input","shadow-lightgray"],  Texto::TYPE_TAREA, " ",  Texto::DEFAULT_PATTERN_500)
+                    //                                                                                                                                                      auxGlobalWrapper        imgWrp            clsImg      imgDflt            accept           max size         ruta guardado
+                // === SUBMIT ===
+                // claseWrappSubmit                           idSubmit  nameSubm  txtSubmit  clseSubmit
+                ), ["input-wrapper","input-wrapper--submit"], "actualizar", "actualizar", "Actualizar", ["btn", "btn--primary", "shadow-lightgray"]);
+
+
+                if ($formulario->validarGlobal()) {
+                    
+                    //subimos la imagen y la insertamos en el user
+                    if (isset($_FILES[$img->getName()]) && $_FILES[$img->getName()]['error'] == 0) {
+                        //subimos y guardamos la img en:                              ruta          nombre         ext
+                        move_uploaded_file($_FILES[$img->getName()]['tmp_name'], $img->getRuta().$_SESSION['id'].".png");
+                        
+                        //actualizamos la img en el user
+                        DWESBaseDatos::actualizarImgUsuario($db, $_SESSION['id'], $img->getRuta().$_SESSION['id'].".png");
+                        $_SESSION['img'] = $img->getRuta().$_SESSION['id'].".png";
+                    }
+
+                    //Hacemos el update en la tabla si los campos han sido validados
+                    DWESBaseDatos::actualizarInfoBuddy ($db, $nombre->getValor(), $descripcion->getValor(), $idUsuario);
+
+                    $_SESSION['nombre'] = $nombre->getValor();
+
+                    header('Location: profile.php?id='.$idUsuario);
+                    die();
+                }
+            }
+        }
+    }
+
     
-
-    // echo '<pre class="color-white">';
-    // print_r($infoBuddie);
-    // echo '</pre>';
-
-    // echo '<pre class="color-white">';
-    // print_r($peticiones);
-    // echo '</pre>';
-
-
+    
     // ********* INFO PARA EL TEMPLATE **********
     $tituloHead = $infoBuddie['tarjeta']['nombre']." - SeriesBuddies";
     $estiloEspecifico = "./css/profile.css";
@@ -139,11 +193,14 @@
             </div>
         <?php } ?>
     </div>
-
+    
+    <?php if($esPropietario && isset($_GET['action']) && $_GET['action'] == 'editando') { ?>
+        <?php $formulario->pintarGlobal(); ?>
+    <?php } ?>
 
     <!-- ***** CARRUSELES ***** -->
     <div class="carousel">
-        <h2 class="title title--carousel"><span class="title--first-lane">MIS</span> SERIES</h2>
+        <h2 class="title title--carousel"><span class="title--first-lane"><?=$misSus?></span> SERIES</h2>
 
         <!-- Galeria en sí: botones y fotos -->
         <div class="list" id="list">
@@ -180,7 +237,7 @@
 
 
     <div class="carousel">
-        <h2 class="title title--carousel"><span class="title--first-lane">MIS</span> BUDDIES</h2>
+        <h2 class="title title--carousel"><span class="title--first-lane"><?=$misSus?></span> BUDDIES</h2>
 
         <!-- Galeria en sí: botones y fotos -->
         <div class="list" id="list">
@@ -198,7 +255,7 @@
                         <div>
                             <a href="./profile.php?id=<?=$value['id_receptor']?>">
                                 <picture>
-                                    <img src="<?=$value['img']?>" alt="imagen" class="img-fit">
+                                    <img src="<?=$value['img']?>" alt="Buddy <?=$value['nombre']?>" class="img-fit">
                                 </picture>
                             </a>
                         </div>
@@ -215,43 +272,42 @@
         </div>
     </div>
 
-    <?php if (count($infoBuddie['chips']) != 0) { ?>
-        <div class="carousel">
-            <h2 class="title title--carousel"><span class="title--first-lane">MIS</span> CHIPS</h2>
+    
+    <div class="carousel">
+        <h2 class="title title--carousel"><span class="title--first-lane"><?=$misSus?></span> CHIPS</h2>
 
-            <!-- Galeria en sí: botones y fotos -->
-            <div class="list" id="list">
+        <!-- Galeria en sí: botones y fotos -->
+        <div class="list" id="list">
 
-                <!-- Boton -->
-                <button class="carrusel-arrow carrusel-prev" id="button-prev" data-button="button-prev"
-                    onclick="app.processingButton(event)">
-                    <i class="fa-solid fa-angle-left"></i>
-                </button>
-                
-                <!-- Todas las imagenes -->
-                <div class="gallery" id="gallery">
-                    <?php foreach ($infoBuddie['chips'] as $key => $value) { ?>
-                        <div class="carrusel img">
-                            <div>
-                                <a href="./profile.php?id=<?=$value['id_usuario']?>">
-                                    <picture>
-                                        <img src="<?=$value['img']?>" alt="<?=$value['nombre']?>" class="img-fit">
-                                    </picture>
-                                </a>
-                            </div>
+            <!-- Boton -->
+            <button class="carrusel-arrow carrusel-prev" id="button-prev" data-button="button-prev"
+                onclick="app.processingButton(event)">
+                <i class="fa-solid fa-angle-left"></i>
+            </button>
+            
+            <!-- Todas las imagenes -->
+            <div class="gallery" id="gallery">
+                <?php foreach ($infoBuddie['chips'] as $key => $value) { ?>
+                    <div class="carrusel img">
+                        <div>
+                            <!-- <a href="./profile.php?id=<?=$value['id_usuario']?>"> -->
+                                <picture>
+                                    <img src="<?=$value['img']?>" alt="<?=$value['nombre']?>" class="img-fit">
+                                </picture>
+                            <!-- </a> -->
                         </div>
-                        <?php } ?>
-                </div>
-
-                <!-- Boton -->
-                <button class="carrusel-arrow carrusel-next" id="button-next" data-button="button-next"
-                    onclick="app.processingButton(event)">
-                    <i class="fa-solid fa-angle-right"></i>
-                </button>
-
+                    </div>
+                    <?php } ?>
             </div>
+
+            <!-- Boton -->
+            <button class="carrusel-arrow carrusel-next" id="button-next" data-button="button-next"
+                onclick="app.processingButton(event)">
+                <i class="fa-solid fa-angle-right"></i>
+            </button>
+
         </div>
-    <?php } ?>
+    </div>
 
 <?php
     // ********* FIN BUFFER + LLAMADA AL TEMPLATE **********

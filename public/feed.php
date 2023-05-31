@@ -76,7 +76,7 @@
             // //quitamos el action a la URL (para posteo/edición de comentarios)
             // $nuevaUrl = DWESBaseDatos::eliminarParametroUrl($urlActual, "action");
 
-            echo $nuevaUrl;
+            //echo $nuevaUrl;
 
 
             $accion = "";

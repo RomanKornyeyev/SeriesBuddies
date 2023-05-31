@@ -440,7 +440,7 @@ class DWESBaseDatos {
                   FROM respuestas r 
                   INNER JOIN usuarios u 
                   ON u.id=r.id_usuario 
-                  ORDER BY fecha, id_usuario 
+                  ORDER BY r.fecha
                   DESC LIMIT 2;");
     return $db->obtenDatos();
   }
@@ -554,6 +554,22 @@ class DWESBaseDatos {
       return false;
     }
   }
+
+  public static function actualizarInfoBuddy ($db, $nombre, $descripcion, $id) : bool
+  {
+    $db->ejecuta(
+      "UPDATE usuarios SET nombre=?, descripcion=? WHERE id = ?; ",
+       $nombre, $descripcion, $id
+    );
+
+    if ($db->getExecuted()) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+
 
   public static function verificaUsuario($db, $id) : bool
   {

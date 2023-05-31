@@ -129,7 +129,8 @@
         <?php if (isset($_GET['id-serie'])) { ?>
             <span class="primary-font color-white">&gt;</span>
             <a href="./buddies.php?id-serie=<?=$_GET['id-serie']?>" class="primary-font primary-color"><?=$nbSerie?></a>
-        <?php } if (isset($_GET['buddies'])) { ?>
+        <?php } 
+        if (isset($_GET['buddies'])) { ?>
             <span class="primary-font color-white">&gt;</span>
             <a href="" class="primary-font primary-color">Resultados de "<?=$_GET['buddies']?>"</a>
         <?php } ?>
