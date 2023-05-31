@@ -422,19 +422,31 @@ class DWESBaseDatos {
     return $db->obtenDatos();
   }
 
-    //Obtiene el total de buddies que coincidan con la serie pedida + busqueda
-    public static function obtenTotalBuddiesBusquedaSerie ($db, $busqueda, $idSerie) {
-      $db->ejecuta('SELECT COUNT(DISTINCT(u.nombre)) AS total_usuarios, r.id_serie 
-                    FROM respuestas r
-                    INNER JOIN usuarios u
-                    ON r.id_usuario=u.id
-                    WHERE id_serie = ?
-                    AND nombre LIKE ?',
-                    $idSerie, '%'.$busqueda.'%');
-      
-      return $db->obtenElDato()['total_usuarios'];
-    }
+  //Obtiene el total de buddies que coincidan con la serie pedida + busqueda
+  public static function obtenTotalBuddiesBusquedaSerie ($db, $busqueda, $idSerie) {
+    $db->ejecuta('SELECT COUNT(DISTINCT(u.nombre)) AS total_usuarios, r.id_serie 
+                  FROM respuestas r
+                  INNER JOIN usuarios u
+                  ON r.id_usuario=u.id
+                  WHERE id_serie = ?
+                  AND nombre LIKE ?',
+                  $idSerie, '%'.$busqueda.'%');
+    
+    return $db->obtenElDato()['total_usuarios'];
+  }
+
+  public static function obtenTarjetasIndex ($db) {
+    $db->ejecuta("SELECT u.nombre, u.img, r.fecha, DATE_FORMAT(ult_contacto, '%d %b %Y', 'es-ES')'fecha', r.contenido 
+                  FROM respuestas r 
+                  INNER JOIN usuarios u 
+                  ON u.id=r.id_usuario 
+                  ORDER BY fecha, id_usuario 
+                  DESC LIMIT 2;");
+    return $db->obtenDatos();
+  }
   
+
+
   // ====== INSERTS ======
 
   public static function insertarUsuario($db, $nombre, $contra, $correo, $privilegio, $verificado) : bool
