@@ -14,25 +14,41 @@
     gap: var(--space-l);
     padding: var(--space-l) 0;
 }
+.primary-profile-info{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2.5fr 1.5fr;
+    justify-items: center;
+    gap: var(--space-xl);
+}
 .card {
     display: flex;
-    width:50%;
+    width:100%;
+    min-height: 30rem;
+    max-height: 50rem;
     border-radius: var(--br-default);
     background-color: var(--primary-50);
     overflow: hidden;
+}
+.card--petitions{
+    padding: var(--space-l);
+    background-color: var(--secondary-50);
+    overflow: hidden;
+    overflow-y: scroll;
 }
 .card__user-img {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--space-ultra-l) var(--space-xxl);
+    padding: var(--space-xxxl) var(--space-xxxl);
     border-radius: var(--br-default);
-    background-color: #FFF4CD;
+    background-color: var(--primary-10);
     width: 40%;
+    min-width: 10rem;
 }
 .profile-img{
-    width: 80%;
-    margin: 0 auto;
+    width: 100%;
+    /* margin: 0 auto; */
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     overflow: hidden;
@@ -43,6 +59,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+.admin-area{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-flow: row wrap;
+    gap: var(--space-m);
 }
 .title--user, .info--user {
     color: var(--background-800);
@@ -59,7 +82,7 @@
 .buddy__footer-external-layer{
     position: relative;
     width: 100%;
-    height: 20%;
+    height: 4.25rem;
     overflow: hidden;
 }
 .buddy__footer-internal-layer{
@@ -78,12 +101,7 @@
     background-color: var(--primary-500);
 }
 
-/* ===== UTILITIES (SPECIFIC, DON'T MOVE IT FROM HERE) ===== */
-.grid-col-3{grid-template-columns: repeat(3, 1fr);}
-.grid-col-2{grid-template-columns: repeat(2, 1fr);}
-.grid-col-1{grid-template-columns: 1fr;}
-.subir{bottom: 0;}
-.bajar{bottom: -100%;}
+
 
 .carrusel-arrow {
     border-radius: 50%;
@@ -217,13 +235,20 @@
     }
 }
 
+/* ===== EXTRA (1000px) ===== */
+@media screen and (max-width: 1000px) {
+    .card{
+        width: 80%;
+    }
+    .primary-profile-info{
+        grid-template-columns: 1fr;
+    }
+}
+
 /* ===== EXTRA (910px) ===== */
 @media screen and (max-width: 910px) {
     .card__user-img{
         width: 35%;
-    }
-    .profile-img {
-        width: 100%;
     }
     .card__user-bio{
         width: 65%;
@@ -233,13 +258,10 @@
 /* ===== TABLET (810px) ===== */
 @media screen and (max-width: 810px) {
     .card {
-        width: 75%;
+        width: 100%;
     }
-    .card__user-img{
-        width: 30%;
-    }
-    .card__user-bio{
-        width: 70%;
+    .card__user-img {
+        padding: var(--space-xl);
     }
     .carousel__container {
         flex-direction: column;
@@ -250,24 +272,29 @@
     }
 }
 
+/* ===== EXTRA (550px) ===== */
+@media screen and (max-width: 550px) {
+    
+}
+
 /* ===== PHONE (480px) ===== */
 @media screen and (max-width: 480px) {
     .main{
         padding: 0;
     }
     .card {
-        width: 90%;
         flex-direction: column;
     }
     .card__user-img {
         padding: 0;
         width: 100%;
+        height: 12.5rem;
     }
     .profile-img {
         border:none;
         border-radius: 0;
         width: 100%;
-        height: 12vh;
+        height: 12.5rem;
         display: block;
     }
     .card__user-bio{
@@ -283,3 +310,10 @@
         display: none;
     }
 }
+
+/* ===== UTILITIES (SPECIFIC, DON'T MOVE IT FROM HERE) ===== */
+.grid-col-3{grid-template-columns: repeat(3, 1fr);}
+.grid-col-2{grid-template-columns: repeat(2, 1fr);}
+.grid-col-1{grid-template-columns: 1fr;}
+.subir{bottom: 0;}
+.bajar{bottom: -100%;}

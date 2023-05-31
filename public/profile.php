@@ -50,66 +50,72 @@
     // ********* COMIENZO BUFFER **********
     ob_start();
 ?>
-                
-    <div class="card">
-        <div class="card__user-img">
-            <div class="profile-img">
-                <img class="img-fit" src="<?=$infoBuddie['tarjeta']['img']?>" alt="profile-img">
-            </div>
-        </div>
-        <div class="card__user-bio">
-            <div class="card__user-info">
-                <div class="admin-area">
-                    <h1 class="title title--user"><?=$infoBuddie['tarjeta']['nombre']?></h1>
-                    <?php //botones de editar/eliminar, solo cuando id=id o es admin ?>
-                    <?php if($idUsuario == $_SESSION['id'] || $esAdmin) { ?>
-                        <a href="./edit.php?id=<?=$idUsuario?>&action=editando" class="btn btn--secondary btn--sm-responsive btn--bold">Editar</a>
-                        <!-- <button class="btn btn--error btn--sm-responsive btn--bold" onclick="eliminar()">Eliminar</button> -->
-                    <?php } ?>
+    <div class="primary-profile-info">               
+        <div class="card">
+            <div class="card__user-img">
+                <div class="profile-img">
+                    <img class="img-fit" src="<?=$infoBuddie['tarjeta']['img']?>" alt="profile-img">
                 </div>
-                <p class="info info--user"><?=$infoBuddie['tarjeta']['alias']?></p>
-                <p class="info info--user">Se unió el <?=$infoBuddie['tarjeta']['fecha']?></p>
-                <p class="text text--user"><?=$infoBuddie['tarjeta']['descripcion']?></p>
             </div>
-            
-            
-            <!-- CARD FOOTER -->
-            <div class="buddy__footer-external-layer">
-                <?php
-                    //si el user no tiene sesión iniciada
-                    if (!$sesionIniciada) {
-                        echo $peticionFooter->pintaSesionNoIniciada($infoBuddie['tarjeta']['id']);
-
-                    //si el user SI TIENE la sesión iniciada
-                    }else{
-                        if($_SESSION['id'] == $infoBuddie['tarjeta']['id']){
+            <div class="card__user-bio">
+                <div class="card__user-info">
+                    <div class="admin-area">
+                        <h1 class="title title--user"><?=$infoBuddie['tarjeta']['nombre']?></h1>
+                        <?php //botones de editar/eliminar, solo cuando id=id o es admin ?>
+                        <?php if($idUsuario == $_SESSION['id'] || $esAdmin) { ?>
+                            <a href="./profile.php?id=<?=$idUsuario?>&action=editando" class="btn btn--secondary btn--bold"><i class="fa-solid fa-user-gear"></i></a>
+                            <!-- <button class="btn btn--error btn--sm-responsive btn--bold" onclick="eliminar()">Eliminar</button> -->
+                        <?php } ?>
+                    </div>
+                    <p class="info info--user"><?=$infoBuddie['tarjeta']['alias']?></p>
+                    <p class="info info--user">Se unió el <?=$infoBuddie['tarjeta']['fecha']?></p>
+                    <p class="text text--user"><?=$infoBuddie['tarjeta']['descripcion']?></p>
+                </div>
+                
+                
+                <!-- CARD FOOTER -->
+                <div class="buddy__footer-external-layer">
+                    <?php
+                        //si el user no tiene sesión iniciada
+                        if (!$sesionIniciada) {
                             echo $peticionFooter->pintaSesionNoIniciada($infoBuddie['tarjeta']['id']);
+
+                        //si el user SI TIENE la sesión iniciada
                         }else{
-                            //obtenemos info sobre el estado de petición de amistad
-                            $peticion = DWESBaseDatos::obtenPeticion($db, $_SESSION['id'], $infoBuddie['tarjeta']['id']);
+                            if($_SESSION['id'] == $infoBuddie['tarjeta']['id']){
+                                echo $peticionFooter->pintaSesionNoIniciada($infoBuddie['tarjeta']['id']);
+                            }else{
+                                //obtenemos info sobre el estado de petición de amistad
+                                $peticion = DWESBaseDatos::obtenPeticion($db, $_SESSION['id'], $infoBuddie['tarjeta']['id']);
 
-                            //si ninguno ha mandado petición de amistad
-                            if ($peticion == "" || $peticion == null) {
-                                echo $peticionFooter->pintaAmistadNula($infoBuddie['tarjeta']['id'], 1, 1, Peticion::FOOTER_PROFILE);
-                                
-                            //si el user actual (SESIÓN) ha ENVIADO peti al user seleccioando
-                            }else if($peticion['estado'] == DWESBaseDatos::PENDIENTE && $peticion['id_emisor'] == $_SESSION['id']) {
-                                echo $peticionFooter->pintaAmistadEnviada($infoBuddie['tarjeta']['id'], 1, 1, Peticion::FOOTER_PROFILE);
+                                //si ninguno ha mandado petición de amistad
+                                if ($peticion == "" || $peticion == null) {
+                                    echo $peticionFooter->pintaAmistadNula($infoBuddie['tarjeta']['id'], 1, 1, Peticion::FOOTER_PROFILE);
+                                    
+                                //si el user actual (SESIÓN) ha ENVIADO peti al user seleccioando
+                                }else if($peticion['estado'] == DWESBaseDatos::PENDIENTE && $peticion['id_emisor'] == $_SESSION['id']) {
+                                    echo $peticionFooter->pintaAmistadEnviada($infoBuddie['tarjeta']['id'], 1, 1, Peticion::FOOTER_PROFILE);
 
-                            //si el user actual (SESIÓN) ha RECIBIDO peti del user seleccioando    
-                            }else if($peticion['estado'] == DWESBaseDatos::PENDIENTE && $peticion['id_receptor'] == $_SESSION['id']) {
-                                echo $peticionFooter->pintaAmistadRecibida($infoBuddie['tarjeta']['id'], 1, 1, Peticion::FOOTER_PROFILE);
+                                //si el user actual (SESIÓN) ha RECIBIDO peti del user seleccioando    
+                                }else if($peticion['estado'] == DWESBaseDatos::PENDIENTE && $peticion['id_receptor'] == $_SESSION['id']) {
+                                    echo $peticionFooter->pintaAmistadRecibida($infoBuddie['tarjeta']['id'], 1, 1, Peticion::FOOTER_PROFILE);
 
-                            //si son AMOGUS  
-                            }else if($peticion['estado'] == DWESBaseDatos::ACEPTADA) {
-                                echo $peticionFooter->pintaAmistadMutua($infoBuddie['tarjeta']['id'], 1, 1, Peticion::FOOTER_PROFILE);
+                                //si son AMOGUS  
+                                }else if($peticion['estado'] == DWESBaseDatos::ACEPTADA) {
+                                    echo $peticionFooter->pintaAmistadMutua($infoBuddie['tarjeta']['id'], 1, 1, Peticion::FOOTER_PROFILE);
+                                }
                             }
                         }
-                    }
-                ?>
+                    ?>
+                </div>
             </div>
         </div>
-    </div>
+
+        <!-- peticiones -->
+        <div class="card card--petitions">
+
+        </div>
+    </div> 
 
     <!-- <div class="petition">
         <?php //foreach ($peticiones as $key => $peticion) { ?>
