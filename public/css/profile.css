@@ -25,16 +25,64 @@
     display: flex;
     width:100%;
     min-height: 30rem;
-    max-height: 50rem;
+    max-height: 40rem;
     border-radius: var(--br-default);
     background-color: var(--primary-50);
     overflow: hidden;
 }
 .card--petitions{
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    gap: var(--space-l);
     padding: var(--space-l);
     background-color: var(--secondary-50);
     overflow: hidden;
     overflow-y: scroll;
+}
+.petitions-title{
+    font-size: 2.4rem;
+    width: 100%;
+    color: var(--secondary-800);
+    text-align: center;
+}
+.petitions__content{
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+}
+.petition-card{
+    width:100%;
+    min-height: 10rem;
+    height: 12.5rem;
+    max-height: 30rem;
+    border-radius: var(--br-default);
+    background-color: var(--primary-50);
+    overflow: hidden;
+    /* box-shadow: 2px 5px 3px 0 var(--primary-500); */
+}
+.petition-card__info{
+    display: flex;
+    width: 100%;
+    height: calc(100% - 4.25rem);
+    padding: var(--space-m);
+    gap: var(--space-m);
+}
+.petition-card-img-wrapper{
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 3px solid var(--primary-500);
+    overflow: hidden;
+}
+.petition-card-name{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 70%;
+    height: 100%;
 }
 .card__user-img {
     display: flex;

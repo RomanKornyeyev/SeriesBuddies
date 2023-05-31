@@ -68,8 +68,12 @@ img{width: 100%;}
     --primary-800: #8f7000;
     --primary-900: #665000;
     --secondary-50: #D0EBFF;
+    --secondary-300: #5be1ff;
+    --secondary-400: #3ddafd;
     --secondary-500: #1DD6FF;
     --secondary-600: #00c1ec;
+    --secondary-700: #00a8ce;
+    --secondary-800: #008cac;
     --success-500: #28a745;
     --success-600: #158a30;
     --success-700: #0e8029;

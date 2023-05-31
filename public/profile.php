@@ -113,7 +113,158 @@
 
         <!-- peticiones -->
         <div class="card card--petitions">
+            <h3 class="petitions-title">Peticiones de amistad</h3>
+            <div class="petitions__content">
 
+
+                <div class="petition-card">
+
+                    <div class="petition-card__info">
+                        <div class="petition-card-img-wrapper">
+                            <!-- <div class="petition-card-img"> -->
+                                <img class="img-fit" src="./upload/perfiles/default.png" alt="">
+                            <!-- </div> -->
+                        </div>
+                        <h3 class="petition-card-name">Román</h3>
+                    </div>
+
+
+                    <div class="buddy__footer-external-layer">
+                        <div class='buddy__footer-internal-layer' id='6'>
+                            <div class='buddy__footer buddy__footer--primary grid-col-3'>
+                                <button class='btn btn--card' onclick='subir(this)'>
+                                    <i class='fa-solid fa-id-card'></i>&nbsp;
+                                    <span class='primary-font'>Volver</span>
+                                    &nbsp;<i class='fa-solid fa-arrow-down'></i>
+                                </button>
+                            </div>
+                            <div class='buddy__footer buddy__footer--primary grid-col-2'>
+                                <button class='btn btn--card btn--success-card' onclick='peticion(this, 6, `aceptar`, 1, 1, 2)'>
+                                    <span class='primary-font'>Aceptar&nbsp;</span>
+                                    <i class='fa-solid fa-check'></i>
+                                </button>
+                                <button class='btn btn--card btn--error-card' onclick='peticion(this, 6, `rechazar`, 1, 1, 2)'>
+                                    <span class='primary-font'>Rechazar&nbsp;</span>
+                                    <i class='fa-solid fa-xmark'></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="petition-card">
+
+                    <div class="petition-card__info">
+                        <div class="petition-card-img-wrapper">
+                            <!-- <div class="petition-card-img"> -->
+                                <img class="img-fit" src="./upload/perfiles/default.png" alt="">
+                            <!-- </div> -->
+                        </div>
+                        <h3 class="petition-card-name">Román</h3>
+                    </div>
+
+
+                    <div class="buddy__footer-external-layer">
+                        <div class='buddy__footer-internal-layer' id='6'>
+                            <div class='buddy__footer buddy__footer--primary grid-col-3'>
+                                <button class='btn btn--card' onclick='subir(this)'>
+                                    <i class='fa-solid fa-id-card'></i>&nbsp;
+                                    <span class='primary-font'>Volver</span>
+                                    &nbsp;<i class='fa-solid fa-arrow-down'></i>
+                                </button>
+                            </div>
+                            <div class='buddy__footer buddy__footer--primary grid-col-2'>
+                                <button class='btn btn--card btn--success-card' onclick='peticion(this, 6, `aceptar`, 1, 1, 2)'>
+                                    <span class='primary-font'>Aceptar&nbsp;</span>
+                                    <i class='fa-solid fa-check'></i>
+                                </button>
+                                <button class='btn btn--card btn--error-card' onclick='peticion(this, 6, `rechazar`, 1, 1, 2)'>
+                                    <span class='primary-font'>Rechazar&nbsp;</span>
+                                    <i class='fa-solid fa-xmark'></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="petition-card">
+
+                    <div class="petition-card__info">
+                        <div class="petition-card-img-wrapper">
+                            <!-- <div class="petition-card-img"> -->
+                                <img class="img-fit" src="./upload/perfiles/default.png" alt="">
+                            <!-- </div> -->
+                        </div>
+                        <h3 class="petition-card-name">Román</h3>
+                    </div>
+
+
+                    <div class="buddy__footer-external-layer">
+                        <div class='buddy__footer-internal-layer' id='6'>
+                            <div class='buddy__footer buddy__footer--primary grid-col-3'>
+                                <button class='btn btn--card' onclick='subir(this)'>
+                                    <i class='fa-solid fa-id-card'></i>&nbsp;
+                                    <span class='primary-font'>Volver</span>
+                                    &nbsp;<i class='fa-solid fa-arrow-down'></i>
+                                </button>
+                            </div>
+                            <div class='buddy__footer buddy__footer--primary grid-col-2'>
+                                <button class='btn btn--card btn--success-card' onclick='peticion(this, 6, `aceptar`, 1, 1, 2)'>
+                                    <span class='primary-font'>Aceptar&nbsp;</span>
+                                    <i class='fa-solid fa-check'></i>
+                                </button>
+                                <button class='btn btn--card btn--error-card' onclick='peticion(this, 6, `rechazar`, 1, 1, 2)'>
+                                    <span class='primary-font'>Rechazar&nbsp;</span>
+                                    <i class='fa-solid fa-xmark'></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="petition-card">
+
+                    <div class="petition-card__info">
+                        <div class="petition-card-img-wrapper">
+                            <!-- <div class="petition-card-img"> -->
+                                <img class="img-fit" src="./upload/perfiles/default.png" alt="">
+                            <!-- </div> -->
+                        </div>
+                        <h3 class="petition-card-name">Román</h3>
+                    </div>
+
+
+                    <div class="buddy__footer-external-layer">
+                        <div class='buddy__footer-internal-layer' id='6'>
+                            <div class='buddy__footer buddy__footer--primary grid-col-3'>
+                                <button class='btn btn--card' onclick='subir(this)'>
+                                    <i class='fa-solid fa-id-card'></i>&nbsp;
+                                    <span class='primary-font'>Volver</span>
+                                    &nbsp;<i class='fa-solid fa-arrow-down'></i>
+                                </button>
+                            </div>
+                            <div class='buddy__footer buddy__footer--primary grid-col-2'>
+                                <button class='btn btn--card btn--success-card' onclick='peticion(this, 6, `aceptar`, 1, 1, 2)'>
+                                    <span class='primary-font'>Aceptar&nbsp;</span>
+                                    <i class='fa-solid fa-check'></i>
+                                </button>
+                                <button class='btn btn--card btn--error-card' onclick='peticion(this, 6, `rechazar`, 1, 1, 2)'>
+                                    <span class='primary-font'>Rechazar&nbsp;</span>
+                                    <i class='fa-solid fa-xmark'></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+
+
+
+            </div>
         </div>
     </div> 
 
