@@ -33,7 +33,7 @@
 <header class="header">
     <!-- *** MOBILE LOGO *** -->
     <!-- trigger menu mobile -->
-    <a href="index.php" class="d-flex flex-center-center" >
+    <a href="index.php">
         <!-- <h1 class="logo logo--mbl">SeriesBuddies</h1> -->
         <img src="upload/logos/logo-mobile.png" alt="Logo SeriesBuddies" class="logo logo--mbl">
     </a>
