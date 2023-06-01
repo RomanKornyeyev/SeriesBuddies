@@ -19,7 +19,7 @@ class DWESBaseDatos {
   const PENDIENTE = "pendiente";
   const ACEPTADA = "aceptada";
 
-  const REGISTROS_POR_PAGINA = 6;
+  const REGISTROS_POR_PAGINA = 20;
   const MAX_BUDDIES_FEED = 3;
   const MAX_PAG_PAGINADOR = 3;
 
