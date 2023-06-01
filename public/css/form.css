@@ -18,6 +18,7 @@
     width: 100%;
     position: relative;
     text-align: center;
+    border: none;
 }
 .input-wrapper--checkbox{
     padding: 0;
