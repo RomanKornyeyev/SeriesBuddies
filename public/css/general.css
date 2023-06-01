@@ -280,7 +280,7 @@ img{width: 100%;}
     padding: var(--space-l) var(--space-l);
     border-radius: var(--br-xl);
     border: 0;
-    outline: 1px solid var(--black);
+    /* outline: 1px solid var(--black); */
     background-color: var(--primary-50);
     font-size: 1.6rem;
     font-family: var(--primary-font);
