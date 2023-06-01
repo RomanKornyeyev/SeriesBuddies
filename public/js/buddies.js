@@ -23,7 +23,15 @@ function disableSiblingClicks(element) {
         };
       }
     });
-  }
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+    let formulario = document.getElementById('formulario-edicion-perfil-wrapper');
+    
+    if (formulario !== null) {
+        formulario.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+    }
+});
 
 
 function peticion(elemento, id, accion, paginaActual=1, totalPaginas=1, tipo){

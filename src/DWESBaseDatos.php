@@ -130,7 +130,7 @@ class DWESBaseDatos {
                   u.id, u.nombre, u.img, 
                   CONCAT('@',u.nombre, '#', u.id)'alias', 
                   u.descripcion, 
-                  DATE_FORMAT(ult_contacto, '%d %b %Y', 'es-ES')'fecha' 
+                  DATE_FORMAT(fecha_alta, '%d %b %Y', 'es-ES')'fecha' 
                   FROM usuarios u 
                   WHERE u.id=?;", 
                   $idUsuario);

@@ -43,6 +43,7 @@
     padding: var(--space-l);
     overflow: hidden;
     overflow-y: scroll;
+    scrollbar-width: none; /*Firefox*/
 
     background: rgb(0,153,255);
     background: linear-gradient(25deg, rgba(0,153,255,1) 0%, rgba(8,94,151,1) 25%, rgba(12,76,120,1) 46%, rgba(9,101,135,1) 72%, rgba(0,176,213,1) 100%); 
@@ -64,6 +65,11 @@
     align-items: center;
     gap: var(--space-sm);
     overflow-y: scroll;
+    scrollbar-width: none; /*Firefox*/
+}
+/*Webkit*/
+.petitions__content::-webkit-scrollbar, .card--petitions::-webkit-scrollbar {
+    width: 0;
 }
 .petitions-empty{
     width: 100%;
@@ -196,6 +202,24 @@
     grid-template-columns: repeat(2,1fr);
     height: 50%;
     background-color: var(--primary-500);
+}
+.formulario-edicion-perfil-wrapper{
+    display: flex;
+    flex-flow: column;
+    gap: var(--space-l);
+    width: 100%;
+    padding: var(--space-l);
+    background-color: var(--primary-50);
+    border-radius: var(--br-default);
+}
+.form{
+    padding:0;
+}
+.title-form{
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+    font-size: 2.6rem;
 }
 
 

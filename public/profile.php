@@ -208,7 +208,15 @@
     </div>
     
     <?php if(($esPropietario || $esAdmin) && isset($_GET['action']) && $_GET['action'] == 'editando') { ?>
-        <?php $formulario->pintarGlobal(); ?>
+        <div class="formulario-edicion-perfil-wrapper" id="formulario-edicion-perfil-wrapper">
+            <h3 class="title-form">Edita tu perfil &nbsp;<i class="fa-solid fa-pen-to-square"></i></h3>
+            <?php $formulario->pintarGlobal(); ?>
+        </div>
+        <div class="width-100 d-flex flex-center-center">
+            <a href="./profile.php?id=<?=$idUsuario?>" class="btn btn--secondary">
+                <i class="fa-solid fa-arrow-left"></i>&nbsp;Cancelar
+            </a>
+        </div>
     <?php } ?>
 
 

@@ -62,8 +62,8 @@
     background-color: var(--secondary-500);
 }
 .btn--secondary:hover, .btn--secondary:focus{
-    background-color: var(--secondary-600);
-    border-color: var(--secondary-600);
+    background-color: var(--secondary-700);
+    border-color: var(--secondary-700);
 }
 
 /* ERROR/DELETE/ADMIN (DEFAULT) */
