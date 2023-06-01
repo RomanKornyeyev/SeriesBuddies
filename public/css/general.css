@@ -255,12 +255,14 @@ img{width: 100%;}
 .logo--pc{
     height: 3.5rem;
     display: block;
+    width: auto;
     /* border: 1px solid white; */
 }
 .logo--mbl{display: none;}
 .logo-footer{
     display: block;
     height: 3rem;
+    width: auto;
 }
 /* ===== SEARCH FORM ===== */
 .h-form{
