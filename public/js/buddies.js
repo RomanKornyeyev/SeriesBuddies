@@ -95,9 +95,8 @@ function peticionNotificacion(elemento, id, accion, tipo=3){
     `);
 
     let footer = elemento.parentNode.parentNode.parentNode;
-    console.log(footer);
     let cardGlobal = elemento.parentNode.parentNode.parentNode.parentNode;
-    console.log(cardGlobal)
+    let contenedorGlobal = elemento.parentNode.parentNode.parentNode.parentNode.parentNode;
 
     elemento.className = "";
     elemento.onclick = null;
@@ -105,7 +104,7 @@ function peticionNotificacion(elemento, id, accion, tipo=3){
     disableSiblingClicks(elemento);
     
     if (accion === "aceptar"){
-        elemento.classList.add("btn-no-clickable-success");
+        elemento.classList.add("btn-no-clickable-success-notification");
     }else{
         elemento.classList.add("btn-no-clickable-error");
     }
@@ -129,6 +128,16 @@ function peticionNotificacion(elemento, id, accion, tipo=3){
                 cardGlobal.classList.add("opacity-fade");
                 await delay(1000);
                 cardGlobal.remove();
+
+                if(contenedorGlobal.childElementCount === 0){
+                    console.log("contenedor vacío");
+                    contenedorGlobal.innerHTML = `
+                        <div class="petitions-empty">
+                            <i class="fa-solid fa-inbox awesome-icon-portrait--secondary"></i>
+                            <h3 class="title title--secondary text-align-center">No hay peticiones</h3>
+                        </div>
+                    `;
+                }
             //¿Error en el handler? Pintamos un error
             }else if (this.status == 500 || this.status == 400){
                 elemento.parentNode.innerHTML = "<div class='btn-no-clickable-error pos-absolute'>ERROR&nbsp;<i class='fa-solid fa-xmark'></i></div>";
@@ -148,7 +157,7 @@ function peticionNotificacion(elemento, id, accion, tipo=3){
 }
 
 
-function eliminar(elemento, id, paginaActual, totalPaginas){
+function eliminar(elemento, id, paginaActual, totalPaginas, tipo=1){
     let objeto = 'usuario';
     //confirmación
     // confirmacion();
@@ -192,7 +201,7 @@ function eliminar(elemento, id, paginaActual, totalPaginas){
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 
                 //pasamos la petición POST
-                xhttp.send(`objeto=${objeto}&id=${id}&pagina_actual=${paginaActual}&total_paginas=${totalPaginas}`);
+                xhttp.send(`objeto=${objeto}&id=${id}&pagina_actual=${paginaActual}&total_paginas=${totalPaginas}&tipo=${tipo}`);
 
 
                 console.log("si");

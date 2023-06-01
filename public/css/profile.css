@@ -58,11 +58,21 @@
 }
 .petitions__content{
     width: 100%;
+    height: 100%;
     display: flex;
     flex-flow: column;
-    align-items: flex-start;
+    align-items: center;
     gap: var(--space-sm);
     overflow-y: scroll;
+}
+.petitions-empty{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-m);
 }
 .petition-card{
     /* width:100%;
@@ -96,6 +106,7 @@
     width: 100%;
     height: calc(100% - 4.25rem);
     gap: var(--space-xl);
+    padding: var(--space-sm);
 }
 .petition-card-img-wrapper{
     /* height: 100%;
@@ -107,7 +118,9 @@
     /*----------- CAMBIOS ANABEL -----------*/
     height: 100%;
     aspect-ratio: 1 / 1;
-    border: 3px solid #ecfbff;
+    /* border: 3px solid #ecfbff; */
+    border: 3px solid var(--secondary-700);
+    border-radius: 50%;
     overflow: hidden;
 }
 .petition-card-name{
@@ -118,12 +131,6 @@
 }
 .petition-card-name>*{
     color: var(--almost-black);
-}
-
-.btn--success-card {
-    background-color: #0490b0;
-    border-color: #008aaa;
-    color: #002e39;
 }
 
 .card__user-img {

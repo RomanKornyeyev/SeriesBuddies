@@ -94,8 +94,11 @@
 }
 .icons{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 65%;
+}
+.icons>*{
+    width: 32%;
 }
 .icon--super-buddies{
     gap: var(--space-l);

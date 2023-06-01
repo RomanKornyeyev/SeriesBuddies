@@ -53,7 +53,7 @@
                 $perfil = "<a class='btn btn--card' href='./profile.php?id=$id'>Perfil</a>";
                 if ($this->esAdmin) {
                     $grid = "grid-col-3";
-                    $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id, $paginaActual, $totalPaginas)'>Eliminar</button>";
+                    $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id, $paginaActual, $totalPaginas, ".self::FOOTER_BUDDIES.")'>Eliminar</button>";
                 }
             }else if ($tipo == self::FOOTER_PROFILE){
                 $grid = "grid-col-1";
@@ -89,7 +89,7 @@
                 $perfil = "<a class='btn btn--card' href='./profile.php?id=$id'>Perfil</a>";
                 if ($this->esAdmin) {
                     $grid = "grid-col-3";
-                    $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id, $paginaActual, $totalPaginas)'>Eliminar</button>";
+                    $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id, $paginaActual, $totalPaginas, ".self::FOOTER_BUDDIES.")'>Eliminar</button>";
                 }
             }else if (intval($tipo) == self::FOOTER_PROFILE){
                 $grid = "grid-col-1";
@@ -133,7 +133,7 @@
                 $perfil = "<a class='btn btn--card' href='./profile.php?id=$id'>Perfil</a>";
                 if ($this->esAdmin) {
                     $grid = "grid-col-3";
-                    $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id, $paginaActual, $totalPaginas)'>Eliminar</button>";
+                    $eliminar = "<button class='btn btn--card btn--error-card' onclick='eliminar(this, $id, $paginaActual, $totalPaginas, ".self::FOOTER_BUDDIES.")'>Eliminar</button>";
                 }
             }else if ($tipo == self::FOOTER_PROFILE){
                 $grid = "grid-col-1";
@@ -194,11 +194,11 @@
                                 </button>
                             </div>
                             <div class='buddy__footer buddy__footer--primary grid-col-2'>
-                                <button class='btn btn--card btn--success-card' onclick='peticionNotificacion(this, $id, `aceptar`, `".self::NOTIFICACION_PROFILE."`)'>
+                                <button class='btn btn--card btn--success-card-notification' onclick='peticionNotificacion(this, $id, `aceptar`, ".self::NOTIFICACION_PROFILE.")'>
                                     <span class='primary-font'>Aceptar&nbsp;</span>
                                     <i class='fa-solid fa-check'></i>
                                 </button>
-                                <button class='btn btn--card btn--error-card' onclick='peticionNotificacion(this, $id, `rechazar`, `".self::NOTIFICACION_PROFILE."`)'>
+                                <button class='btn btn--card btn--error-card' onclick='peticionNotificacion(this, $id, `rechazar`, ".self::NOTIFICACION_PROFILE.")'>
                                     <span class='primary-font'>Rechazar&nbsp;</span>
                                     <i class='fa-solid fa-xmark'></i>
                                 </button>

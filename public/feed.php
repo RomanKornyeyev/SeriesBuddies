@@ -249,10 +249,10 @@
                         <h2 class="title title--user"><?=$comentario['nombre']?></h2>
                         <div class="icons">
                             <?php foreach ($comentario['chips'] as $value) { ?>
-                                <div class="img-fit">
+                                <div>
                                     <img class="img-fit" src="<?=$value['img']?>" alt="chip-img">
                                 </div>
-                            <?php } ?>
+                            <?php } ?>                            
                             <!-- <div class="icons__chip"></div>
                             <div class="icons__chip"></div> -->
                         </div>

@@ -30,6 +30,9 @@ INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("j
 INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("librerias","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "librerias@librerias.com", "usuario", "si");
 INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("henry","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "henry@henry.com", "usuario", "si");
 INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("roman","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "roman@roman.com", "usuario", "si");
+INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("prueba1","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "prueba1@prueba1.com", "usuario", "si");
+INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("prueba2","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "prueba2@prueba2.com", "usuario", "si");
+INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("prueba3","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "prueba3@prueba3.com", "usuario", "si");
 
 CREATE TABLE peticiones (
     id              INT AUTO_INCREMENT PRIMARY KEY,

@@ -29,7 +29,7 @@
         $totalResultados = end($response);
         if ($totalResultados == 0) {
             $haySeries = false;
-            $mensajeError = '<i class="fa-solid fa-face-sad-tear awesome-icon-portait"></i><h3 class="title title--m text-align-center">No hay resultados</h3>';
+            $mensajeError = '<i class="fa-solid fa-face-sad-tear awesome-icon-portrait"></i><h3 class="title title--m text-align-center">No hay resultados</h3>';
         } else {
             $haySeries = true;
         }

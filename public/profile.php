@@ -24,17 +24,20 @@
     //Saco la informacion del buddie de la tabla usuarios.
     $infoBuddie['tarjeta'] = DWESBaseDatos::obtenInfoBuddieTarjeta($db, $idUsuario);
 
-    //Devuelve los id de las series en las que ha comentado ese buddie
-    $series = DWESBaseDatos::obtenInfoBuddieIdSeries($db, $idUsuario);
-    
-    //Devuelve las imagenes de todas las series (*** ES LO QUE LAGUEA ***)
-    $infoBuddie['series'] = $tmdb->getSeriesPosters($series);
+    //si está editando el perfil, no le salen los chips ni buddies (optimiza la carga)
+    if(!isset($_GET['action'])) { 
+        //Devuelve los id de las series en las que ha comentado ese buddie
+        $series = DWESBaseDatos::obtenInfoBuddieIdSeries($db, $idUsuario);
 
-    //Devuelve los amigos (id_receptor, nombre y la img) de ese buddie
-    $infoBuddie['buddies'] = DWESBaseDatos::obtenInfoBuddieBuddies($db, $idUsuario);
-    
-    //Devuelve los chips (id, img, nombre) de ese buddie
-    $infoBuddie['chips'] = DWESBaseDatos::obtenInfoBuddieChips($db, $idUsuario);
+        //Devuelve las imagenes de todas las series (*** ES LO QUE LAGUEA ***)
+        $infoBuddie['series'] = $tmdb->getSeriesPosters($series);
+
+        //Devuelve los amigos (id_receptor, nombre y la img) de ese buddie
+        $infoBuddie['buddies'] = DWESBaseDatos::obtenInfoBuddieBuddies($db, $idUsuario);
+        
+        //Devuelve los chips (id, img, nombre) de ese buddie
+        $infoBuddie['chips'] = DWESBaseDatos::obtenInfoBuddieChips($db, $idUsuario);
+    }
     
     $esPropietario = false;
     //si tiene la sesión iniciada e id=id (u know), se cargan las peticiones de amistad
@@ -63,12 +66,8 @@
             header('Location: login.php?error=Inicia sesión para poder actualizar tu perfil');
             die();
         } else {
-            if ($_SESSION['id'] != $idUsuario) {
-                header('Location: index.php');
-                die();
-
-            //Si el idUsuario = al de la sesion, se inicializa el form
-            } else {
+            //Si el idUsuario = al de la sesion o es admin, se inicializa el form
+            if ($_SESSION['id'] == $idUsuario || $esAdmin) {
                 // ================================= INICIALIZACIÓN DEL FORM =================================
                 //                              ACTION            METHOD           clases-css-form   ¿Vaciar al validar?   atr-extra(para forms con img)   CAMPOS
                 $formulario = new Formulario   ("",         Formulario::METHOD_POST, ["form"],        Formulario::VACIAR_NO,  Formulario::ATR_IMG,           array(
@@ -92,17 +91,26 @@
                         
                         //actualizamos la img en el user
                         DWESBaseDatos::actualizarImgUsuario($db, $_SESSION['id'], $img->getRuta().$_SESSION['id'].".png");
-                        $_SESSION['img'] = $img->getRuta().$_SESSION['id'].".png";
+                        if ($_SESSION['id'] == $idUsuario) {
+                            $_SESSION['img'] = $img->getRuta().$_SESSION['id'].".png";
+                        }
                     }
 
                     //Hacemos el update en la tabla si los campos han sido validados
                     DWESBaseDatos::actualizarInfoBuddy ($db, $nombre->getValor(), $descripcion->getValor(), $idUsuario);
 
-                    $_SESSION['nombre'] = $nombre->getValor();
+                    if ($_SESSION['id'] == $idUsuario) {
+                        $_SESSION['nombre'] = $nombre->getValor();
+                    }
 
                     header('Location: profile.php?id='.$idUsuario);
                     die();
                 }
+
+            //Si el idUsuario != al de la sesion o no es admin, redirect al index
+            } else {
+                header('Location: index.php');
+                die();
             }
         }
     }
@@ -188,126 +196,134 @@
                     <?php foreach ($peticiones as $key => $peticion) {
                         echo $peticionFooter->pintaAmistadRecibidaNotificacion($peticion['id_emisor'], $peticion['nombre'], $peticion['img']);
                     } ?>
-                    
+                    <?php if(count($peticiones) == 0) { ?>
+                        <div class="petitions-empty">
+                            <i class="fa-solid fa-inbox awesome-icon-portrait--secondary"></i>
+                            <h3 class="title title--secondary text-align-center">No hay peticiones</h3>
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
         <?php } ?>
     </div>
     
-    <?php if($esPropietario && isset($_GET['action']) && $_GET['action'] == 'editando') { ?>
+    <?php if(($esPropietario || $esAdmin) && isset($_GET['action']) && $_GET['action'] == 'editando') { ?>
         <?php $formulario->pintarGlobal(); ?>
     <?php } ?>
 
-    <!-- ***** CARRUSELES ***** -->
-    <div class="carousel">
-        <h2 class="title title--carousel"><span class="title--first-lane"><?=$misSus?></span> SERIES</h2>
 
-        <!-- Galeria en sí: botones y fotos -->
-        <div class="list" id="list">
+    <?php if(!isset($_GET['action'])) { ?>
+        <!-- ***** CARRUSELES ***** -->
+        <div class="carousel">
+            <h2 class="title title--carousel"><span class="title--first-lane"><?=$misSus?></span> SERIES</h2>
 
-            <!-- Boton -->
-            <button class="carrusel-arrow carrusel-prev" id="button-prev" data-button="button-prev"
-                onclick="app.processingButton(event)">
-                <i class="fa-solid fa-angle-left"></i>
-            </button>
-            
-            <!-- Todas las imagenes -->
-            <div class="gallery" id="gallery">
-                <?php foreach ($infoBuddie['series'] as $key => $value) { ?>
-                    <div class="carrusel">
-                        <div>
-                            <a href="./feed.php?id=<?=$series[$key]['id_serie']?>&id_genero=0">
-                                <picture>
-                                    <img src="<?=$infoBuddie['series'][$key]?>" alt="imagen" class="img-fit">
-                                </picture>
-                            </a>
+            <!-- Galeria en sí: botones y fotos -->
+            <div class="list" id="list">
+
+                <!-- Boton -->
+                <button class="carrusel-arrow carrusel-prev" id="button-prev" data-button="button-prev"
+                    onclick="app.processingButton(event)">
+                    <i class="fa-solid fa-angle-left"></i>
+                </button>
+                
+                <!-- Todas las imagenes -->
+                <div class="gallery" id="gallery">
+                    <?php foreach ($infoBuddie['series'] as $key => $value) { ?>
+                        <div class="carrusel">
+                            <div>
+                                <a href="./feed.php?id=<?=$series[$key]['id_serie']?>&id_genero=0">
+                                    <picture>
+                                        <img src="<?=$infoBuddie['series'][$key]?>" alt="imagen" class="img-fit">
+                                    </picture>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                <?php } ?>
-            </div>
-
-            <!-- Boton -->
-            <button class="carrusel-arrow carrusel-next" id="button-next" data-button="button-next"
-                onclick="app.processingButton(event)">
-                <i class="fa-solid fa-angle-right"></i>
-            </button>
-
-        </div>
-    </div>
-
-
-    <div class="carousel">
-        <h2 class="title title--carousel"><span class="title--first-lane"><?=$misSus?></span> BUDDIES</h2>
-
-        <!-- Galeria en sí: botones y fotos -->
-        <div class="list" id="list">
-
-            <!-- Boton -->
-            <button class="carrusel-arrow carrusel-prev" id="button-prev" data-button="button-prev"
-                onclick="app.processingButton(event)">
-                <i class="fa-solid fa-angle-left"></i>
-            </button>
-            
-            <!-- Todas las imagenes -->
-            <div class="gallery" id="gallery">
-                <?php foreach ($infoBuddie['buddies'] as $key => $value) { ?>
-                    <div class="carrusel">
-                        <div>
-                            <a href="./profile.php?id=<?=$value['id_receptor']?>">
-                                <picture>
-                                    <img src="<?=$value['img']?>" alt="Buddy <?=$value['nombre']?>" class="img-fit">
-                                </picture>
-                            </a>
-                        </div>
-                    </div>
-                <?php } ?>
-            </div>
-
-            <!-- Boton -->
-            <button class="carrusel-arrow carrusel-next" id="button-next" data-button="button-next"
-                onclick="app.processingButton(event)">
-                <i class="fa-solid fa-angle-right"></i>
-            </button>
-
-        </div>
-    </div>
-
-    
-    <div class="carousel">
-        <h2 class="title title--carousel"><span class="title--first-lane"><?=$misSus?></span> CHIPS</h2>
-
-        <!-- Galeria en sí: botones y fotos -->
-        <div class="list" id="list">
-
-            <!-- Boton -->
-            <button class="carrusel-arrow carrusel-prev" id="button-prev" data-button="button-prev"
-                onclick="app.processingButton(event)">
-                <i class="fa-solid fa-angle-left"></i>
-            </button>
-            
-            <!-- Todas las imagenes -->
-            <div class="gallery" id="gallery">
-                <?php foreach ($infoBuddie['chips'] as $key => $value) { ?>
-                    <div class="carrusel img">
-                        <div>
-                            <!-- <a href="./profile.php?id=<?=$value['id_usuario']?>"> -->
-                                <picture>
-                                    <img src="<?=$value['img']?>" alt="<?=$value['nombre']?>" class="img-fit">
-                                </picture>
-                            <!-- </a> -->
-                        </div>
-                    </div>
                     <?php } ?>
+                </div>
+
+                <!-- Boton -->
+                <button class="carrusel-arrow carrusel-next" id="button-next" data-button="button-next"
+                    onclick="app.processingButton(event)">
+                    <i class="fa-solid fa-angle-right"></i>
+                </button>
+
             </div>
-
-            <!-- Boton -->
-            <button class="carrusel-arrow carrusel-next" id="button-next" data-button="button-next"
-                onclick="app.processingButton(event)">
-                <i class="fa-solid fa-angle-right"></i>
-            </button>
-
         </div>
-    </div>
+
+
+        <div class="carousel">
+            <h2 class="title title--carousel"><span class="title--first-lane"><?=$misSus?></span> BUDDIES</h2>
+
+            <!-- Galeria en sí: botones y fotos -->
+            <div class="list" id="list">
+
+                <!-- Boton -->
+                <button class="carrusel-arrow carrusel-prev" id="button-prev" data-button="button-prev"
+                    onclick="app.processingButton(event)">
+                    <i class="fa-solid fa-angle-left"></i>
+                </button>
+                
+                <!-- Todas las imagenes -->
+                <div class="gallery" id="gallery">
+                    <?php foreach ($infoBuddie['buddies'] as $key => $value) { ?>
+                        <div class="carrusel">
+                            <div>
+                                <a href="./profile.php?id=<?=$value['id_receptor']?>">
+                                    <picture>
+                                        <img src="<?=$value['img']?>" alt="Buddy <?=$value['nombre']?>" class="img-fit">
+                                    </picture>
+                                </a>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+
+                <!-- Boton -->
+                <button class="carrusel-arrow carrusel-next" id="button-next" data-button="button-next"
+                    onclick="app.processingButton(event)">
+                    <i class="fa-solid fa-angle-right"></i>
+                </button>
+
+            </div>
+        </div>
+
+        
+        <div class="carousel">
+            <h2 class="title title--carousel"><span class="title--first-lane"><?=$misSus?></span> CHIPS</h2>
+
+            <!-- Galeria en sí: botones y fotos -->
+            <div class="list" id="list">
+
+                <!-- Boton -->
+                <button class="carrusel-arrow carrusel-prev" id="button-prev" data-button="button-prev"
+                    onclick="app.processingButton(event)">
+                    <i class="fa-solid fa-angle-left"></i>
+                </button>
+                
+                <!-- Todas las imagenes -->
+                <div class="gallery" id="gallery">
+                    <?php foreach ($infoBuddie['chips'] as $key => $value) { ?>
+                        <div class="carrusel img">
+                            <div>
+                                <!-- <a href="./profile.php?id=<?=$value['id_usuario']?>"> -->
+                                    <picture>
+                                        <img src="<?=$value['img']?>" alt="<?=$value['nombre']?>" class="img-fit">
+                                    </picture>
+                                <!-- </a> -->
+                            </div>
+                        </div>
+                        <?php } ?>
+                </div>
+
+                <!-- Boton -->
+                <button class="carrusel-arrow carrusel-next" id="button-next" data-button="button-next"
+                    onclick="app.processingButton(event)">
+                    <i class="fa-solid fa-angle-right"></i>
+                </button>
+
+            </div>
+        </div>
+    <?php } ?>
 
 <?php
     // ********* FIN BUFFER + LLAMADA AL TEMPLATE **********

@@ -107,10 +107,23 @@
     background-color: var(--success-500);
     border-color: var(--success-500);
     color: var(--success-900);
+   
 }
 .btn--success-card:hover, .btn--success-card:focus{
     background-color: var(--success-700);
     border-color: var(--success-700);
+    color: var(--almost-white);
+}
+
+/* SUCCESS (CARD NOTIFICATION) */
+.btn--success-card-notification{
+    background-color: var(--secondary-700);
+    border-color: var(--secondary-700);
+    color: var(--secondary-900);
+}
+.btn--success-card-notification:hover, .btn--success-card-notification:focus{
+    background-color: var(--secondary-900);
+    border-color: var(--secondary-900);
     color: var(--almost-white);
 }
 
@@ -210,6 +223,19 @@
     font-weight: 700;
     background-color: var(--success-500);
     border-color: var(--success-500);
+    color: var(--almost-white);
+}
+.btn-no-clickable-success-notification{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    font-weight: 700;
+    background-color: var(--secondary-900);
+    border-color: var(--secondary-900);
     color: var(--almost-white);
 }
 .btn-no-clickable-error{

@@ -13,6 +13,9 @@
     justify-content: center;
     align-items: center;
     max-height: calc(100vh - 10rem);
+    overflow: hidden;
+    padding-top: 0;
+    max-width: 185rem;
     /* border: 5px solid white; */
 }
 .main{
@@ -140,6 +143,9 @@
 
 /* ===== TABLET (810px) ===== */
 @media screen and (max-width: 810px) {
+    .container{
+        overflow-y: scroll;
+    }
     .main{
         grid-template-columns: 1fr;
         grid-template-rows: 1fr .5fr;

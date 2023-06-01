@@ -72,8 +72,9 @@ img{width: 100%;}
     --secondary-400: #3ddafd;
     --secondary-500: #1DD6FF;
     --secondary-600: #00c1ec;
-    --secondary-700: #00a8ce;
-    --secondary-800: #008cac;
+    --secondary-700: #0490b0;
+    --secondary-800: #047088;
+    --secondary-900: #024a5a;
     --success-500: #28a745;
     --success-600: #158a30;
     --success-700: #0e8029;
@@ -328,6 +329,9 @@ img{width: 100%;}
 .title{
     color: var(--primary-500);
 }
+.title--secondary{
+    color: var(--secondary-600);
+}
 .title--l{
     font-size: 4.5rem;
 }
@@ -522,9 +526,13 @@ img{width: 100%;}
 .color-white{color: var(--almost-white);}
 .pos-absolute{position: absolute;}
 .font-size-default{font-size: 1.6rem;}
-.awesome-icon-portait{
+.awesome-icon-portrait{
     font-size: 10rem;
     color: var(--primary-500);
+}
+.awesome-icon-portrait--secondary{
+    font-size: 7.5rem;
+    color: var(--secondary-600);
 }
 
 .rotate-infinite{animation: rotate 1s linear infinite;}

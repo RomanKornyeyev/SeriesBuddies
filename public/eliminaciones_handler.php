@@ -38,19 +38,19 @@
 
                                     //si ninguno ha mandado petición de amistad
                                     if ($peticion == "" || $peticion == null) {
-                                        $futer = $peticionFooter->pintaAmistadNula($consulta[0]['id'], $_POST['pagina_actual'], $_POST['total_paginas']);
+                                        $futer = $peticionFooter->pintaAmistadNula($consulta[0]['id'], $_POST['pagina_actual'], $_POST['total_paginas'], $_POST['tipo']);
                                         
                                     //si el user actual (SESIÓN) ha ENVIADO peti al user seleccioando
                                     }else if($peticion['estado'] == DWESBaseDatos::PENDIENTE && $peticion['id_emisor'] == $_SESSION['id']) {
-                                        $futer = $peticionFooter->pintaAmistadEnviada($consulta[0]['id'], $_POST['pagina_actual'], $_POST['total_paginas']);
+                                        $futer = $peticionFooter->pintaAmistadEnviada($consulta[0]['id'], $_POST['pagina_actual'], $_POST['total_paginas'], $_POST['tipo']);
 
                                     //si el user actual (SESIÓN) ha RECIBIDO peti del user seleccioando    
                                     }else if($peticion['estado'] == DWESBaseDatos::PENDIENTE && $peticion['id_receptor'] == $_SESSION['id']) {
-                                        $futer = $peticionFooter->pintaAmistadRecibida($consulta[0]['id'], $_POST['pagina_actual'], $_POST['total_paginas']);
+                                        $futer = $peticionFooter->pintaAmistadRecibida($consulta[0]['id'], $_POST['pagina_actual'], $_POST['total_paginas'], $_POST['tipo']);
 
                                     //si son AMOGUS  
                                     }else if($peticion['estado'] == DWESBaseDatos::ACEPTADA) {
-                                        $futer = $peticionFooter->pintaAmistadMutua($consulta[0]['id'], $_POST['pagina_actual'], $_POST['total_paginas']);
+                                        $futer = $peticionFooter->pintaAmistadMutua($consulta[0]['id'], $_POST['pagina_actual'], $_POST['total_paginas'], $_POST['tipo']);
                                     }
                                 }
 
@@ -75,7 +75,7 @@
                                                     <div class='barrita'></div>
                                                     <div class='achievements'>
                                                         <p>".$consulta[0]['total_series']." Series</p>
-                                                        <p>xx Chips</p>
+                                                        <p>".$consulta[0]['total_chips']." Chips</p>
                                                     </div>
                                                 </div>
                                             </div>
