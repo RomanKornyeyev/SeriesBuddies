@@ -628,6 +628,7 @@ img{width: 100%;}
     .logo--mbl{
         display: block;
         height: 5.5rem;
+        width: auto;
     }
     .header__content{
         flex-direction: column;
