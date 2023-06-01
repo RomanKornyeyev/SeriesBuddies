@@ -146,7 +146,7 @@
                                 $email->getValor(),
                                 "Completa tu registro - SeriesBuddies",
                                 "¡Bienvenido a SeriesBuddies ".$consulta['nombre']."! Completa tu registro con el siguiente enlace: 
-                                <a target='_blank' href='http://localhost:8000/public/verify.php?token=".$token."'>COMPLETAR MI REGISTRO</a>"                
+                                <a target='_blank' href='".DWESBaseDatos::RUTA_DOMINIO_BASE."/verify.php?token=".$token."'>COMPLETAR MI REGISTRO</a>"                
                             );
 
                             $estado = "sin-link-enviado";

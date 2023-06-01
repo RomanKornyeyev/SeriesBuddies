@@ -229,7 +229,7 @@
             <?php if(isset($_GET['action'])){ ?>
                 <a href="./feed.php?id=<?=$idSerie?>&id_genero=<?=$idGenero?>&pagina=<?=$paginaActual?>" class="btn btn--secondary"><i class="fa-solid fa-arrow-left"></i>&nbsp;Volver</a>
             <?php }else{ ?>
-                <a href="./feed.php?id=<?=$idSerie?>&id_genero=<?=$idGenero?>&action=publicando" class="btn">Responder &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
+                <a href="./feed.php?id=<?=$idSerie?>&id_genero=<?=$idGenero?>&action=publicando" class="btn">Comentar &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
             <?php }?>
         </div>
         <?php if(!empty($comentarios)) { ?>
@@ -281,7 +281,7 @@
                 <?php if(isset($_GET['action'])){ ?>
                     <a href="./feed.php?id=<?=$idSerie?>&id_genero=<?=$idGenero?>&pagina=<?=$paginaActual?>" class="btn btn--secondary"><i class="fa-solid fa-arrow-left"></i>&nbsp;Volver</a>
                 <?php }else{ ?>
-                    <a href="./feed.php?id=<?=$idSerie?>&id_genero=<?=$idGenero?>&action=publicando" class="btn">Responder &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
+                    <a href="./feed.php?id=<?=$idSerie?>&id_genero=<?=$idGenero?>&action=publicando" class="btn">Comentar &nbsp;<i class="fa-solid fa-pen-to-square"></i></a>
                 <?php }?>
             </div>
             <?=$paginacion?>

@@ -23,6 +23,8 @@ class DWESBaseDatos {
   const MAX_BUDDIES_FEED = 3;
   const MAX_PAG_PAGINADOR = 3;
 
+  const RUTA_DOMINIO_BASE = "www.seriesbuddies.es";
+
   /*
     Patrón Singletone para poder usar la clase en proyectos más grandes
   */

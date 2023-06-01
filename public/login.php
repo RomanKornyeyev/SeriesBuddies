@@ -83,7 +83,7 @@
                 // --- USUARIO NO VERIFICADO ---
                 }else{
                     $erroresForm['incorrecto'] = "El usuario ".$email->getValor()." no está verificado.
-                    Por favor <a href='http://localhost:8000/public/verify.php' class='underline'>verifícalo</a>.";
+                    Por favor <a href='".DWESBaseDatos::RUTA_DOMINIO_BASE."/verify.php' class='underline'>verifícalo</a>.";
                 }
             // --- USER NO EXISTE --- 
             }else{

@@ -113,7 +113,7 @@
                                 $email->getValor(),
                                 "Cambia tu contraseña - SeriesBuddies",
                                 "Hola ".$consulta['nombre'].", has solicitado cambiar tu contraseña. Puedes cambiarla en el siguiente enlace: 
-                                <a target='_blank' href='http://localhost:8000/public/recovery.php?token=".$token."'>CAMBIAR MI CONTRASEÑA</a>"                
+                                <a target='_blank' href='".DWESBaseDatos::RUTA_DOMINIO_BASE."/recovery.php?token=".$token."'>CAMBIAR MI CONTRASEÑA</a>"                
                             );
 
                             $estado = "sin-link-enviado";
@@ -126,7 +126,7 @@
                     // --- el usuario NO está verificado --- 
                     }else{
                         $erroresForm['noVerificado'] = "El usuario ".$consulta['correo']." no está verificado.
-                        Por favor <a href='http://localhost:8000/public/verify.php' class='underline'>verifícalo</a>.";
+                        Por favor <a href='".DWESBaseDatos::RUTA_DOMINIO_BASE."/verify.php' class='underline'>verifícalo</a>.";
                     }
                 // --- user no existe --- 
                 }else{
