@@ -11,6 +11,19 @@
         $valorSerieBuscada = "";
     }
     
+    //si tiene la sesión iniciada, se comprueban las peticiones de amistad
+    //si tiene peticiones, le sale una bolita verde
+    $bolitaNotificacion = "";
+    if ($sesionIniciada) {
+
+        //Obtiene el nombre, el id_emisor, id_receptor y el estado de las peticiones pendientes de ese buddie
+        $petis = DWESBaseDatos::obtenPeticionesPendientes($db, $_SESSION['id']);
+
+        if(isset($petis) && count($petis) > 0){
+            $bolitaNotificacion = "<div class='bolita-notificacion'>".count($petis)."</div>";
+        }
+    }
+    
 
     // ========================================= FORM DE BUSCAR SERIE =========================================
     //                             ACTION            METHOD           clases-css-form   ¿Vaciar al validar?   atr-extra(para forms con img)   CAMPOS
@@ -63,12 +76,14 @@
             <?php if($sesionIniciada){?>
                 <div class='user-area-wrapper'>
                     <a class='user-area' href='profile.php?id=<?=$usuarioId?>'>
+                        <?=$bolitaNotificacion?>
                         <div class='img-perfil-nav'>
                             <img class='img-fit' src='<?=$usuarioImg?>' alt='img-user'>
                         </div>
                         <div class="nav__link">
                             <div class="nav__link--user"><?=$usuarioNombre?></div>
                         </div>
+                        
                     </a>
                 </div>
             <?php } ?>

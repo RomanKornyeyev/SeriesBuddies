@@ -77,7 +77,7 @@
             // --- EL USER YA EXISTE (SIN VERIFICAR) --- 
             }else if($consulta['verificado'] == DWESBaseDatos::VERIFICADO_NO){
                 $erroresForm['incorrecto'] = "El usuario ".$email->getValor()." ya existe, pero no está verificado.
-                Por favor <a href='".DWESBaseDatos::RUTA_DOMINIO_BASE."/verify.php' class='underline'>verifícalo</a>.";
+                Por favor <a href='./verify.php' class='underline'>verifícalo</a>.";
             // --- EL USER YA EXISTE (VERIFICADO) --- 
             }else{
                 $erroresForm['incorrecto'] = "El usuario ".$email->getValor()." ya existe";

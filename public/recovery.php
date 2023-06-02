@@ -126,7 +126,7 @@
                     // --- el usuario NO está verificado --- 
                     }else{
                         $erroresForm['noVerificado'] = "El usuario ".$consulta['correo']." no está verificado.
-                        Por favor <a href='".DWESBaseDatos::RUTA_DOMINIO_BASE."/verify.php' class='underline'>verifícalo</a>.";
+                        Por favor <a href='./verify.php' class='underline'>verifícalo</a>.";
                     }
                 // --- user no existe --- 
                 }else{
