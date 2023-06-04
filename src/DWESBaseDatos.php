@@ -273,7 +273,7 @@ class DWESBaseDatos {
   }
 
   public static function obtenBuddiesChipsRespuestas ($db, $idUsuario) {
-    $db->ejecuta("SELECT c.img FROM chips c INNER JOIN chips_usuario cu ON cu.id_chip=c.id WHERE id_usuario=?;", $idUsuario);
+    $db->ejecuta("SELECT c.img FROM chips c INNER JOIN chips_usuario cu ON cu.id_chip=c.id WHERE id_usuario=? AND cu.id_chip != 4;", $idUsuario);
     return $db->obtenDatos();
   }
 

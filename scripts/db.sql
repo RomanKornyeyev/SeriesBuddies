@@ -104,34 +104,47 @@ CREATE TABLE chips_usuario (
 );
 
 
-INSERT INTO chips (img, nombre) VALUES ('upload/chips/gold.png', 'CHIP - GOLD');     --15 SERIES VISTAS
-INSERT INTO chips (img, nombre) VALUES ('upload/chips/silver.png', 'CHIP - SILVER'); --10 SERIES VISTAS
-INSERT INTO chips (img, nombre) VALUES ('upload/chips/bronze.png', 'CHIP - BRONZE'); --5 SERIES VISTAS
+INSERT INTO chips (img, nombre) VALUES ('upload/chips/chip_oro.png', 'CHIP - GOLD');     --20 SERIES VISTAS
+INSERT INTO chips (img, nombre) VALUES ('upload/chips/chip_plata.png', 'CHIP - SILVER'); --10 SERIES VISTAS
+INSERT INTO chips (img, nombre) VALUES ('upload/chips/chip_bronce.png', 'CHIP - BRONZE'); --5 SERIES VISTAS
+INSERT INTO chips (img, nombre) VALUES ('upload/chips/chip_inicio.png', 'CHIP - INICIO'); --CHIP DE BIENVENIDA
 
-
---Trigger que se ejecuta cuando se hacen inserts en respuestas
 /************* ===== ATENCIÓN: QUITAR COMENTARIOS INTERNOS ANTES DE METER EL TRIGGER ===== ***************/
+-- Trigger que se ejecuta cuando se hacen inserts en usuarios
+system clear;
+drop trigger insertar_medalla_inicio;
+
+DELIMITER //
+CREATE TRIGGER insertar_medalla_inicio AFTER INSERT
+ON usuarios
+FOR EACH ROW
+BEGIN
+    INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (4, NEW.id);
+END;
+//
+DELIMITER ;
+
+-- Trigger que se ejecuta cuando se hacen inserts en respuestas
 system clear;
 drop trigger comprobar_medallas;
-
 DELIMITER //
 CREATE TRIGGER comprobar_medallas AFTER INSERT
 ON respuestas
 FOR EACH ROW
 BEGIN
-    --Variables que se necesitan para controlar errores y resultados en el cursor
+    -- Variables que se necesitan para controlar errores y resultados en el cursor
     DECLARE done INT DEFAULT 0;
     DECLARE series INT;
     DECLARE usuario INT;
+    DECLARE count_chips_series INT;
+    DECLARE count_chip_plata INT;
+    DECLARE count_chip_oro INT;
 
     -- Código del trigger
     DECLARE p CURSOR FOR
         WITH cte_cursor AS (SELECT id_serie, id_usuario FROM respuestas GROUP BY id_usuario, id_serie) SELECT count(id_serie) as total_series, id_usuario FROM cte_cursor GROUP BY id_usuario;
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
     
-    --Se borra la tabla chips_usuario
-    DELETE FROM chips_usuario;
-
     OPEN p;
     bucle_chips:
     LOOP
@@ -139,30 +152,30 @@ BEGIN
         IF done = 1 THEN
         LEAVE bucle_chips;
         END IF;
-        IF (series >= 5 AND series<10) THEN
-            INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (3, usuario);
-        END IF;
 
-        IF (series >=10 AND series<15) THEN
-            INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (3, usuario);
-            INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (2, usuario);
-        END IF;
+        SET count_chips_series = (SELECT COUNT(DISTINCT(id_chip)) FROM chips_usuario where id_usuario = usuario and id_chip != 4);
+        SET count_chip_plata = (SELECT count(id_chip) FROM chips_usuario WHERE id_usuario = usuario AND id_chip = 2);
+        SET count_chip_oro = (SELECT count(id_chip) FROM chips_usuario WHERE id_usuario = usuario AND id_chip = 1);
 
-        IF (series >=15 AND series<20) THEN
-            INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (3, usuario);
-            INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (2, usuario);
-            INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (1, usuario);
+        IF count_chips_series = 0 THEN
+            IF (series >= 5 AND series<10) THEN
+                INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (3, usuario);
+            END IF;
+        ELSE
+            IF (series >=10 AND series<20 AND count_chip_plata = 0) THEN
+                INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (2, usuario);
+            END IF;
+
+            IF (series >=20 AND count_chip_oro = 0) THEN
+                INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (1, usuario);
+            END IF;
         END IF;
         
     END LOOP bucle_chips;
     CLOSE p;
-
-
 END;
 //
 DELIMITER ;
-
-
 
 
 
