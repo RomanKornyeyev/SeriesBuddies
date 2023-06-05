@@ -107,10 +107,11 @@ CREATE TABLE chips_usuario (
 INSERT INTO chips (img, nombre) VALUES ('upload/chips/chip_oro.png', 'CHIP - GOLD');     --20 SERIES VISTAS
 INSERT INTO chips (img, nombre) VALUES ('upload/chips/chip_plata.png', 'CHIP - SILVER'); --10 SERIES VISTAS
 INSERT INTO chips (img, nombre) VALUES ('upload/chips/chip_bronce.png', 'CHIP - BRONZE'); --5 SERIES VISTAS
-INSERT INTO chips (img, nombre) VALUES ('upload/chips/chip_inicio.png', 'CHIP - INICIO'); --CHIP DE BIENVENIDA
+INSERT INTO chips (img, nombre) VALUES ('upload/chips/chip_inicio.png', 'CHIP - INICIO'); --5 SERIES VISTAS
 
+
+--Trigger que se ejecuta cuando se hacen inserts en respuestas
 /************* ===== ATENCIÓN: QUITAR COMENTARIOS INTERNOS ANTES DE METER EL TRIGGER ===== ***************/
--- Trigger que se ejecuta cuando se hacen inserts en usuarios
 system clear;
 drop trigger insertar_medalla_inicio;
 
@@ -124,55 +125,89 @@ END;
 //
 DELIMITER ;
 
--- Trigger que se ejecuta cuando se hacen inserts en respuestas
 system clear;
-drop trigger comprobar_medallas;
+drop trigger sumar_medallas;
 DELIMITER //
-CREATE TRIGGER comprobar_medallas AFTER INSERT
+CREATE TRIGGER sumar_medallas AFTER INSERT
 ON respuestas
 FOR EACH ROW
 BEGIN
-    -- Variables que se necesitan para controlar errores y resultados en el cursor
-    DECLARE done INT DEFAULT 0;
-    DECLARE series INT;
-    DECLARE usuario INT;
+    -- Variables que se necesitan para controlar errores y resultados
+    DECLARE total_series INT;
     DECLARE count_chips_series INT;
     DECLARE count_chip_plata INT;
     DECLARE count_chip_oro INT;
 
-    -- Código del trigger
-    DECLARE p CURSOR FOR
-        WITH cte_cursor AS (SELECT id_serie, id_usuario FROM respuestas GROUP BY id_usuario, id_serie) SELECT count(id_serie) as total_series, id_usuario FROM cte_cursor GROUP BY id_usuario;
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+    -- Total de series en las que ha comentado
+    SET total_series = (WITH cte AS (SELECT id_serie, id_usuario FROM respuestas GROUP BY id_usuario, id_serie) SELECT count(id_serie) as total_series FROM cte WHERE id_usuario = NEW.id_usuario GROUP BY id_usuario);
+
+    -- Total de chips sin contar el de bienvenida
+    SET count_chips_series = (SELECT COUNT(DISTINCT(id_chip)) FROM chips_usuario where id_usuario = NEW.id_usuario and id_chip != 4);
+    -- Total de chips de plata que tiene
+    SET count_chip_plata = (SELECT count(id_chip) FROM chips_usuario WHERE id_usuario = NEW.id_usuario AND id_chip = 2);
+    -- Total de chips de oro que tiene
+    SET count_chip_oro = (SELECT count(id_chip) FROM chips_usuario WHERE id_usuario = NEW.id_usuario AND id_chip = 1);
+
+    -- Si no tiene ningun chip ademas del de bienvenida
+    IF count_chips_series = 0 THEN
+        -- Y el total de series comentadas esta entre 5 y 10, se le inserta el chip de bronce
+        IF (total_series >= 5 AND total_series<10) THEN
+            INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (3, NEW.id_usuario);
+        END IF;
+    -- Si tiene el chip de bronce y entonces...
+    ELSE
+        -- El total de series comentadas (10 - 19) y NO tiene un chip de plata, se le inserta ese chip
+        IF (total_series >=10 AND total_series<20 AND count_chip_plata = 0) THEN
+            INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (2, NEW.id_usuario);
+        END IF;
+
+        -- El total de series comentadas >= 20 y NO tiene un chip de oro, se le inserta ese chip
+        IF (total_series >=20 AND count_chip_oro = 0) THEN
+            INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (1, NEW.id_usuario);
+        END IF;
+    END IF;
+END;
+//
+DELIMITER ;
+
+system clear;
+drop trigger restar_medallas;
+DELIMITER //
+CREATE TRIGGER restar_medallas AFTER DELETE
+ON respuestas
+FOR EACH ROW
+BEGIN
+    -- Variables que se necesitan para controlar errores y resultados
+    DECLARE total_series INT;
+    DECLARE count_chip_bronce INT;
+    DECLARE count_chip_plata INT;
+    DECLARE count_chip_oro INT;
+
+    -- Total de series en las que ha comentado
+    SET total_series = (WITH cte AS (SELECT id_serie, id_usuario FROM respuestas GROUP BY id_usuario, id_serie) SELECT count(id_serie) as total_series FROM cte WHERE id_usuario = OLD.id_usuario GROUP BY id_usuario);
+
+    -- Total de chips de bronce que tiene
+    SET count_chip_bronce = (SELECT COUNT(id_chip) FROM chips_usuario WHERE id_usuario = OLD.id_usuario AND id_chip = 3);
+    -- Total de chips de plata que tiene
+    SET count_chip_plata = (SELECT COUNT(id_chip) FROM chips_usuario WHERE id_usuario = OLD.id_usuario AND id_chip = 2);
+    -- Total de chips de oro que tiene
+    SET count_chip_oro = (SELECT COUNT(id_chip) FROM chips_usuario WHERE id_usuario = OLD.id_usuario AND id_chip = 1);
+
     
-    OPEN p;
-    bucle_chips:
-    LOOP
-        FETCH p INTO series, usuario;
-        IF done = 1 THEN
-        LEAVE bucle_chips;
-        END IF;
+    -- Si el total de series comentadas es menos de 5 y tiene el chip de bronce, se elimina el chip
+    IF (total_series < 5 AND count_chip_bronce = 1) THEN
+        DELETE FROM chips_usuario WHERE id_chip=3 and id_usuario=OLD.id_usuario;
+    END IF;
 
-        SET count_chips_series = (SELECT COUNT(DISTINCT(id_chip)) FROM chips_usuario where id_usuario = usuario and id_chip != 4);
-        SET count_chip_plata = (SELECT count(id_chip) FROM chips_usuario WHERE id_usuario = usuario AND id_chip = 2);
-        SET count_chip_oro = (SELECT count(id_chip) FROM chips_usuario WHERE id_usuario = usuario AND id_chip = 1);
+    -- El total de series comentadas (10 - 19) y tiene el chip de plata, se elimina el chip
+    IF (total_series < 10 AND count_chip_plata = 1) THEN
+        DELETE FROM chips_usuario WHERE id_chip=2 and id_usuario=OLD.id_usuario;
+    END IF;
 
-        IF count_chips_series = 0 THEN
-            IF (series >= 5 AND series<10) THEN
-                INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (3, usuario);
-            END IF;
-        ELSE
-            IF (series >=10 AND series<20 AND count_chip_plata = 0) THEN
-                INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (2, usuario);
-            END IF;
-
-            IF (series >=20 AND count_chip_oro = 0) THEN
-                INSERT INTO chips_usuario (id_chip, id_usuario) VALUES (1, usuario);
-            END IF;
-        END IF;
-        
-    END LOOP bucle_chips;
-    CLOSE p;
+    -- El total de series comentadas >= 20 y tiene el chip de oro, se elimina el chip
+    IF (total_series < 20 AND count_chip_oro = 1) THEN
+        DELETE FROM chips_usuario WHERE id_chip=1 and id_usuario=OLD.id_usuario;
+    END IF;
 END;
 //
 DELIMITER ;

@@ -94,7 +94,7 @@ class TMDB
 
         //Si no hay foto banner para la serie se pone el logo de seriesbuddies por defecto
         if ($serie['backdrop_path'] == '') {
-            $serieData['backdrop']  =  'upload/logos/logo-poster.png';
+            $serieData['backdrop']  =  'upload/logos/logo-backdrop.png';
         } else {
             $serieData['backdrop']  =  self::BASE_URL_IMG.self::WIDTH_BACKDROP.$serie['backdrop_path'];
         }
