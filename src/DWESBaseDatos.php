@@ -130,7 +130,8 @@ class DWESBaseDatos {
                   u.id, u.nombre, u.img, 
                   CONCAT('@',u.nombre, '#', u.id)'alias', 
                   u.descripcion, 
-                  DATE_FORMAT(fecha_alta, '%d %b %Y', 'es-ES')'fecha' 
+                  DATE_FORMAT(fecha_alta, '%d %b %Y', 'es-ES')'fecha',
+                  u.privilegio 
                   FROM usuarios u 
                   WHERE u.id=?;", 
                   $idUsuario);
@@ -253,7 +254,7 @@ class DWESBaseDatos {
   //Nombre, comentario, fecha e imagen del usuario + id de la serie en determinado rango
   public static function obtenRespuestasSerie ($db, $idSerie, $registroInicial)
   {
-    $db->ejecuta("SELECT u.nombre, u.id as 'id_user', r.id as 'id_respuesta', id_serie, contenido, fecha, DATE_FORMAT(fecha, '%d %b %Y', 'es-ES') as fecha_formateada, img 
+    $db->ejecuta("SELECT u.nombre, u.id as 'id_user', r.id as 'id_respuesta', id_serie, contenido, fecha, DATE_FORMAT(fecha, '%d %b %Y', 'es-ES') as fecha_formateada, img, privilegio 
                   FROM respuestas r 
                   INNER JOIN usuarios u 
                   ON u.id=r.id_usuario 
@@ -294,7 +295,7 @@ class DWESBaseDatos {
 
   //Fotos de los primeros 5 usuarios que han comentado esta serie
   public static function obtenPrimerosBuddiesSerie ($db, $idSerie) {
-    $db->ejecuta('SELECT u.nombre, u.img, u.id, COUNT(r.id) AS total_respuestas
+    $db->ejecuta('SELECT u.nombre, u.img, u.id, COUNT(r.id) AS total_respuestas, u.privilegio
     FROM usuarios u
     JOIN respuestas r ON u.id = r.id_usuario
     WHERE r.id_serie = ?
@@ -309,7 +310,7 @@ class DWESBaseDatos {
   public static function obtenListadoBuddies ($db, $registroInicial) {
     //Devuelve la informacion del usuario que ha comentado en esa serie
     $db->ejecuta (
-      "WITH t as (select u.id, u.nombre, u.img, CONCAT('@',u.nombre,'#', u.id) AS alias, count(p.id) as total_amigos 
+      "WITH t as (select u.id, u.nombre, u.img, CONCAT('@',u.nombre,'#', u.id) AS alias, u.privilegio, count(p.id) as total_amigos 
       from usuarios u 
       left join peticiones p 
       on u.id=p.id_emisor 
@@ -317,7 +318,7 @@ class DWESBaseDatos {
       group by u.id),
       t2 as (select count(id_chip) as total_chips, u.id, u.nombre from usuarios u inner join chips_usuario cu on u.id=cu.id_usuario group by cu.id_usuario)
       
-      SELECT t.id, t.nombre, t.img, t.alias, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas, t.total_amigos, t2.total_chips
+      SELECT t.id, t.nombre, t.img, t.alias, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas, t.total_amigos, t.privilegio, t2.total_chips
       FROM t
       LEFT JOIN respuestas r ON t.id=r.id_usuario
       LEFT JOIN t2 ON t.id=t2.id
@@ -330,7 +331,7 @@ class DWESBaseDatos {
 
   public static function obtenListadoBuddiesPorSerie ($db, $idSerie, $registroInicial) {
     $db->ejecuta (
-      "WITH t as (select u.id, u.nombre, u.img, CONCAT('@',u.nombre,'#', u.id) AS alias, count(p.id) as total_amigos 
+      "WITH t as (select u.id, u.nombre, u.img, CONCAT('@',u.nombre,'#', u.id) AS alias, u.privilegio, count(p.id) as total_amigos 
       from usuarios u 
       left join peticiones p 
       on u.id=p.id_emisor 
@@ -338,7 +339,7 @@ class DWESBaseDatos {
       group by u.id),
       t2 as (select count(id_chip) as total_chips, u.id, u.nombre from usuarios u inner join chips_usuario cu on u.id=cu.id_usuario group by cu.id_usuario)
       
-      SELECT t.id, t.nombre, t.img, t.alias, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas, t.total_amigos, t2.total_chips
+      SELECT t.id, t.nombre, t.img, t.alias, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas, t.total_amigos, t.privilegio, t2.total_chips
       FROM t
       LEFT JOIN respuestas r ON t.id=r.id_usuario
       LEFT JOIN t2 ON t.id=t2.id
@@ -363,7 +364,7 @@ class DWESBaseDatos {
   //Obtiene la info de los buddies que coincidan su nombre con la busqueda pedida
   public static function obtenListadoBuddiesBusqueda ($db, $busqueda, $registroInicial) {
     $db->ejecuta (
-      "WITH t as (select u.id, u.nombre, u.img, CONCAT('@',u.nombre,'#', u.id) AS alias, count(p.id) as total_amigos 
+      "WITH t as (select u.id, u.nombre, u.img, CONCAT('@',u.nombre,'#', u.id) AS alias, u.privilegio, count(p.id) as total_amigos 
       from usuarios u 
       left join peticiones p 
       on u.id=p.id_emisor 
@@ -371,7 +372,7 @@ class DWESBaseDatos {
       group by u.id),
       t2 as (select count(id_chip) as total_chips, u.id, u.nombre from usuarios u inner join chips_usuario cu on u.id=cu.id_usuario group by cu.id_usuario)
       
-      SELECT t.id, t.nombre, t.img, t.alias, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas, t.total_amigos, t2.total_chips
+      SELECT t.id, t.nombre, t.img, t.alias, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas, t.total_amigos, t.privilegio, t2.total_chips
       FROM t
       LEFT JOIN respuestas r ON t.id=r.id_usuario
       LEFT JOIN t2 ON t.id=t2.id
@@ -398,7 +399,7 @@ class DWESBaseDatos {
   //Obtiene la info de los buddies que coincidan su nombre con la busqueda pedida
   public static function obtenListadoBuddiesBusquedaPorSerie ($db, $busqueda, $idSerie, $registroInicial) {
     $db->ejecuta (
-      "WITH t as (select u.id, u.nombre, u.img, CONCAT('@',u.nombre,'#', u.id) AS alias, count(p.id) as total_amigos 
+      "WITH t as (select u.id, u.nombre, u.img, CONCAT('@',u.nombre,'#', u.id) AS alias, u.privilegio, count(p.id) as total_amigos 
       from usuarios u 
       left join peticiones p 
       on u.id=p.id_emisor 
@@ -406,7 +407,7 @@ class DWESBaseDatos {
       group by u.id),
       t2 as (select count(id_chip) as total_chips, u.id, u.nombre from usuarios u inner join chips_usuario cu on u.id=cu.id_usuario group by cu.id_usuario)
       
-      SELECT t.id, t.nombre, t.img, t.alias, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas, t.total_amigos, t2.total_chips
+      SELECT t.id, t.nombre, t.img, t.alias, COUNT(DISTINCT(r.id_serie)) AS total_series, COUNT(r.id_serie) AS total_respuestas, t.total_amigos, t.privilegio, t2.total_chips
       FROM t
       LEFT JOIN respuestas r ON t.id=r.id_usuario
       LEFT JOIN t2 ON t.id=t2.id

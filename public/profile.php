@@ -127,6 +127,13 @@
     // ********* COMIENZO BUFFER **********
     ob_start();
 ?>
+    <?php 
+        if($infoBuddie['tarjeta']['privilegio'] == DWESBaseDatos::ADMIN){
+            $adminTarjeta = true;
+        }else{
+            $adminTarjeta = false;
+        }
+    ?>
     <div class="primary-profile-info <?=$infoPropietario?>">               
         <div class="card">
             <div class="card__user-img">
@@ -137,7 +144,10 @@
             <div class="card__user-bio">
                 <div class="card__user-info">
                     <div class="admin-area">
-                        <h1 class="title title--user"><?=$infoBuddie['tarjeta']['nombre']?></h1>
+                        <h1 class="title title--user">
+                            <?=$infoBuddie['tarjeta']['nombre']?>
+                            <?php if($adminTarjeta){echo "<span class='admin-card--profile'>ADMIN</span>";}?>
+                        </h1>
                         <?php //botones de editar/eliminar, solo cuando id=id o es admin ?>
                         <?php if($idUsuario == $_SESSION['id'] || $esAdmin) { ?>
                             <a href="./profile.php?id=<?=$idUsuario?>&action=editando" class="btn btn--secondary btn--bold"><i class="fa-solid fa-user-gear"></i></a>

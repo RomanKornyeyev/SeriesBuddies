@@ -175,6 +175,11 @@
     padding-bottom: 2%;
     font-weight: 900;
 }
+.title--user{
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--space-m);
+}
 .info--user:first-of-type {color:var(--error-700)}
 .card__user-info {
     padding: var(--space-xxl);

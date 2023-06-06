@@ -151,13 +151,22 @@
     <?php // ***** GENERACIÓN DE USERS ***** ?>
     <?php //por cada user pintamos una tarjeta ?>
     <?php foreach ($consulta as $value){?>
+        <?php 
+            if($value['privilegio'] == DWESBaseDatos::ADMIN){
+                $adminTarjeta = true;
+            }else{
+                $adminTarjeta = false;
+            }
+        ?>
         <!-- CARD (GLOBAL) -->
         <div class="card card--buddy">
 
             <!-- CARD BODY -->
             <div class="buddy__body">
-                <div class="profile-img">
-                    <img class="img-fit" src="<?=$value['img']?>" alt="profile-img">
+                <div class="profile-img-wrapper <?php if($adminTarjeta){ echo "profile-img-wrapper-admin-buddies";}?>">
+                    <div class="profile-img">
+                        <img class="img-fit" src="<?=$value['img']?>" alt="profile-img">
+                    </div>
                 </div>
                 <div class="profile-info">
                     <h2 class="profile-name"><?=$value['nombre']?></h2>

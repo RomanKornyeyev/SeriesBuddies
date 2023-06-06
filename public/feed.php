@@ -243,8 +243,10 @@
             <div class="card">
                 <div class="card__post">
                     <div class="card__post-img">
-                        <div class="img-user-post">
-                            <img class="img-fit" src="<?=$comentario['img']?>" alt="serie-img">
+                        <div class="img-user-post-wrapper <?php if($comentario['privilegio'] == DWESBaseDatos::ADMIN){echo "img-user-post-wrapper-admin-feed";} ?>">
+                            <div class="img-user-post">
+                                <img class="img-fit" src="<?=$comentario['img']?>" alt="serie-img">
+                            </div>
                         </div>
                         <h2 class="title title--user"><?=$comentario['nombre']?></h2>
                         <div class="icons">

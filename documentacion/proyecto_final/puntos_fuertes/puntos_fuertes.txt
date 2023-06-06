@@ -1,0 +1,10 @@
+ANABEL:
+ - Diseño de interfaz y paleta de colores
+ - Uso e integración de la API
+ - Consultas complejas
+
+ROMÁN:
+ - Librería formularios
+ - Gestión de los usuarios (registro, login, etc.) y sus respectivos roles (niveles de privilegio)
+ - Maquetación (CSS)
+ - Peticiones asíncronas con AJAX.

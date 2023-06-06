@@ -40,8 +40,12 @@
     height: 80%;
     background-color: var(--primary-50);
 }
-.profile-img{
+.profile-img-wrapper{
+    position: relative;
     width: 35%;
+}
+.profile-img{
+    width: 100%;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     overflow: hidden;

@@ -139,8 +139,12 @@
     background-color: var(--white);
     width: 22rem;
 }
-.img-user-post{
+.img-user-post-wrapper{
+    position: relative;
     width: 10rem;
+}
+.img-user-post{
+    width: 100%;
     border-radius: 50%;
     aspect-ratio: 1/1;
     overflow: hidden;
@@ -184,7 +188,7 @@
         border-radius: 50%;
         aspect-ratio: 1/1;
     }
-    .img-user-post{
+    .img-user-post-wrapper{
         width: 8.5rem;
     }
 }
@@ -247,7 +251,7 @@
     .info--comment{
         gap: var(--space-s);
     }
-    .img-user-post{
+    .img-user-post-wrapper, .img-user-post{
         height: 100%;
         width: auto;
     }

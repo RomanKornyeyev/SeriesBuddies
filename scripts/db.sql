@@ -3,8 +3,8 @@ DROP TABLE IF EXISTS respuestas CASCADE;
 DROP TABLE IF EXISTS peticiones CASCADE;
 DROP TABLE IF EXISTS tokens CASCADE;
 DROP TABLE IF EXISTS usuarios CASCADE;
-DROP TABLE IF EXISTS chips CASCADE;
 DROP TABLE IF EXISTS chips_usuario CASCADE;
+DROP TABLE IF EXISTS chips CASCADE;
 
 /************* USUARIOS, PETICIONES, ETC ***************/
 CREATE TABLE usuarios (
@@ -112,8 +112,11 @@ INSERT INTO chips (img, nombre) VALUES ('upload/chips/chip_inicio.png', 'CHIP - 
 
 --Trigger que se ejecuta cuando se hacen inserts en respuestas
 /************* ===== ATENCIÓN: QUITAR COMENTARIOS INTERNOS ANTES DE METER EL TRIGGER ===== ***************/
-system clear;
+drop trigger comprobar_medallas; -- LEGACY
 drop trigger insertar_medalla_inicio;
+drop trigger sumar_medallas;
+drop trigger restar_medallas;
+
 
 DELIMITER //
 CREATE TRIGGER insertar_medalla_inicio AFTER INSERT
@@ -125,8 +128,7 @@ END;
 //
 DELIMITER ;
 
-system clear;
-drop trigger sumar_medallas;
+
 DELIMITER //
 CREATE TRIGGER sumar_medallas AFTER INSERT
 ON respuestas
@@ -170,8 +172,7 @@ END;
 //
 DELIMITER ;
 
-system clear;
-drop trigger restar_medallas;
+
 DELIMITER //
 CREATE TRIGGER restar_medallas AFTER DELETE
 ON respuestas

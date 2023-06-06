@@ -75,7 +75,7 @@
             <!-- user -->
             <?php if($sesionIniciada){?>
                 <div class='user-area-wrapper'>
-                    <a class='user-area' href='profile.php?id=<?=$usuarioId?>'>
+                    <a class='user-area <?php if($esAdmin){echo "user-area-admin";}?>' href='profile.php?id=<?=$usuarioId?>'>
                         <?=$bolitaNotificacion?>
                         <div class='img-perfil-nav'>
                             <img class='img-fit' src='<?=$usuarioImg?>' alt='img-user'>

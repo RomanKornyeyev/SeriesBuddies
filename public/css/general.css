@@ -230,8 +230,8 @@ img{width: 100%;}
     position: absolute;
     width: 2rem;
     height: 2rem;
-    bottom: .1rem;
-    left: .1rem;
+    bottom: 0;
+    left: 0;
     border-radius: 50%;
     background-color: var(--success-500);
     color: var(--almost-white);
@@ -453,6 +453,59 @@ img{width: 100%;}
     }
 }
 /* ===== EXTRA (AVISOS, CONFIRMACIONES, ETC) ===== */
+.profile-img-wrapper-admin-buddies::after{
+    content: 'ADMIN';
+    position: absolute;
+    background-color: var(--error-500);
+    padding: var(--space-xs) var(--space-s);
+    bottom: 0;
+    right: 0;
+    border-radius: var(--br-default);
+    font-size: 1.2rem;
+    color: var(--almost-white);
+    font-weight: bold;
+}
+.img-user-post-wrapper-admin-feed::after{
+    content: 'ADMIN';
+    position: absolute;
+    background-color: var(--error-500);
+    padding: var(--space-xs) var(--space-s);
+    bottom: 0;
+    right: 0;
+    border-radius: var(--br-default);
+    font-size: 1.2rem;
+    color: var(--almost-white);
+    font-weight: bold;
+}
+@media screen and (max-width: 500px) {
+    .img-user-post-wrapper-admin-feed::after{
+        font-size: .9rem;
+        padding: var(--space-ultra-s) var(--space-xs);
+    }
+}
+.admin-card--profile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 var(--space-m);
+    background-color: var(--error-500);
+    border-radius: var(--br-default);
+    font-size: 1.6rem;
+    color: var(--almost-white);
+    font-weight: bold;
+}
+.user-area-admin::after{
+    content: 'ADMIN';
+    position: absolute;
+    background-color: var(--error-500);
+    padding: var(--space-xs) var(--space-s);
+    bottom: 0;
+    left: 3rem;
+    border-radius: var(--br-default);
+    font-size: 1rem;
+    color: var(--almost-white);
+    font-weight: bold;
+}
 .confirmation-wrapper{
     position: fixed;
     display: flex;
