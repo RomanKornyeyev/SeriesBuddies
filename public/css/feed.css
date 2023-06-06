@@ -150,6 +150,9 @@
     overflow: hidden;
     border: 5px solid var(--primary-500);
 }
+.img-user-post--serie{
+    width: 32.5%;
+}
 /* .card__post-img>.icon:last-of-type {
     width: 75%;
 } */

@@ -87,10 +87,10 @@
                     //subimos la imagen y la insertamos en el user
                     if (isset($_FILES[$img->getName()]) && $_FILES[$img->getName()]['error'] == 0) {
                         //subimos y guardamos la img en:                              ruta          nombre         ext
-                        move_uploaded_file($_FILES[$img->getName()]['tmp_name'], $img->getRuta().$_SESSION['id'].".png");
+                        move_uploaded_file($_FILES[$img->getName()]['tmp_name'], $img->getRuta().$idUsuario.".png");
                         
                         //actualizamos la img en el user
-                        DWESBaseDatos::actualizarImgUsuario($db, $_SESSION['id'], $img->getRuta().$_SESSION['id'].".png");
+                        DWESBaseDatos::actualizarImgUsuario($db, $idUsuario, $img->getRuta().$idUsuario.".png");
                         if ($_SESSION['id'] == $idUsuario) {
                             $_SESSION['img'] = $img->getRuta().$_SESSION['id'].".png";
                         }

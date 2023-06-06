@@ -201,7 +201,7 @@
             <div class="links__buddy">
                 <div class="icon icon--super-buddies">
                     <?php foreach ($listadoBuddies as $buddie) { ?>
-                        <a href="./profile.php?id=<?=$buddie['id']?>" class="icon__buddy img-user-post"><img class="img-fit" src="<?=$buddie['img']?>" alt="serie-img"></a>
+                        <a href="./profile.php?id=<?=$buddie['id']?>" class="icon__buddy img-user-post img-user-post--serie"><img class="img-fit" src="<?=$buddie['img']?>" alt="serie-img"></a>
                     <?php } ?>
                 </div>
                 <div class="width-100 info--super-buddies">

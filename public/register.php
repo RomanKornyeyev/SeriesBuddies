@@ -69,7 +69,9 @@
                     $email->getValor(),
                     "Completa tu registro - SeriesBuddies",
                     "¡Bienvenido a SeriesBuddies ".$nuevoUsuario['nombre']."! Completa tu registro con el siguiente enlace: 
-                    <a target='_blank' href='".DWESBaseDatos::RUTA_DOMINIO_BASE."/verify.php?token=".$token."'>COMPLETAR MI REGISTRO</a>"                
+                    <a target='_blank' href='".DWESBaseDatos::RUTA_DOMINIO_BASE."/verify.php?token=".$token."'>COMPLETAR MI REGISTRO</a>
+                    <br>¿No te funciona el link anterior? Haz click aquí:
+                    <a href='".DWESBaseDatos::RUTA_DOMINIO_BASE."/verify.php?token=".$token."'>".DWESBaseDatos::RUTA_DOMINIO_BASE."/verify.php?token=".$token."</a>"                
                 );
 
                 $verificacionPendiente = true;

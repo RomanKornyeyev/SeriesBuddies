@@ -113,7 +113,9 @@
                                 $email->getValor(),
                                 "Cambia tu contraseña - SeriesBuddies",
                                 "Hola ".$consulta['nombre'].", has solicitado cambiar tu contraseña. Puedes cambiarla en el siguiente enlace: 
-                                <a target='_blank' href='".DWESBaseDatos::RUTA_DOMINIO_BASE."/recovery.php?token=".$token."'>CAMBIAR MI CONTRASEÑA</a>"                
+                                <a target='_blank' href='".DWESBaseDatos::RUTA_DOMINIO_BASE."/recovery.php?token=".$token."'>CAMBIAR MI CONTRASEÑA</a>
+                                <br>¿No te funciona el link anterior? Haz click aquí:
+                                <a href='".DWESBaseDatos::RUTA_DOMINIO_BASE."/recovery.php?token=".$token."'>".DWESBaseDatos::RUTA_DOMINIO_BASE."/recovery.php?token=".$token."</a>"                 
                             );
 
                             $estado = "sin-link-enviado";
