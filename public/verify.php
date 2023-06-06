@@ -91,7 +91,7 @@
                                 Mailer::sendEmail(
                                     $consulta['correo'],
                                     "Registro completado - SeriesBuddies",
-                                    "¡Bienvenido a SeriesBuddies ".$consulta['nombre']."! Has completado tu registro."                
+                                    Mailer::pintaEmailVerificacionCompletada($consulta['nombre'])              
                                 );
 
                                 //estado verificado para pintar el OKEY
@@ -145,10 +145,7 @@
                             Mailer::sendEmail(
                                 $email->getValor(),
                                 "Completa tu registro - SeriesBuddies",
-                                "¡Bienvenido a SeriesBuddies ".$consulta['nombre']."! Completa tu registro con el siguiente enlace: 
-                                <a target='_blank' href='".DWESBaseDatos::RUTA_DOMINIO_BASE."/verify.php?token=".$token."'>COMPLETAR MI REGISTRO</a>
-                                <br>¿No te funciona el link anterior? Haz click aquí:
-                                <a href='".DWESBaseDatos::RUTA_DOMINIO_BASE."/verify.php?token=".$token."'>".DWESBaseDatos::RUTA_DOMINIO_BASE."/verify.php?token=".$token."</a>"                
+                                Mailer::pintaEmailVerificacion(DWESBaseDatos::RUTA_DOMINIO_BASE, $consulta['nombre'], $token)               
                             );
 
                             $estado = "sin-link-enviado";

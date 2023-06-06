@@ -59,7 +59,7 @@
                                 Mailer::sendEmail(
                                     $consulta['correo'],
                                     "Contraseña modificada - SeriesBuddies",
-                                    "Hola ".$consulta['nombre']." tu contraseña ha sido modificada correctamente."                
+                                    Mailer::pintaEmailRecoveryCompleted($consulta['nombre'])             
                                 );
                     
                                 //estado verificado para pintar el OKEY
@@ -111,11 +111,8 @@
                             //manda un mail de confirmación
                             Mailer::sendEmail(
                                 $email->getValor(),
-                                "Cambia tu contraseña - SeriesBuddies",
-                                "Hola ".$consulta['nombre'].", has solicitado cambiar tu contraseña. Puedes cambiarla en el siguiente enlace: 
-                                <a target='_blank' href='".DWESBaseDatos::RUTA_DOMINIO_BASE."/recovery.php?token=".$token."'>CAMBIAR MI CONTRASEÑA</a>
-                                <br>¿No te funciona el link anterior? Haz click aquí:
-                                <a href='".DWESBaseDatos::RUTA_DOMINIO_BASE."/recovery.php?token=".$token."'>".DWESBaseDatos::RUTA_DOMINIO_BASE."/recovery.php?token=".$token."</a>"                 
+                                "Reestablece tu contraseña - SeriesBuddies",
+                                Mailer::pintaEmailRecovery(DWESBaseDatos::RUTA_DOMINIO_BASE, $consulta['nombre'], $token)                 
                             );
 
                             $estado = "sin-link-enviado";

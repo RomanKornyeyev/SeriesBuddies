@@ -223,7 +223,7 @@ class TMDB
         
         foreach ($series as $key => $serie) {
             foreach ($serie as $clave => $contenido) {
-                if ($clave=='name' && str_contains($contenido, $nombre) == 0) {
+                if ($clave=='name' && str_contains($contenido, strtolower($nombre)) == 0) {
                     $serieData[]=$this->almacenarDatosSeries($series, $key);
                 }
             }
