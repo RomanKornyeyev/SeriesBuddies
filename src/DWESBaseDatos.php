@@ -434,7 +434,7 @@ class DWESBaseDatos {
   }
 
   public static function obtenTarjetasIndex ($db) {
-    $db->ejecuta("SELECT u.nombre, u.img, r.fecha, DATE_FORMAT(ult_contacto, '%d %b %Y', 'es-ES')'fecha', r.contenido 
+    $db->ejecuta("SELECT u.nombre, u.img, r.fecha, DATE_FORMAT(r.fecha, '%d %b %Y', 'es-ES')'fecha', r.contenido 
                   FROM respuestas r 
                   INNER JOIN usuarios u 
                   ON u.id=r.id_usuario 
