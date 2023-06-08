@@ -1,48 +1,75 @@
-<diagram program="umletino" version="15.0.0"><zoom_level>8</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>504</x><y>48</y><w>168</w><h>144</h></coordinates><panel_attributes>Formulario
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>650</x><y>29</y><w>210</w><h>290</h></coordinates><panel_attributes>Formulario
 --
 - action: string
 - method: string
 - methodGlobal: array
+- claseForm: array
+- vaciar: int
+- atr: string
+- campos: array
 - rutaGuardado: string
 - campos: array
+- claseSubmitWrapper: array
+- idSubmit: string
+- nameSubmit: string
+- valorSubmit: string
+- claseSubmitInput: array
 --
 + validarGlobal() : boolean
-+ pintarGlobal()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>504</x><y>256</y><w>168</w><h>152</h></coordinates><panel_attributes>Atipo
++ pintarGlobal()
++ vaciarCampos()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>650</x><y>379</y><w>210</w><h>230</h></coordinates><panel_attributes>Atipo
 --
+# null: int
 # valor: mixed (str or arr)
 # name: string
 # label: string
+# claseLabel: array
 # error: string
+# claseWrapper: array
+# claseInput: array
 --
 + validar()
 + imprimirError()
 + cleanData(string): string
 a+ pintar()
-a+ validarEspecifico()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>408</x><y>544</y><w>168</w><h>152</h></coordinates><panel_attributes>Texto
+a+ validarEspecifico()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>440</x><y>719</y><w>210</w><h>170</h></coordinates><panel_attributes>Texto
 --
 - tipo: string
 - placeholder: string
 - patron: string
 --
 + validarEspecifico()
-+ pintar()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>488</x><y>400</y><w>120</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>130;10;10;180</additional_attributes></element><element><id>UMLClass</id><coordinates><x>200</x><y>544</y><w>168</w><h>152</h></coordinates><panel_attributes>Numero
++ pintar()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>540</x><y>599</y><w>240</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>220;10;10;120</additional_attributes></element><element><id>UMLClass</id><coordinates><x>220</x><y>719</y><w>210</w><h>170</h></coordinates><panel_attributes>Numero
 --
 - tipo: string
 - min: int
 - max: int
 --
 + validarEspecifico()
-+ pintar()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>272</x><y>400</y><w>336</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>400;10;10;180</additional_attributes></element><element><id>UMLClass</id><coordinates><x>616</x><y>544</y><w>168</w><h>152</h></coordinates><panel_attributes>Multiple
++ pintar()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>310</x><y>599</y><w>470</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>450;10;10;120</additional_attributes></element><element><id>UMLClass</id><coordinates><x>660</x><y>719</y><w>210</w><h>170</h></coordinates><panel_attributes>Multiple
 --
+- claseLabelMultiple: array
+- claseMultiple
 - tipo: string
 - arr: array
 --
 + validarEspecifico()
-+ pintar()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>584</x><y>400</y><w>128</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;140;180</additional_attributes></element><element><id>Relation</id><coordinates><x>576</x><y>184</y><w>80</w><h>88</h></coordinates><panel_attributes>lt=&lt;.
-&lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>10;90;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>824</x><y>544</y><w>168</w><h>152</h></coordinates><panel_attributes>Fecha
++ pintar()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>750</x><y>599</y><w>30</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;120</additional_attributes></element><element><id>Relation</id><coordinates><x>740</x><y>309</y><w>100</w><h>90</h></coordinates><panel_attributes>lt=&lt;.
+&lt;&lt;instanceOf&gt;&gt;</panel_attributes><additional_attributes>10;70;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>880</x><y>719</y><w>210</w><h>170</h></coordinates><panel_attributes>Fecha
 --
 - inicio: string
 - fin: string
 --
 + validarEspecifico()
-+ pintar()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>584</x><y>400</y><w>336</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;400;180</additional_attributes></element></diagram>
++ pintar()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>750</x><y>599</y><w>250</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;230;120</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1100</x><y>719</y><w>210</w><h>170</h></coordinates><panel_attributes>File
+--
+- imgWrapper: array
+- claseImg: array
+- inputWrapperAux: array
+- imgDefault: string
+- accept: string
+- size: int
+- ruta: string
+--
++ validarEspecifico()
++ pintar()</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>750</x><y>599</y><w>470</w><h>140</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;450;120</additional_attributes></element></diagram>
