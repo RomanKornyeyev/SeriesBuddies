@@ -35,6 +35,7 @@ input,textarea,button,select,a{
     outline: none;
     overflow: hidden;
 }
+textarea{resize: none;}
 table, tr, td{
     border: none;
     border-collapse: collapse;

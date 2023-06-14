@@ -12,8 +12,8 @@ class Texto extends Atipo
     public const EMAIL_PATTERN = "/^([a-zA-Z0-9_\.-]+){1,50}@([a-zA-Z0-9\.-]+){1,50}\.([a-z\.]{2,3})$/";
     //public const DEFAULT_PATTERN_25 = "/^[a-zA-Z0-9\s\,\.\¿\?\¡\!\_\-]{1,25}$/";
     //public const DEFAULT_PATTERN_500 = "/^[a-zA-Z0-9\s\,\.\¿\?\¡\!\_\-]{1,500}$/";
-    public const DEFAULT_PATTERN_25 = "/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s\,\.\-\_\@\/\\\#\¿\?\¡\!\:\;]{1,25}$/u";
-    public const DEFAULT_PATTERN_500 = "/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s\,\.\-\_@\/\\\#\¿\?\¡\!\:\;]{1,500}$/u";
+    public const DEFAULT_PATTERN_25 = "/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s\,\.\-\_\@\/\\\#\¿\?\¡\!\:\;\(\)\=]{1,25}$/u";
+    public const DEFAULT_PATTERN_500 = "/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s\,\.\-\_@\/\\\#\¿\?\¡\!\:\;\(\)\=]{1,500}$/u";
     public const DEFAULT_PSWD = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,16}$/";
 
     public const TYPE_TEXT = "text";

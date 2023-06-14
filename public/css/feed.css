@@ -232,6 +232,9 @@
     .text--serie {
         text-align: left;
     }
+    .icon--super-buddies{
+        height: 11rem;
+    }
     .icon__buddy {
         width: 15%;
     }
