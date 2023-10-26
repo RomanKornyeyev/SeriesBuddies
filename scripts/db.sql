@@ -21,6 +21,7 @@ CREATE TABLE usuarios (
     ult_contacto DATETIME DEFAULT (NOW() - INTERVAL 1 DAY)
 );
 
+/* TODAS LAS CONTRASEÑAS SON admin */
 INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("admin","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "admin@admin.com", "admin", "si");
 INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("anabel","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "anabel@anabel.com", "usuario", "si");
 INSERT INTO usuarios (nombre, contra, correo, privilegio, verificado) VALUES ("francis","$2y$10$.5vCCMbwTyRGf88.STcYBe1R9asP2.j1KB1zQI8UpFiKvVaJB6d9W", "francis@francis.com", "usuario", "si");

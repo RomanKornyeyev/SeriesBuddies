@@ -5,9 +5,9 @@ namespace clases\api_tmdb;
 class TMDB
 {
     //VARIABLES Y CONSTANTES
-    const API_KEY = '4ed281c2a8c566b11358f1307c78ee21'; 
+    const API_KEY = ' --- TU API KEY --- '; 
     const API_URL = 'https://api.themoviedb.org/3/';
-    const TOKEN = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0ZWQyODFjMmE4YzU2NmIxMTM1OGYxMzA3Yzc4ZWUyMSIsInN1YiI6IjY0NGQzNzliMmQzNzIxMjg4NjAxMDIwYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.dF1hwzUEcQB-Ad-r7vwD3bgCj4W3vctULyT1bHGxQoE';
+    const TOKEN = ' --- TU TOKEN ---';
     const MAX_PAGINAS = 500;
     const BASE_URL_IMG='https://image.tmdb.org/t/p/';
     const WIDTH_BACKDROP = 'w1280';

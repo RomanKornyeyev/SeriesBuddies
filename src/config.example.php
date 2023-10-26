@@ -6,6 +6,6 @@
     $CONFIG["db_user"] = "user_seriesBuddies";
     $CONFIG["db_pass"] = "123456";
     $CONFIG["mail_user"] = "tu.correo@correo.com";
-    $CONFIG["mail_pass"] = "123";
+    $CONFIG["mail_pass"] = "123"; // clave de aplicación
 
 ?>
