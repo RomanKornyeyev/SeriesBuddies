@@ -70,8 +70,12 @@ require("../vendor/autoload.php");
 
 <hr>
 
-### CUENTA DE EMAIL
+### CREDENCIALES (EMAIL + API KEY)
+#### EMAIL
 Es necesario tener una cuenta de email con una **clave de aplicación**, OJO, clave de aplicación, no la clave de acceso de toda la vida. Para ello normalmente es necesario activar la verificación en dos pasos. Aquí mirarse cualquier tutorial.
+
+#### API KEY
+Es necesaria una API KEY de desarrollador de [The Movie Database](https://www.themoviedb.org/).
 
 <hr>
 
