@@ -20,6 +20,9 @@
     text-align: center;
     border: none;
 }
+.input-wrapper--header{
+    flex-flow: row;
+}
 .input-wrapper--checkbox{
     padding: 0;
     text-align: left;

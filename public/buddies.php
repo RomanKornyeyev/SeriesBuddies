@@ -24,7 +24,7 @@
     $formBuddies = new Formulario("buddies.php", Formulario::METHOD_POST, ["h-form"],        Formulario::VACIAR_NO,          "",                   array(
         //                       ====================================== COMÚN =======================================================================  //  ======================== ESPECÍFICO ========================
         //                ¿Puede estar vacío?       valor               name        label  clases-css-label  clases-css-wrapper  clases-css-input             tipoCampo       placeholder      regex
-        $buddies = new Texto        (Atipo::NULL_NO, $_GET['buddies'],              "buddies",  "",  ["d-none"],    ["input-wrapper"],  ["h-input"],              Texto::TYPE_TEXT, "Busca a un buddy...",  Texto::DEFAULT_PATTERN_25),
+        $buddies = new Texto        (Atipo::NULL_NO, $_GET['buddies'],              "buddies",  "",  ["d-none"],    ["input-wrapper", "input-wrapper--header"],  ["h-input"],              Texto::TYPE_TEXT, "Busca a un buddy...",  Texto::DEFAULT_PATTERN_25),
         $hiddenIdSerie = new Numero (Atipo::NULL_SI, $_GET['id-serie'], "id-serie", "",  ["d-none"],    ["d-none"],  ["d-none"],           Numero::TYPE_NUMBER, Numero::MIN_DEFAULT_0, 999999999)
     // === SUBMIT ===
     // claseWrappSubmit      idSubmit  nameSubm  txtSubmit  clseSubmit
