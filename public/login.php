@@ -18,7 +18,7 @@
         //                       ====================================== COMÚN =======================================================================  //  ======================== ESPECÍFICO ========================
         //                  ¿Puede estar vacío? valor  name    label         clases-css-label         clases-css-wrapper       clases-css-input            tipoCampo    placeholder    regex
         $email = new Texto      (Atipo::NULL_NO, null,"email", "Email",   ["label","label--text"],    ["input-wrapper"],  ["input","shadow-lightgray"],  Texto::TYPE_TEXT, " ",  Texto::EMAIL_PATTERN),
-        $pass = new Texto       (Atipo::NULL_NO, null,"contra","Password",["label","label--text"],    ["input-wrapper"],  ["input","shadow-lightgray"],  Texto::TYPE_PSWD, " ",  Texto::DEFAULT_PATTERN_25),
+        $pass = new Texto       (Atipo::NULL_NO, null,"contra","Password",["label","label--text"],    ["input-wrapper"],  ["input","shadow-lightgray"],  Texto::TYPE_PSWD, " ",  Texto::DEFAULT_PSWD),
         //                                                                                                                                               clase-label-cada-check             clase-wrapper(chboxes)                    tipoCampo              array (checkboxes, radios, selects)                                               
         $recuerdame = new Multiple(Atipo::NULL_SI, null,"recuerdame",NULL,["label","label--checkbox"],["input-wrapper"],        ["checkbox"],           ["label", "label--checkbox"],["input-wrapper","input-wrapper--checkbox"], Multiple::TYPE_CHECKBOX, ["Recuérdame"])
     // === SUBMIT ===
