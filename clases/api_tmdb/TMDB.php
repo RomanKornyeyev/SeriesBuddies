@@ -5,9 +5,9 @@ namespace clases\api_tmdb;
 class TMDB
 {
     //VARIABLES Y CONSTANTES
-    const API_KEY = ' --- TU API KEY --- '; 
+    //const API_KEY = ''; 
     const API_URL = 'https://api.themoviedb.org/3/';
-    const TOKEN = ' --- TU TOKEN ---';
+    //const TOKEN = '';
     const MAX_PAGINAS = 500;
     const BASE_URL_IMG='https://image.tmdb.org/t/p/';
     const WIDTH_BACKDROP = 'w1280';
@@ -46,6 +46,8 @@ class TMDB
 
     //Lanza la peticion a la api con la url especificada y lo devuelve como un array
     public function peticionHTTP ($url) {
+        global $CONFIG; //para $CONFIG["api_token"], $CONFIG["api_key"],
+
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -55,7 +57,7 @@ class TMDB
         curl_setopt($curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
         curl_setopt($curl, CURLOPT_HTTPHEADER, [
-            "Authorization: ".self::TOKEN,
+            "Authorization: ".$CONFIG["api_token"],
             "accept: application/json"
         ]);
         

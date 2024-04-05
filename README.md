@@ -101,6 +101,5 @@ Todos los scripts de creación de tablas e inserts inicial están disponibles en
 
 ## Unos últimos pasos...
 1. Renombrar config.example.php a config.php (o bien copiarlo y ponerle de nombre config.php) y meter las credenciales.
-2. Meter tu API_KEY y TOKEN en [TMDB.php](./clases/api_tmdb/TMDB.php)
 
 ¡Todo listo!
