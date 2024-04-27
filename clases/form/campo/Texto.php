@@ -12,9 +12,10 @@ class Texto extends Atipo
     public const EMAIL_PATTERN = "/^([a-zA-Z0-9_\.-]+){1,50}@([a-zA-Z0-9\.-]+){1,50}\.([a-z\.]{2,3})$/";
     //public const DEFAULT_PATTERN_25 = "/^[a-zA-Z0-9\s\,\.\¿\?\¡\!\_\-]{1,25}$/";
     //public const DEFAULT_PATTERN_500 = "/^[a-zA-Z0-9\s\,\.\¿\?\¡\!\_\-]{1,500}$/";
-    public const DEFAULT_PATTERN_25 = "/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s\,\.\-\_\@\/\\\#\¿\?\¡\!\:\;\(\)\=]{1,25}$/u";
-    public const DEFAULT_PATTERN_500 = "/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s\,\.\-\_@\/\\\#\¿\?\¡\!\:\;\(\)\=]{1,500}$/u";
+    public const DEFAULT_PATTERN_25 = "/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s\,\.\*\-\_\@\/\\\#\¿\?\¡\!\:\;\(\)\=]{1,25}$/u";
+    public const DEFAULT_PATTERN_500 = "/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s\,\.\*\-\_@\/\\\#\¿\?\¡\!\:\;\(\)\=]{1,500}$/u";
     public const DEFAULT_PSWD = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,16}$/";
+    public const DEFAULT_PSWD_LOGIN = "/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s\,\.\*\-\_\@\/\\\#\¿\?\¡\!\:\;\(\)\=]{1,25}$/u";
 
     public const TYPE_TEXT = "text";
     public const TYPE_TAREA = "textarea";
@@ -39,6 +40,8 @@ class Texto extends Atipo
                 $this->error = "Email no válido<br>";
             } else if ($this->patron == self::DEFAULT_PSWD) {
                 $this->error = "Contraseña no válida. Debe tener mínimo 6 caracteres, máximo 16. Mínimo una minuscula, mayúscula y un número<br>";
+            } else if ($this->patron == self::DEFAULT_PSWD_LOGIN) {
+                $this->error = "Carácteres especiales como < > '' no están admitidos<br>";
             } else{
                 $longitud = ($this->tipo == self::TYPE_TAREA)? 500 : 25;
                 $this->error = "No se admiten carácteres especiales y el tamaño máximo es de $longitud caracteres<br>";
